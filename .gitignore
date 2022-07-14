@@ -1,7 +1,4 @@
 
 .ipynb_checkpoints/Pynkowski_test-checkpoint.ipynb
-pynkowski/__pycache__/__init__.cpython-39.pyc
-pynkowski/__pycache__/data.cpython-39.pyc
-pynkowski/__pycache__/theory.cpython-39.pyc
-pynkowski/__pycache__/version.cpython-39.pyc
+pynkowski/__pycache__/
 sphinx/

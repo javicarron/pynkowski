@@ -286,7 +286,7 @@ class TheoryTemperature():
         The angular power spectrum of the Gaussian isotropic scalar field. 
         Default : None 
     
-    μ : float, scalar, optional
+    μ : float, optional
         The derivative of the covariance function at the origin for the Gaussian isotropic scalar field.
         If both μ and cls are given, an error will be raised.
         If only cls is given, μ will be computed from input cls.
@@ -311,7 +311,7 @@ class TheoryTemperature():
     us : np.array
         The thresholds at which the theoretical MFs are computed. 
         
-    μ : float, scalar
+    μ : float
         The derivative of the covariance function at the origin for the Gaussian isotropic scalar field.
         
     """    
@@ -384,7 +384,7 @@ class TheoryP2():
         Shape '(..., lmax+1)'. '...' can be 2 (EE, BB) or absent (assumed to be EE+BB).
         Default : None 
     
-    μ : float, scalar, optional
+    μ : float, optional
         The derivative of the covariance function at the origin for each of the two independent Gaussian isotropic fields (i.e., U and Q in the cosmological case).
         If both μ and cls are given, an error will be raised.
         If only cls is given, μ will be computed from input cls.
@@ -409,7 +409,7 @@ class TheoryP2():
     us : np.array
         The thresholds at which the theoretical MFs are computed. 
         
-    μ : float, scalar
+    μ : float
         The derivative of the covariance function at the origin for the sum of two squared Gaussian isotropic fields.
         
     """    
@@ -477,3 +477,5 @@ class TheoryP2():
 __all__ = ["TheoryP2",
            "TheoryTemperature",
            "get_μ"]
+
+__docformat__ = "numpy"

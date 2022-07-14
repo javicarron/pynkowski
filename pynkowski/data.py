@@ -6,6 +6,7 @@ try:
 except:
     tqdm = lambda x: x
     print('tqdm not loaded')
+    
 
  
 def get_theta(nside):
@@ -532,3 +533,4 @@ class Scalar():
         
         
 __all__ = ["Scalar"]
+__docformat__ = "numpy"

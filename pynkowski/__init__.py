@@ -8,9 +8,10 @@ from .theory import (TheoryP2,
                      TheoryTemperature,
                      get_μ)
 
-from .version import __version__
+from .__version import __version__
 
 
 
 
 __pdoc__ = {"version":False}
+__docformat__ = "numpy"
