@@ -344,13 +344,15 @@ class TheoryTemperature():
     
     def V0(self):
         """Compute the expected values of the normalised first MF v0 at the different thresholds us.
-
+        $$\mathbb{E}[ v_{0} ] =1 -\Phi (u)$$
+        where $\Phi$ is the cumulative normal distribution.
         """    
         return (V0_th_s0(self.us))
 
     def V1(self):
         """Compute the expected values of the normalised second MF v1 at the different thresholds us.
-
+        
+        $$\mathbb{E}[ v_{1}(u) ] = {1 \over 8} \exp{(- {u^2 \over 2})} \mu^{1/2}$$
         """ 
         us_ = define_us_for_V(self.us,self.dus)
         v1_ = V1_th_s0(us_, self.μ)
@@ -359,7 +361,8 @@ class TheoryTemperature():
 
     def V2(self):
         """Compute the expected values of the normalised third MF v2 at the different thresholds us.
-
+        
+        $$\mathbb{E}[v_{2}(u)] = {2 \over \sqrt{(2\pi)^{3}}} \exp(-{u^{2} \over 2}) u$$
         """    
         us_ = define_us_for_V(self.us,self.dus)
         v2_ = V2_th_s0(us_, self.μ)
@@ -370,7 +373,7 @@ class TheoryTemperature():
 
 class TheoryP2():
     """Class to compute the expected values of Minkowski functionals (MFs) for the sum of two squared Gaussian isotropic fields normalised for their standard deviations defined on the sphere 
-    like the polarised intensity of the CMB (P^2 = Q^2 + U^2).
+    like the polarised intensity of the CMB ($P^2 = Q^2 + U^2$).
 
     Parameters
     ----------
@@ -450,12 +453,14 @@ class TheoryP2():
     def V0(self):
         """Compute the expected values of the normalised first MF v0 at the different thresholds us.
 
+        $$\mathbb{E}[{v_{0}(u)}] = \exp (-u/2)$$
         """    
         return (V0_th_P2(self.us))
 
     def V1(self):
         """Compute the expected values of the normalised second MF v1 at the different thresholds us.
-
+        
+        $$\mathbb{E}[{v_{1}(u)}] = {\sqrt{2\pi } \over 8} \sqrt{\mu u}\exp (-{u \over 2})$$
         """ 
         us_ = define_us_for_V(self.us,self.dus)
         v1_ = V1_th_P2(us_, self.μ)
@@ -464,7 +469,8 @@ class TheoryP2():
     
     def V2(self):
         """Compute the expected values of the normalised third MF v2 at the different thresholds us.
-
+        
+        $$\mathbb{E}[{v_{2}(u)}] = \mu {(u-1)\exp (-u/2) \over 2\pi }$$
         """    
         us_ = define_us_for_V(self.us,self.dus)
         v2_ = V2_th_P2(us_, self.μ)
@@ -474,8 +480,8 @@ class TheoryP2():
 
 
 
-__all__ = ["TheoryP2",
+__all__ = ["get_μ",
            "TheoryTemperature",
-           "get_μ"]
+           "TheoryP2"]
 
 __docformat__ = "numpy"

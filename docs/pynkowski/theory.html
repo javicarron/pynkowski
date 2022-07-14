@@ -11,7 +11,24 @@
     <style>/*! theme.css */:root{--pdoc-background:#fff;}.pdoc{--text:#212529;--muted:#6c757d;--link:#3660a5;--link-hover:#1659c5;--code:#f8f8f8;--active:#fff598;--accent:#eee;--accent2:#c1c1c1;--nav-hover:rgba(255, 255, 255, 0.5);--name:#0066BB;--def:#008800;--annotation:#007020;}</style>
     <style>/*! layout.css */html, body{width:100%;height:100%;}html, main{scroll-behavior:smooth;}body{background-color:var(--pdoc-background);}@media (max-width:769px){#navtoggle{cursor:pointer;position:absolute;width:50px;height:40px;top:1rem;right:1rem;border-color:var(--text);color:var(--text);display:flex;opacity:0.8;}#navtoggle:hover{opacity:1;}#togglestate + div{display:none;}#togglestate:checked + div{display:inherit;}main, header{padding:2rem 3vw;}header + main{margin-top:-3rem;}.git-button{display:none !important;}nav input[type="search"]{max-width:77%;}nav input[type="search"]:first-child{margin-top:-6px;}nav input[type="search"]:valid ~ *{display:none !important;}}@media (min-width:770px){:root{--sidebar-width:clamp(12.5rem, 28vw, 22rem);}nav{position:fixed;overflow:auto;height:100vh;width:var(--sidebar-width);}main, header{padding:3rem 2rem 3rem calc(var(--sidebar-width) + 3rem);width:calc(54rem + var(--sidebar-width));max-width:100%;}header + main{margin-top:-4rem;}#navtoggle{display:none;}}#togglestate{position:absolute;height:0;opacity:0;}nav.pdoc{--pad:clamp(0.5rem, 2vw, 1.75rem);--indent:1.5rem;background-color:var(--accent);border-right:1px solid var(--accent2);box-shadow:0 0 20px rgba(50, 50, 50, .2) inset;padding:0 0 0 var(--pad);overflow-wrap:anywhere;scrollbar-width:thin; scrollbar-color:var(--accent2) transparent }nav.pdoc::-webkit-scrollbar{width:.4rem; }nav.pdoc::-webkit-scrollbar-thumb{background-color:var(--accent2); }nav.pdoc > div{padding:var(--pad) 0;}nav.pdoc .module-list-button{display:inline-flex;align-items:center;color:var(--text);border-color:var(--muted);margin-bottom:1rem;}nav.pdoc .module-list-button:hover{border-color:var(--text);}nav.pdoc input[type=search]{display:block;outline-offset:0;width:calc(100% - var(--pad));}nav.pdoc .logo{max-width:calc(100% - var(--pad));max-height:35vh;display:block;margin:0 auto 1rem;transform:translate(calc(-.5 * var(--pad)), 0);}nav.pdoc ul{list-style:none;padding-left:0;}nav.pdoc > div > ul{margin-left:calc(0px - var(--pad));}nav.pdoc li a{padding:.2rem 0 .2rem calc(var(--pad) + var(--indent));}nav.pdoc > div > ul > li > a{padding-left:var(--pad);}nav.pdoc li{transition:all 100ms;}nav.pdoc li:hover{background-color:var(--nav-hover);}nav.pdoc a, nav.pdoc a:hover{color:var(--text);}nav.pdoc a{display:block;}nav.pdoc > h2:first-of-type{margin-top:1.5rem;}nav.pdoc .class:before{content:"class ";color:var(--muted);}nav.pdoc .function:after{content:"()";color:var(--muted);}nav.pdoc footer:before{content:"";display:block;width:calc(100% - var(--pad));border-top:solid var(--accent2) 1px;margin-top:1.5rem;padding-top:.5rem;}nav.pdoc footer{font-size:small;}</style>
     <style>/*! content.css */.pdoc{color:var(--text);box-sizing:border-box;line-height:1.5;background:none;}.pdoc .pdoc-button{display:inline-block;border:solid black 1px;border-radius:2px;font-size:.75rem;padding:calc(0.5em - 1px) 1em;transition:100ms all;}.pdoc .pdoc-alert{padding:1rem 1rem 1rem calc(1.5rem + 24px);border:1px solid transparent;border-radius:.25rem;background-repeat:no-repeat;background-position:1rem center;margin-bottom:1rem;}.pdoc .pdoc-alert > *:last-child{margin-bottom:0;}.pdoc .pdoc-alert-note {color:#084298;background-color:#cfe2ff;border-color:#b6d4fe;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23084298%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M8%2016A8%208%200%201%200%208%200a8%208%200%200%200%200%2016zm.93-9.412-1%204.705c-.07.34.029.533.304.533.194%200%20.487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703%200-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381%202.29-.287zM8%205.5a1%201%200%201%201%200-2%201%201%200%200%201%200%202z%22/%3E%3C/svg%3E");}.pdoc .pdoc-alert-warning{color:#664d03;background-color:#fff3cd;border-color:#ffecb5;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23664d03%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M8.982%201.566a1.13%201.13%200%200%200-1.96%200L.165%2013.233c-.457.778.091%201.767.98%201.767h13.713c.889%200%201.438-.99.98-1.767L8.982%201.566zM8%205c.535%200%20.954.462.9.995l-.35%203.507a.552.552%200%200%201-1.1%200L7.1%205.995A.905.905%200%200%201%208%205zm.002%206a1%201%200%201%201%200%202%201%201%200%200%201%200-2z%22/%3E%3C/svg%3E");}.pdoc .pdoc-alert-danger{color:#842029;background-color:#f8d7da;border-color:#f5c2c7;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23842029%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5.52.359A.5.5%200%200%201%206%200h4a.5.5%200%200%201%20.474.658L8.694%206H12.5a.5.5%200%200%201%20.395.807l-7%209a.5.5%200%200%201-.873-.454L6.823%209.5H3.5a.5.5%200%200%201-.48-.641l2.5-8.5z%22/%3E%3C/svg%3E");}.pdoc .visually-hidden{position:absolute !important;width:1px !important;height:1px !important;padding:0 !important;margin:-1px !important;overflow:hidden !important;clip:rect(0, 0, 0, 0) !important;white-space:nowrap !important;border:0 !important;}.pdoc h1, .pdoc h2, .pdoc h3{font-weight:300;margin:.3em 0;padding:.2em 0;}.pdoc > section:not(.module-info) h1{font-size:1.5rem;font-weight:500;}.pdoc > section:not(.module-info) h2{font-size:1.4rem;font-weight:500;}.pdoc > section:not(.module-info) h3{font-size:1.3rem;font-weight:500;}.pdoc > section:not(.module-info) h4{font-size:1.2rem;}.pdoc > section:not(.module-info) h5{font-size:1.1rem;}.pdoc a{text-decoration:none;color:var(--link);}.pdoc a:hover{color:var(--link-hover);}.pdoc blockquote{margin-left:2rem;}.pdoc pre{border-top:1px solid var(--accent2);border-bottom:1px solid var(--accent2);margin-top:0;margin-bottom:1em;padding:.5rem 0 .5rem .5rem;overflow-x:auto;background-color:var(--code);}.pdoc code{color:var(--text);padding:.2em .4em;margin:0;font-size:85%;background-color:var(--code);border-radius:6px;}.pdoc a > code{color:inherit;}.pdoc pre > code{display:inline-block;font-size:inherit;background:none;border:none;padding:0;}.pdoc > section:not(.module-info){margin-bottom:1.5rem;}.pdoc .modulename{margin-top:0;font-weight:bold;}.pdoc .modulename a{color:var(--link);transition:100ms all;}.pdoc .git-button{float:right;border:solid var(--link) 1px;}.pdoc .git-button:hover{background-color:var(--link);color:var(--pdoc-background);}.view-source-toggle-state,.view-source-toggle-state ~ .pdoc-code{display:none;}.view-source-toggle-state:checked ~ .pdoc-code{display:block;}.view-source-button{display:inline-block;float:right;font-size:.75rem;line-height:1.5rem;color:var(--muted);padding:0 .4rem 0 1.3rem;cursor:pointer;text-indent:-2px;}.view-source-button > span{visibility:hidden;}.module-info .view-source-button{float:none;display:flex;justify-content:flex-end;margin:-1.2rem .4rem -.2rem 0;}.view-source-button::before{position:absolute;content:"View Source";display:list-item;list-style-type:disclosure-closed;}.view-source-toggle-state:checked ~ .attr .view-source-button::before,.view-source-toggle-state:checked ~ .view-source-button::before{list-style-type:disclosure-open;}.pdoc .docstring{margin-bottom:1.5rem;}.pdoc section:not(.module-info) .docstring{margin-left:clamp(0rem, 5vw - 2rem, 1rem);}.pdoc .docstring .pdoc-code{margin-left:1em;margin-right:1em;}.pdoc h1:target,.pdoc h2:target,.pdoc h3:target,.pdoc h4:target,.pdoc h5:target,.pdoc h6:target,.pdoc .pdoc-code > pre > span:target{background-color:var(--active);box-shadow:-1rem 0 0 0 var(--active);}.pdoc .pdoc-code > pre > span:target{display:block;}.pdoc div:target > .attr,.pdoc section:target > .attr,.pdoc dd:target > a{background-color:var(--active);}.pdoc *{scroll-margin:2rem;}.pdoc .pdoc-code .linenos{user-select:none;}.pdoc .attr:hover{filter:contrast(0.95);}.pdoc section, .pdoc .classattr{position:relative;}.pdoc .headerlink{--width:clamp(1rem, 3vw, 2rem);position:absolute;top:0;left:calc(0rem - var(--width));transition:all 100ms ease-in-out;opacity:0;}.pdoc .headerlink::before{content:"#";display:block;text-align:center;width:var(--width);height:2.3rem;line-height:2.3rem;font-size:1.5rem;}.pdoc .attr:hover ~ .headerlink,.pdoc *:target > .headerlink,.pdoc .headerlink:hover{opacity:1;}.pdoc .attr{display:block;margin:.5rem 0 .5rem;padding:.4rem .4rem .4rem 1rem;background-color:var(--accent);overflow-x:auto;}.pdoc .classattr{margin-left:2rem;}.pdoc .name{color:var(--name);font-weight:bold;}.pdoc .def{color:var(--def);font-weight:bold;}.pdoc .signature{background-color:transparent;}.pdoc .param, .pdoc .return-annotation{white-space:pre;}.pdoc .signature.multiline .param{display:block;}.pdoc .signature.condensed .param{display:inline-block;}.pdoc .annotation{color:var(--annotation);}.pdoc .inherited{margin-left:2rem;}.pdoc .inherited dt{font-weight:700;}.pdoc .inherited dt, .pdoc .inherited dd{display:inline;margin-left:0;margin-bottom:.5rem;}.pdoc .inherited dd:not(:last-child):after{content:", ";}.pdoc .inherited .class:before{content:"class ";}.pdoc .inherited .function a:after{content:"()";}.pdoc .search-result .docstring{overflow:auto;max-height:25vh;}.pdoc .search-result.focused > .attr{background-color:var(--active);}.pdoc .attribution{margin-top:2rem;display:block;opacity:0.5;transition:all 200ms;filter:grayscale(100%);}.pdoc .attribution:hover{opacity:1;filter:grayscale(0%);}.pdoc .attribution img{margin-left:5px;height:35px;vertical-align:middle;width:70px;transition:all 200ms;}.pdoc table{display:block;width:max-content;max-width:100%;overflow:auto;margin-bottom:1rem;}.pdoc table th{font-weight:600;}.pdoc table th, .pdoc table td{padding:6px 13px;border:1px solid var(--accent2);}</style>
-    <style>/*! custom.css */</style></head>
+    <style>/*! custom.css */</style><script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+    };
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+    /* Re-invoke MathJax when DOM content changes, for example during search. */
+    document.addEventListener("DOMContentLoaded", () => {
+        new MutationObserver(() => MathJax.typeset()).observe(
+            document.querySelector("main.pdoc").parentNode,
+            {childList: true}
+        );
+    })
+</script></head>
 <body>
     <nav class="pdoc">
         <label id="navtoggle" for="togglestate" class="pdoc-button"><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke-linecap='round' stroke="currentColor" stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg></label>
@@ -32,22 +49,7 @@
         <h2>API Documentation</h2>
             <ul class="memberlist">
             <li>
-                    <a class="class" href="#TheoryP2">TheoryP2</a>
-                            <ul class="memberlist">
-                        <li>
-                                <a class="function" href="#TheoryP2.__init__">TheoryP2</a>
-                        </li>
-                        <li>
-                                <a class="function" href="#TheoryP2.V0">V0</a>
-                        </li>
-                        <li>
-                                <a class="function" href="#TheoryP2.V1">V1</a>
-                        </li>
-                        <li>
-                                <a class="function" href="#TheoryP2.V2">V2</a>
-                        </li>
-                </ul>
-
+                    <a class="function" href="#get_μ">get_μ</a>
             </li>
             <li>
                     <a class="class" href="#TheoryTemperature">TheoryTemperature</a>
@@ -68,7 +70,22 @@
 
             </li>
             <li>
-                    <a class="function" href="#get_μ">get_μ</a>
+                    <a class="class" href="#TheoryP2">TheoryP2</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#TheoryP2.__init__">TheoryP2</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#TheoryP2.V0">V0</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#TheoryP2.V1">V1</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#TheoryP2.V2">V2</a>
+                        </li>
+                </ul>
+
             </li>
     </ul>
 
@@ -437,433 +454,204 @@
 </span><span id="L-344"><a href="#L-344"><span class="linenos">344</span></a>    
 </span><span id="L-345"><a href="#L-345"><span class="linenos">345</span></a>    <span class="k">def</span> <span class="nf">V0</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="L-346"><a href="#L-346"><span class="linenos">346</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised first MF v0 at the different thresholds us.</span>
-</span><span id="L-347"><a href="#L-347"><span class="linenos">347</span></a>
-</span><span id="L-348"><a href="#L-348"><span class="linenos">348</span></a><span class="sd">        &quot;&quot;&quot;</span>    
-</span><span id="L-349"><a href="#L-349"><span class="linenos">349</span></a>        <span class="k">return</span> <span class="p">(</span><span class="n">V0_th_s0</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">))</span>
-</span><span id="L-350"><a href="#L-350"><span class="linenos">350</span></a>
-</span><span id="L-351"><a href="#L-351"><span class="linenos">351</span></a>    <span class="k">def</span> <span class="nf">V1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-352"><a href="#L-352"><span class="linenos">352</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised second MF v1 at the different thresholds us.</span>
-</span><span id="L-353"><a href="#L-353"><span class="linenos">353</span></a>
-</span><span id="L-354"><a href="#L-354"><span class="linenos">354</span></a><span class="sd">        &quot;&quot;&quot;</span> 
-</span><span id="L-355"><a href="#L-355"><span class="linenos">355</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
-</span><span id="L-356"><a href="#L-356"><span class="linenos">356</span></a>        <span class="n">v1_</span> <span class="o">=</span> <span class="n">V1_th_s0</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
-</span><span id="L-357"><a href="#L-357"><span class="linenos">357</span></a>        
-</span><span id="L-358"><a href="#L-358"><span class="linenos">358</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v1_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="L-359"><a href="#L-359"><span class="linenos">359</span></a>
-</span><span id="L-360"><a href="#L-360"><span class="linenos">360</span></a>    <span class="k">def</span> <span class="nf">V2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-361"><a href="#L-361"><span class="linenos">361</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised third MF v2 at the different thresholds us.</span>
-</span><span id="L-362"><a href="#L-362"><span class="linenos">362</span></a>
-</span><span id="L-363"><a href="#L-363"><span class="linenos">363</span></a><span class="sd">        &quot;&quot;&quot;</span>    
-</span><span id="L-364"><a href="#L-364"><span class="linenos">364</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
-</span><span id="L-365"><a href="#L-365"><span class="linenos">365</span></a>        <span class="n">v2_</span> <span class="o">=</span> <span class="n">V2_th_s0</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
-</span><span id="L-366"><a href="#L-366"><span class="linenos">366</span></a>        
-</span><span id="L-367"><a href="#L-367"><span class="linenos">367</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v2_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="L-368"><a href="#L-368"><span class="linenos">368</span></a>
-</span><span id="L-369"><a href="#L-369"><span class="linenos">369</span></a>
-</span><span id="L-370"><a href="#L-370"><span class="linenos">370</span></a>
-</span><span id="L-371"><a href="#L-371"><span class="linenos">371</span></a><span class="k">class</span> <span class="nc">TheoryP2</span><span class="p">():</span>
-</span><span id="L-372"><a href="#L-372"><span class="linenos">372</span></a>    <span class="sd">&quot;&quot;&quot;Class to compute the expected values of Minkowski functionals (MFs) for the sum of two squared Gaussian isotropic fields normalised for their standard deviations defined on the sphere </span>
-</span><span id="L-373"><a href="#L-373"><span class="linenos">373</span></a><span class="sd">    like the polarised intensity of the CMB (P^2 = Q^2 + U^2).</span>
-</span><span id="L-374"><a href="#L-374"><span class="linenos">374</span></a>
-</span><span id="L-375"><a href="#L-375"><span class="linenos">375</span></a><span class="sd">    Parameters</span>
-</span><span id="L-376"><a href="#L-376"><span class="linenos">376</span></a><span class="sd">    ----------</span>
-</span><span id="L-377"><a href="#L-377"><span class="linenos">377</span></a><span class="sd">    us : np.array, optional</span>
-</span><span id="L-378"><a href="#L-378"><span class="linenos">378</span></a><span class="sd">        The thresholds at which the theoretical MFs will be computed. </span>
-</span><span id="L-379"><a href="#L-379"><span class="linenos">379</span></a><span class="sd">        If not given, a range between 0 and 5σ with steps of 0.1σ is considered, </span>
-</span><span id="L-380"><a href="#L-380"><span class="linenos">380</span></a><span class="sd">        with σ=1 the expected standard deviation of the fields U and Q.</span>
-</span><span id="L-381"><a href="#L-381"><span class="linenos">381</span></a><span class="sd">    </span>
-</span><span id="L-382"><a href="#L-382"><span class="linenos">382</span></a><span class="sd">    cls : np.array, optional</span>
-</span><span id="L-383"><a href="#L-383"><span class="linenos">383</span></a><span class="sd">        The angular power spectrum associated to the Gaussian isotropic fields. </span>
-</span><span id="L-384"><a href="#L-384"><span class="linenos">384</span></a><span class="sd">        Shape &#39;(..., lmax+1)&#39;. &#39;...&#39; can be 2 (EE, BB) or absent (assumed to be EE+BB).</span>
-</span><span id="L-385"><a href="#L-385"><span class="linenos">385</span></a><span class="sd">        Default : None </span>
-</span><span id="L-386"><a href="#L-386"><span class="linenos">386</span></a><span class="sd">    </span>
-</span><span id="L-387"><a href="#L-387"><span class="linenos">387</span></a><span class="sd">    μ : float, optional</span>
-</span><span id="L-388"><a href="#L-388"><span class="linenos">388</span></a><span class="sd">        The derivative of the covariance function at the origin for each of the two independent Gaussian isotropic fields (i.e., U and Q in the cosmological case).</span>
-</span><span id="L-389"><a href="#L-389"><span class="linenos">389</span></a><span class="sd">        If both μ and cls are given, an error will be raised.</span>
-</span><span id="L-390"><a href="#L-390"><span class="linenos">390</span></a><span class="sd">        If only cls is given, μ will be computed from input cls.</span>
-</span><span id="L-391"><a href="#L-391"><span class="linenos">391</span></a><span class="sd">        If neither μ nor cls are given, μ is assumed to be 1.</span>
-</span><span id="L-392"><a href="#L-392"><span class="linenos">392</span></a><span class="sd">        Default : None</span>
-</span><span id="L-393"><a href="#L-393"><span class="linenos">393</span></a><span class="sd">        </span>
-</span><span id="L-394"><a href="#L-394"><span class="linenos">394</span></a><span class="sd">    average_bin : bool, optional</span>
-</span><span id="L-395"><a href="#L-395"><span class="linenos">395</span></a><span class="sd">        If True, the results of V1 and V2 are the average on each bin, to be compared with binned computations on maps.</span>
-</span><span id="L-396"><a href="#L-396"><span class="linenos">396</span></a><span class="sd">        If False, the results are the evaluation on the center of each bin.</span>
-</span><span id="L-397"><a href="#L-397"><span class="linenos">397</span></a><span class="sd">        The value is always exactly computed for V0, as the computation on maps does not imply binning.</span>
-</span><span id="L-398"><a href="#L-398"><span class="linenos">398</span></a><span class="sd">        Defaul : True</span>
-</span><span id="L-399"><a href="#L-399"><span class="linenos">399</span></a><span class="sd">        </span>
-</span><span id="L-400"><a href="#L-400"><span class="linenos">400</span></a><span class="sd">    edges : bool, optional</span>
-</span><span id="L-401"><a href="#L-401"><span class="linenos">401</span></a><span class="sd">        If False, the given &#39;us&#39; is considered as an array of uniformly distributed thresholds. </span>
-</span><span id="L-402"><a href="#L-402"><span class="linenos">402</span></a><span class="sd">        If True, input &#39;us&#39; is considered as a monotonically increasing array of bin edges, including the rightmost edge, allowing for non-uniform distributions of thresholds. </span>
-</span><span id="L-403"><a href="#L-403"><span class="linenos">403</span></a><span class="sd">        In this last case, the thresholds are the central value of the given bins.</span>
-</span><span id="L-404"><a href="#L-404"><span class="linenos">404</span></a><span class="sd">        Neglected if &#39;us&#39; is not given.</span>
-</span><span id="L-405"><a href="#L-405"><span class="linenos">405</span></a><span class="sd">        Default : False.</span>
-</span><span id="L-406"><a href="#L-406"><span class="linenos">406</span></a>
-</span><span id="L-407"><a href="#L-407"><span class="linenos">407</span></a><span class="sd">    Attributes</span>
-</span><span id="L-408"><a href="#L-408"><span class="linenos">408</span></a><span class="sd">    ----------</span>
-</span><span id="L-409"><a href="#L-409"><span class="linenos">409</span></a><span class="sd">    us : np.array</span>
-</span><span id="L-410"><a href="#L-410"><span class="linenos">410</span></a><span class="sd">        The thresholds at which the theoretical MFs are computed. </span>
-</span><span id="L-411"><a href="#L-411"><span class="linenos">411</span></a><span class="sd">        </span>
-</span><span id="L-412"><a href="#L-412"><span class="linenos">412</span></a><span class="sd">    μ : float</span>
-</span><span id="L-413"><a href="#L-413"><span class="linenos">413</span></a><span class="sd">        The derivative of the covariance function at the origin for the sum of two squared Gaussian isotropic fields.</span>
+</span><span id="L-347"><a href="#L-347"><span class="linenos">347</span></a><span class="sd">        $$\mathbb{E}[ v_{0} ] =1 -\Phi (u)$$</span>
+</span><span id="L-348"><a href="#L-348"><span class="linenos">348</span></a><span class="sd">        where $\Phi$ is the cumulative normal distribution.</span>
+</span><span id="L-349"><a href="#L-349"><span class="linenos">349</span></a><span class="sd">        &quot;&quot;&quot;</span>    
+</span><span id="L-350"><a href="#L-350"><span class="linenos">350</span></a>        <span class="k">return</span> <span class="p">(</span><span class="n">V0_th_s0</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">))</span>
+</span><span id="L-351"><a href="#L-351"><span class="linenos">351</span></a>
+</span><span id="L-352"><a href="#L-352"><span class="linenos">352</span></a>    <span class="k">def</span> <span class="nf">V1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-353"><a href="#L-353"><span class="linenos">353</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised second MF v1 at the different thresholds us.</span>
+</span><span id="L-354"><a href="#L-354"><span class="linenos">354</span></a><span class="sd">        </span>
+</span><span id="L-355"><a href="#L-355"><span class="linenos">355</span></a><span class="sd">        $$\mathbb{E}[ v_{1}(u) ] = {1 \over 8} \exp{(- {u^2 \over 2})} \mu^{1/2}$$</span>
+</span><span id="L-356"><a href="#L-356"><span class="linenos">356</span></a><span class="sd">        &quot;&quot;&quot;</span> 
+</span><span id="L-357"><a href="#L-357"><span class="linenos">357</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
+</span><span id="L-358"><a href="#L-358"><span class="linenos">358</span></a>        <span class="n">v1_</span> <span class="o">=</span> <span class="n">V1_th_s0</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
+</span><span id="L-359"><a href="#L-359"><span class="linenos">359</span></a>        
+</span><span id="L-360"><a href="#L-360"><span class="linenos">360</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v1_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="L-361"><a href="#L-361"><span class="linenos">361</span></a>
+</span><span id="L-362"><a href="#L-362"><span class="linenos">362</span></a>    <span class="k">def</span> <span class="nf">V2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-363"><a href="#L-363"><span class="linenos">363</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised third MF v2 at the different thresholds us.</span>
+</span><span id="L-364"><a href="#L-364"><span class="linenos">364</span></a><span class="sd">        </span>
+</span><span id="L-365"><a href="#L-365"><span class="linenos">365</span></a><span class="sd">        $$\mathbb{E}[v_{2}(u)] = {2 \over \sqrt{(2\pi)^{3}}} \exp(-{u^{2} \over 2}) u$$</span>
+</span><span id="L-366"><a href="#L-366"><span class="linenos">366</span></a><span class="sd">        &quot;&quot;&quot;</span>    
+</span><span id="L-367"><a href="#L-367"><span class="linenos">367</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
+</span><span id="L-368"><a href="#L-368"><span class="linenos">368</span></a>        <span class="n">v2_</span> <span class="o">=</span> <span class="n">V2_th_s0</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
+</span><span id="L-369"><a href="#L-369"><span class="linenos">369</span></a>        
+</span><span id="L-370"><a href="#L-370"><span class="linenos">370</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v2_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="L-371"><a href="#L-371"><span class="linenos">371</span></a>
+</span><span id="L-372"><a href="#L-372"><span class="linenos">372</span></a>
+</span><span id="L-373"><a href="#L-373"><span class="linenos">373</span></a>
+</span><span id="L-374"><a href="#L-374"><span class="linenos">374</span></a><span class="k">class</span> <span class="nc">TheoryP2</span><span class="p">():</span>
+</span><span id="L-375"><a href="#L-375"><span class="linenos">375</span></a>    <span class="sd">&quot;&quot;&quot;Class to compute the expected values of Minkowski functionals (MFs) for the sum of two squared Gaussian isotropic fields normalised for their standard deviations defined on the sphere </span>
+</span><span id="L-376"><a href="#L-376"><span class="linenos">376</span></a><span class="sd">    like the polarised intensity of the CMB ($P^2 = Q^2 + U^2$).</span>
+</span><span id="L-377"><a href="#L-377"><span class="linenos">377</span></a>
+</span><span id="L-378"><a href="#L-378"><span class="linenos">378</span></a><span class="sd">    Parameters</span>
+</span><span id="L-379"><a href="#L-379"><span class="linenos">379</span></a><span class="sd">    ----------</span>
+</span><span id="L-380"><a href="#L-380"><span class="linenos">380</span></a><span class="sd">    us : np.array, optional</span>
+</span><span id="L-381"><a href="#L-381"><span class="linenos">381</span></a><span class="sd">        The thresholds at which the theoretical MFs will be computed. </span>
+</span><span id="L-382"><a href="#L-382"><span class="linenos">382</span></a><span class="sd">        If not given, a range between 0 and 5σ with steps of 0.1σ is considered, </span>
+</span><span id="L-383"><a href="#L-383"><span class="linenos">383</span></a><span class="sd">        with σ=1 the expected standard deviation of the fields U and Q.</span>
+</span><span id="L-384"><a href="#L-384"><span class="linenos">384</span></a><span class="sd">    </span>
+</span><span id="L-385"><a href="#L-385"><span class="linenos">385</span></a><span class="sd">    cls : np.array, optional</span>
+</span><span id="L-386"><a href="#L-386"><span class="linenos">386</span></a><span class="sd">        The angular power spectrum associated to the Gaussian isotropic fields. </span>
+</span><span id="L-387"><a href="#L-387"><span class="linenos">387</span></a><span class="sd">        Shape &#39;(..., lmax+1)&#39;. &#39;...&#39; can be 2 (EE, BB) or absent (assumed to be EE+BB).</span>
+</span><span id="L-388"><a href="#L-388"><span class="linenos">388</span></a><span class="sd">        Default : None </span>
+</span><span id="L-389"><a href="#L-389"><span class="linenos">389</span></a><span class="sd">    </span>
+</span><span id="L-390"><a href="#L-390"><span class="linenos">390</span></a><span class="sd">    μ : float, optional</span>
+</span><span id="L-391"><a href="#L-391"><span class="linenos">391</span></a><span class="sd">        The derivative of the covariance function at the origin for each of the two independent Gaussian isotropic fields (i.e., U and Q in the cosmological case).</span>
+</span><span id="L-392"><a href="#L-392"><span class="linenos">392</span></a><span class="sd">        If both μ and cls are given, an error will be raised.</span>
+</span><span id="L-393"><a href="#L-393"><span class="linenos">393</span></a><span class="sd">        If only cls is given, μ will be computed from input cls.</span>
+</span><span id="L-394"><a href="#L-394"><span class="linenos">394</span></a><span class="sd">        If neither μ nor cls are given, μ is assumed to be 1.</span>
+</span><span id="L-395"><a href="#L-395"><span class="linenos">395</span></a><span class="sd">        Default : None</span>
+</span><span id="L-396"><a href="#L-396"><span class="linenos">396</span></a><span class="sd">        </span>
+</span><span id="L-397"><a href="#L-397"><span class="linenos">397</span></a><span class="sd">    average_bin : bool, optional</span>
+</span><span id="L-398"><a href="#L-398"><span class="linenos">398</span></a><span class="sd">        If True, the results of V1 and V2 are the average on each bin, to be compared with binned computations on maps.</span>
+</span><span id="L-399"><a href="#L-399"><span class="linenos">399</span></a><span class="sd">        If False, the results are the evaluation on the center of each bin.</span>
+</span><span id="L-400"><a href="#L-400"><span class="linenos">400</span></a><span class="sd">        The value is always exactly computed for V0, as the computation on maps does not imply binning.</span>
+</span><span id="L-401"><a href="#L-401"><span class="linenos">401</span></a><span class="sd">        Defaul : True</span>
+</span><span id="L-402"><a href="#L-402"><span class="linenos">402</span></a><span class="sd">        </span>
+</span><span id="L-403"><a href="#L-403"><span class="linenos">403</span></a><span class="sd">    edges : bool, optional</span>
+</span><span id="L-404"><a href="#L-404"><span class="linenos">404</span></a><span class="sd">        If False, the given &#39;us&#39; is considered as an array of uniformly distributed thresholds. </span>
+</span><span id="L-405"><a href="#L-405"><span class="linenos">405</span></a><span class="sd">        If True, input &#39;us&#39; is considered as a monotonically increasing array of bin edges, including the rightmost edge, allowing for non-uniform distributions of thresholds. </span>
+</span><span id="L-406"><a href="#L-406"><span class="linenos">406</span></a><span class="sd">        In this last case, the thresholds are the central value of the given bins.</span>
+</span><span id="L-407"><a href="#L-407"><span class="linenos">407</span></a><span class="sd">        Neglected if &#39;us&#39; is not given.</span>
+</span><span id="L-408"><a href="#L-408"><span class="linenos">408</span></a><span class="sd">        Default : False.</span>
+</span><span id="L-409"><a href="#L-409"><span class="linenos">409</span></a>
+</span><span id="L-410"><a href="#L-410"><span class="linenos">410</span></a><span class="sd">    Attributes</span>
+</span><span id="L-411"><a href="#L-411"><span class="linenos">411</span></a><span class="sd">    ----------</span>
+</span><span id="L-412"><a href="#L-412"><span class="linenos">412</span></a><span class="sd">    us : np.array</span>
+</span><span id="L-413"><a href="#L-413"><span class="linenos">413</span></a><span class="sd">        The thresholds at which the theoretical MFs are computed. </span>
 </span><span id="L-414"><a href="#L-414"><span class="linenos">414</span></a><span class="sd">        </span>
-</span><span id="L-415"><a href="#L-415"><span class="linenos">415</span></a><span class="sd">    &quot;&quot;&quot;</span>    
-</span><span id="L-416"><a href="#L-416"><span class="linenos">416</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">us</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Cls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">μ</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">average_bin</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-</span><span id="L-417"><a href="#L-417"><span class="linenos">417</span></a>        <span class="sd">&quot;&quot;&quot;Class to compute the expected values of Minkowski functionals (MFs) for a Gaussian isotropic scalar field defined on the sphere.</span>
-</span><span id="L-418"><a href="#L-418"><span class="linenos">418</span></a>
-</span><span id="L-419"><a href="#L-419"><span class="linenos">419</span></a><span class="sd">        &quot;&quot;&quot;</span>    
-</span><span id="L-420"><a href="#L-420"><span class="linenos">420</span></a>        <span class="k">if</span> <span class="p">(</span><span class="n">us</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
-</span><span id="L-421"><a href="#L-421"><span class="linenos">421</span></a>            <span class="n">Δu</span> <span class="o">=</span> <span class="mf">0.05</span>
-</span><span id="L-422"><a href="#L-422"><span class="linenos">422</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">Δu</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">5.</span><span class="o">+</span><span class="n">Δu</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="n">Δu</span><span class="p">)</span>
-</span><span id="L-423"><a href="#L-423"><span class="linenos">423</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="n">Δu</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-</span><span id="L-424"><a href="#L-424"><span class="linenos">424</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="L-425"><a href="#L-425"><span class="linenos">425</span></a>            <span class="n">us</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">us</span><span class="p">)</span>
-</span><span id="L-426"><a href="#L-426"><span class="linenos">426</span></a>            <span class="k">if</span> <span class="n">us</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,):</span>
-</span><span id="L-427"><a href="#L-427"><span class="linenos">427</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="n">us</span>
-</span><span id="L-428"><a href="#L-428"><span class="linenos">428</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="mf">0.</span>
-</span><span id="L-429"><a href="#L-429"><span class="linenos">429</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="L-430"><a href="#L-430"><span class="linenos">430</span></a>                <span class="k">if</span> <span class="n">edges</span><span class="p">:</span>
-</span><span id="L-431"><a href="#L-431"><span class="linenos">431</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="p">(</span><span class="n">us</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">-</span><span class="n">us</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-</span><span id="L-432"><a href="#L-432"><span class="linenos">432</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="p">(</span><span class="n">us</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">+</span><span class="n">us</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mf">2.</span>
-</span><span id="L-433"><a href="#L-433"><span class="linenos">433</span></a>                <span class="k">else</span><span class="p">:</span>
-</span><span id="L-434"><a href="#L-434"><span class="linenos">434</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="n">us</span>
-</span><span id="L-435"><a href="#L-435"><span class="linenos">435</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="p">(</span><span class="n">us</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">us</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">us</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-</span><span id="L-436"><a href="#L-436"><span class="linenos">436</span></a>
-</span><span id="L-437"><a href="#L-437"><span class="linenos">437</span></a>        <span class="k">if</span> <span class="p">(</span><span class="n">Cls</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">μ</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
-</span><span id="L-438"><a href="#L-438"><span class="linenos">438</span></a>            <span class="k">if</span> <span class="p">(</span><span class="n">Cls</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">Cls</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="mi">2</span><span class="p">):</span>
-</span><span id="L-439"><a href="#L-439"><span class="linenos">439</span></a>                <span class="bp">cls</span> <span class="o">=</span> <span class="p">(</span><span class="bp">cls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="bp">cls</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mf">2.</span>
-</span><span id="L-440"><a href="#L-440"><span class="linenos">440</span></a>            <span class="k">elif</span> <span class="p">(</span><span class="n">Cls</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
-</span><span id="L-441"><a href="#L-441"><span class="linenos">441</span></a>                <span class="bp">cls</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">/</span><span class="mf">2.</span>
-</span><span id="L-442"><a href="#L-442"><span class="linenos">442</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="L-443"><a href="#L-443"><span class="linenos">443</span></a>                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Cls dimension has to be either (2,lmax+1) or (lmax+1)&quot;</span><span class="p">)</span>
-</span><span id="L-444"><a href="#L-444"><span class="linenos">444</span></a>                
-</span><span id="L-445"><a href="#L-445"><span class="linenos">445</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">μ</span> <span class="o">=</span> <span class="n">define_mu</span><span class="p">(</span><span class="n">Cls</span><span class="p">,</span><span class="n">μ</span><span class="p">)</span>   
-</span><span id="L-446"><a href="#L-446"><span class="linenos">446</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">average_bin</span><span class="p">:</span>
-</span><span id="L-447"><a href="#L-447"><span class="linenos">447</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="mf">0.</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span>
-</span><span id="L-448"><a href="#L-448"><span class="linenos">448</span></a>        
-</span><span id="L-449"><a href="#L-449"><span class="linenos">449</span></a>    
-</span><span id="L-450"><a href="#L-450"><span class="linenos">450</span></a>    <span class="k">def</span> <span class="nf">V0</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-451"><a href="#L-451"><span class="linenos">451</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised first MF v0 at the different thresholds us.</span>
-</span><span id="L-452"><a href="#L-452"><span class="linenos">452</span></a>
-</span><span id="L-453"><a href="#L-453"><span class="linenos">453</span></a><span class="sd">        &quot;&quot;&quot;</span>    
-</span><span id="L-454"><a href="#L-454"><span class="linenos">454</span></a>        <span class="k">return</span> <span class="p">(</span><span class="n">V0_th_P2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">))</span>
+</span><span id="L-415"><a href="#L-415"><span class="linenos">415</span></a><span class="sd">    μ : float</span>
+</span><span id="L-416"><a href="#L-416"><span class="linenos">416</span></a><span class="sd">        The derivative of the covariance function at the origin for the sum of two squared Gaussian isotropic fields.</span>
+</span><span id="L-417"><a href="#L-417"><span class="linenos">417</span></a><span class="sd">        </span>
+</span><span id="L-418"><a href="#L-418"><span class="linenos">418</span></a><span class="sd">    &quot;&quot;&quot;</span>    
+</span><span id="L-419"><a href="#L-419"><span class="linenos">419</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">us</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Cls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">μ</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">average_bin</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span><span id="L-420"><a href="#L-420"><span class="linenos">420</span></a>        <span class="sd">&quot;&quot;&quot;Class to compute the expected values of Minkowski functionals (MFs) for a Gaussian isotropic scalar field defined on the sphere.</span>
+</span><span id="L-421"><a href="#L-421"><span class="linenos">421</span></a>
+</span><span id="L-422"><a href="#L-422"><span class="linenos">422</span></a><span class="sd">        &quot;&quot;&quot;</span>    
+</span><span id="L-423"><a href="#L-423"><span class="linenos">423</span></a>        <span class="k">if</span> <span class="p">(</span><span class="n">us</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+</span><span id="L-424"><a href="#L-424"><span class="linenos">424</span></a>            <span class="n">Δu</span> <span class="o">=</span> <span class="mf">0.05</span>
+</span><span id="L-425"><a href="#L-425"><span class="linenos">425</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">Δu</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">5.</span><span class="o">+</span><span class="n">Δu</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="n">Δu</span><span class="p">)</span>
+</span><span id="L-426"><a href="#L-426"><span class="linenos">426</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="n">Δu</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span><span id="L-427"><a href="#L-427"><span class="linenos">427</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="L-428"><a href="#L-428"><span class="linenos">428</span></a>            <span class="n">us</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">us</span><span class="p">)</span>
+</span><span id="L-429"><a href="#L-429"><span class="linenos">429</span></a>            <span class="k">if</span> <span class="n">us</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,):</span>
+</span><span id="L-430"><a href="#L-430"><span class="linenos">430</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="n">us</span>
+</span><span id="L-431"><a href="#L-431"><span class="linenos">431</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="mf">0.</span>
+</span><span id="L-432"><a href="#L-432"><span class="linenos">432</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="L-433"><a href="#L-433"><span class="linenos">433</span></a>                <span class="k">if</span> <span class="n">edges</span><span class="p">:</span>
+</span><span id="L-434"><a href="#L-434"><span class="linenos">434</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="p">(</span><span class="n">us</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">-</span><span class="n">us</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</span><span id="L-435"><a href="#L-435"><span class="linenos">435</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="p">(</span><span class="n">us</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">+</span><span class="n">us</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mf">2.</span>
+</span><span id="L-436"><a href="#L-436"><span class="linenos">436</span></a>                <span class="k">else</span><span class="p">:</span>
+</span><span id="L-437"><a href="#L-437"><span class="linenos">437</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="n">us</span>
+</span><span id="L-438"><a href="#L-438"><span class="linenos">438</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="p">(</span><span class="n">us</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">us</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">us</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span><span id="L-439"><a href="#L-439"><span class="linenos">439</span></a>
+</span><span id="L-440"><a href="#L-440"><span class="linenos">440</span></a>        <span class="k">if</span> <span class="p">(</span><span class="n">Cls</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">μ</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+</span><span id="L-441"><a href="#L-441"><span class="linenos">441</span></a>            <span class="k">if</span> <span class="p">(</span><span class="n">Cls</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">Cls</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="mi">2</span><span class="p">):</span>
+</span><span id="L-442"><a href="#L-442"><span class="linenos">442</span></a>                <span class="bp">cls</span> <span class="o">=</span> <span class="p">(</span><span class="bp">cls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="bp">cls</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mf">2.</span>
+</span><span id="L-443"><a href="#L-443"><span class="linenos">443</span></a>            <span class="k">elif</span> <span class="p">(</span><span class="n">Cls</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+</span><span id="L-444"><a href="#L-444"><span class="linenos">444</span></a>                <span class="bp">cls</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">/</span><span class="mf">2.</span>
+</span><span id="L-445"><a href="#L-445"><span class="linenos">445</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="L-446"><a href="#L-446"><span class="linenos">446</span></a>                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Cls dimension has to be either (2,lmax+1) or (lmax+1)&quot;</span><span class="p">)</span>
+</span><span id="L-447"><a href="#L-447"><span class="linenos">447</span></a>                
+</span><span id="L-448"><a href="#L-448"><span class="linenos">448</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">μ</span> <span class="o">=</span> <span class="n">define_mu</span><span class="p">(</span><span class="n">Cls</span><span class="p">,</span><span class="n">μ</span><span class="p">)</span>   
+</span><span id="L-449"><a href="#L-449"><span class="linenos">449</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">average_bin</span><span class="p">:</span>
+</span><span id="L-450"><a href="#L-450"><span class="linenos">450</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="mf">0.</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span>
+</span><span id="L-451"><a href="#L-451"><span class="linenos">451</span></a>        
+</span><span id="L-452"><a href="#L-452"><span class="linenos">452</span></a>    
+</span><span id="L-453"><a href="#L-453"><span class="linenos">453</span></a>    <span class="k">def</span> <span class="nf">V0</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-454"><a href="#L-454"><span class="linenos">454</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised first MF v0 at the different thresholds us.</span>
 </span><span id="L-455"><a href="#L-455"><span class="linenos">455</span></a>
-</span><span id="L-456"><a href="#L-456"><span class="linenos">456</span></a>    <span class="k">def</span> <span class="nf">V1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-457"><a href="#L-457"><span class="linenos">457</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised second MF v1 at the different thresholds us.</span>
-</span><span id="L-458"><a href="#L-458"><span class="linenos">458</span></a>
-</span><span id="L-459"><a href="#L-459"><span class="linenos">459</span></a><span class="sd">        &quot;&quot;&quot;</span> 
-</span><span id="L-460"><a href="#L-460"><span class="linenos">460</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
-</span><span id="L-461"><a href="#L-461"><span class="linenos">461</span></a>        <span class="n">v1_</span> <span class="o">=</span> <span class="n">V1_th_P2</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
-</span><span id="L-462"><a href="#L-462"><span class="linenos">462</span></a>        
-</span><span id="L-463"><a href="#L-463"><span class="linenos">463</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v1_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="L-464"><a href="#L-464"><span class="linenos">464</span></a>    
-</span><span id="L-465"><a href="#L-465"><span class="linenos">465</span></a>    <span class="k">def</span> <span class="nf">V2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-466"><a href="#L-466"><span class="linenos">466</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised third MF v2 at the different thresholds us.</span>
-</span><span id="L-467"><a href="#L-467"><span class="linenos">467</span></a>
-</span><span id="L-468"><a href="#L-468"><span class="linenos">468</span></a><span class="sd">        &quot;&quot;&quot;</span>    
-</span><span id="L-469"><a href="#L-469"><span class="linenos">469</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
-</span><span id="L-470"><a href="#L-470"><span class="linenos">470</span></a>        <span class="n">v2_</span> <span class="o">=</span> <span class="n">V2_th_P2</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
-</span><span id="L-471"><a href="#L-471"><span class="linenos">471</span></a>        
-</span><span id="L-472"><a href="#L-472"><span class="linenos">472</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v2_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="L-473"><a href="#L-473"><span class="linenos">473</span></a>
-</span><span id="L-474"><a href="#L-474"><span class="linenos">474</span></a>
-</span><span id="L-475"><a href="#L-475"><span class="linenos">475</span></a>
-</span><span id="L-476"><a href="#L-476"><span class="linenos">476</span></a>
-</span><span id="L-477"><a href="#L-477"><span class="linenos">477</span></a><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TheoryP2&quot;</span><span class="p">,</span>
-</span><span id="L-478"><a href="#L-478"><span class="linenos">478</span></a>           <span class="s2">&quot;TheoryTemperature&quot;</span><span class="p">,</span>
-</span><span id="L-479"><a href="#L-479"><span class="linenos">479</span></a>           <span class="s2">&quot;get_μ&quot;</span><span class="p">]</span>
+</span><span id="L-456"><a href="#L-456"><span class="linenos">456</span></a><span class="sd">        $$\mathbb{E}[{v_{0}(u)}] = \exp (-u/2)$$</span>
+</span><span id="L-457"><a href="#L-457"><span class="linenos">457</span></a><span class="sd">        &quot;&quot;&quot;</span>    
+</span><span id="L-458"><a href="#L-458"><span class="linenos">458</span></a>        <span class="k">return</span> <span class="p">(</span><span class="n">V0_th_P2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">))</span>
+</span><span id="L-459"><a href="#L-459"><span class="linenos">459</span></a>
+</span><span id="L-460"><a href="#L-460"><span class="linenos">460</span></a>    <span class="k">def</span> <span class="nf">V1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-461"><a href="#L-461"><span class="linenos">461</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised second MF v1 at the different thresholds us.</span>
+</span><span id="L-462"><a href="#L-462"><span class="linenos">462</span></a><span class="sd">        </span>
+</span><span id="L-463"><a href="#L-463"><span class="linenos">463</span></a><span class="sd">        $$\mathbb{E}[{v_{1}(u)}] = {\sqrt{2\pi } \over 8} \sqrt{\mu u}\exp (-{u \over 2})$$</span>
+</span><span id="L-464"><a href="#L-464"><span class="linenos">464</span></a><span class="sd">        &quot;&quot;&quot;</span> 
+</span><span id="L-465"><a href="#L-465"><span class="linenos">465</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
+</span><span id="L-466"><a href="#L-466"><span class="linenos">466</span></a>        <span class="n">v1_</span> <span class="o">=</span> <span class="n">V1_th_P2</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
+</span><span id="L-467"><a href="#L-467"><span class="linenos">467</span></a>        
+</span><span id="L-468"><a href="#L-468"><span class="linenos">468</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v1_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="L-469"><a href="#L-469"><span class="linenos">469</span></a>    
+</span><span id="L-470"><a href="#L-470"><span class="linenos">470</span></a>    <span class="k">def</span> <span class="nf">V2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-471"><a href="#L-471"><span class="linenos">471</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised third MF v2 at the different thresholds us.</span>
+</span><span id="L-472"><a href="#L-472"><span class="linenos">472</span></a><span class="sd">        </span>
+</span><span id="L-473"><a href="#L-473"><span class="linenos">473</span></a><span class="sd">        $$\mathbb{E}[{v_{2}(u)}] = \mu {(u-1)\exp (-u/2) \over 2\pi }$$</span>
+</span><span id="L-474"><a href="#L-474"><span class="linenos">474</span></a><span class="sd">        &quot;&quot;&quot;</span>    
+</span><span id="L-475"><a href="#L-475"><span class="linenos">475</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
+</span><span id="L-476"><a href="#L-476"><span class="linenos">476</span></a>        <span class="n">v2_</span> <span class="o">=</span> <span class="n">V2_th_P2</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
+</span><span id="L-477"><a href="#L-477"><span class="linenos">477</span></a>        
+</span><span id="L-478"><a href="#L-478"><span class="linenos">478</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v2_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="L-479"><a href="#L-479"><span class="linenos">479</span></a>
 </span><span id="L-480"><a href="#L-480"><span class="linenos">480</span></a>
-</span><span id="L-481"><a href="#L-481"><span class="linenos">481</span></a><span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;numpy&quot;</span>
+</span><span id="L-481"><a href="#L-481"><span class="linenos">481</span></a>
+</span><span id="L-482"><a href="#L-482"><span class="linenos">482</span></a>
+</span><span id="L-483"><a href="#L-483"><span class="linenos">483</span></a><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;get_μ&quot;</span><span class="p">,</span>
+</span><span id="L-484"><a href="#L-484"><span class="linenos">484</span></a>           <span class="s2">&quot;TheoryTemperature&quot;</span><span class="p">,</span>
+</span><span id="L-485"><a href="#L-485"><span class="linenos">485</span></a>           <span class="s2">&quot;TheoryP2&quot;</span><span class="p">]</span>
+</span><span id="L-486"><a href="#L-486"><span class="linenos">486</span></a>
+</span><span id="L-487"><a href="#L-487"><span class="linenos">487</span></a><span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;numpy&quot;</span>
 </span></pre></div>
 
 
             </section>
-                <section id="TheoryP2">
-                            <input id="TheoryP2-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr class">
+                <section id="get_μ">
+                            <input id="get_μ-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
             
-    <span class="def">class</span>
-    <span class="name">TheoryP2</span>:
+        <span class="def">def</span>
+        <span class="name">get_μ</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">cls</span></span>)</span>
 
-                <label class="view-source-button" for="TheoryP2-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="get_μ-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#TheoryP2"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="TheoryP2-372"><a href="#TheoryP2-372"><span class="linenos">372</span></a><span class="k">class</span> <span class="nc">TheoryP2</span><span class="p">():</span>
-</span><span id="TheoryP2-373"><a href="#TheoryP2-373"><span class="linenos">373</span></a>    <span class="sd">&quot;&quot;&quot;Class to compute the expected values of Minkowski functionals (MFs) for the sum of two squared Gaussian isotropic fields normalised for their standard deviations defined on the sphere </span>
-</span><span id="TheoryP2-374"><a href="#TheoryP2-374"><span class="linenos">374</span></a><span class="sd">    like the polarised intensity of the CMB (P^2 = Q^2 + U^2).</span>
-</span><span id="TheoryP2-375"><a href="#TheoryP2-375"><span class="linenos">375</span></a>
-</span><span id="TheoryP2-376"><a href="#TheoryP2-376"><span class="linenos">376</span></a><span class="sd">    Parameters</span>
-</span><span id="TheoryP2-377"><a href="#TheoryP2-377"><span class="linenos">377</span></a><span class="sd">    ----------</span>
-</span><span id="TheoryP2-378"><a href="#TheoryP2-378"><span class="linenos">378</span></a><span class="sd">    us : np.array, optional</span>
-</span><span id="TheoryP2-379"><a href="#TheoryP2-379"><span class="linenos">379</span></a><span class="sd">        The thresholds at which the theoretical MFs will be computed. </span>
-</span><span id="TheoryP2-380"><a href="#TheoryP2-380"><span class="linenos">380</span></a><span class="sd">        If not given, a range between 0 and 5σ with steps of 0.1σ is considered, </span>
-</span><span id="TheoryP2-381"><a href="#TheoryP2-381"><span class="linenos">381</span></a><span class="sd">        with σ=1 the expected standard deviation of the fields U and Q.</span>
-</span><span id="TheoryP2-382"><a href="#TheoryP2-382"><span class="linenos">382</span></a><span class="sd">    </span>
-</span><span id="TheoryP2-383"><a href="#TheoryP2-383"><span class="linenos">383</span></a><span class="sd">    cls : np.array, optional</span>
-</span><span id="TheoryP2-384"><a href="#TheoryP2-384"><span class="linenos">384</span></a><span class="sd">        The angular power spectrum associated to the Gaussian isotropic fields. </span>
-</span><span id="TheoryP2-385"><a href="#TheoryP2-385"><span class="linenos">385</span></a><span class="sd">        Shape &#39;(..., lmax+1)&#39;. &#39;...&#39; can be 2 (EE, BB) or absent (assumed to be EE+BB).</span>
-</span><span id="TheoryP2-386"><a href="#TheoryP2-386"><span class="linenos">386</span></a><span class="sd">        Default : None </span>
-</span><span id="TheoryP2-387"><a href="#TheoryP2-387"><span class="linenos">387</span></a><span class="sd">    </span>
-</span><span id="TheoryP2-388"><a href="#TheoryP2-388"><span class="linenos">388</span></a><span class="sd">    μ : float, optional</span>
-</span><span id="TheoryP2-389"><a href="#TheoryP2-389"><span class="linenos">389</span></a><span class="sd">        The derivative of the covariance function at the origin for each of the two independent Gaussian isotropic fields (i.e., U and Q in the cosmological case).</span>
-</span><span id="TheoryP2-390"><a href="#TheoryP2-390"><span class="linenos">390</span></a><span class="sd">        If both μ and cls are given, an error will be raised.</span>
-</span><span id="TheoryP2-391"><a href="#TheoryP2-391"><span class="linenos">391</span></a><span class="sd">        If only cls is given, μ will be computed from input cls.</span>
-</span><span id="TheoryP2-392"><a href="#TheoryP2-392"><span class="linenos">392</span></a><span class="sd">        If neither μ nor cls are given, μ is assumed to be 1.</span>
-</span><span id="TheoryP2-393"><a href="#TheoryP2-393"><span class="linenos">393</span></a><span class="sd">        Default : None</span>
-</span><span id="TheoryP2-394"><a href="#TheoryP2-394"><span class="linenos">394</span></a><span class="sd">        </span>
-</span><span id="TheoryP2-395"><a href="#TheoryP2-395"><span class="linenos">395</span></a><span class="sd">    average_bin : bool, optional</span>
-</span><span id="TheoryP2-396"><a href="#TheoryP2-396"><span class="linenos">396</span></a><span class="sd">        If True, the results of V1 and V2 are the average on each bin, to be compared with binned computations on maps.</span>
-</span><span id="TheoryP2-397"><a href="#TheoryP2-397"><span class="linenos">397</span></a><span class="sd">        If False, the results are the evaluation on the center of each bin.</span>
-</span><span id="TheoryP2-398"><a href="#TheoryP2-398"><span class="linenos">398</span></a><span class="sd">        The value is always exactly computed for V0, as the computation on maps does not imply binning.</span>
-</span><span id="TheoryP2-399"><a href="#TheoryP2-399"><span class="linenos">399</span></a><span class="sd">        Defaul : True</span>
-</span><span id="TheoryP2-400"><a href="#TheoryP2-400"><span class="linenos">400</span></a><span class="sd">        </span>
-</span><span id="TheoryP2-401"><a href="#TheoryP2-401"><span class="linenos">401</span></a><span class="sd">    edges : bool, optional</span>
-</span><span id="TheoryP2-402"><a href="#TheoryP2-402"><span class="linenos">402</span></a><span class="sd">        If False, the given &#39;us&#39; is considered as an array of uniformly distributed thresholds. </span>
-</span><span id="TheoryP2-403"><a href="#TheoryP2-403"><span class="linenos">403</span></a><span class="sd">        If True, input &#39;us&#39; is considered as a monotonically increasing array of bin edges, including the rightmost edge, allowing for non-uniform distributions of thresholds. </span>
-</span><span id="TheoryP2-404"><a href="#TheoryP2-404"><span class="linenos">404</span></a><span class="sd">        In this last case, the thresholds are the central value of the given bins.</span>
-</span><span id="TheoryP2-405"><a href="#TheoryP2-405"><span class="linenos">405</span></a><span class="sd">        Neglected if &#39;us&#39; is not given.</span>
-</span><span id="TheoryP2-406"><a href="#TheoryP2-406"><span class="linenos">406</span></a><span class="sd">        Default : False.</span>
-</span><span id="TheoryP2-407"><a href="#TheoryP2-407"><span class="linenos">407</span></a>
-</span><span id="TheoryP2-408"><a href="#TheoryP2-408"><span class="linenos">408</span></a><span class="sd">    Attributes</span>
-</span><span id="TheoryP2-409"><a href="#TheoryP2-409"><span class="linenos">409</span></a><span class="sd">    ----------</span>
-</span><span id="TheoryP2-410"><a href="#TheoryP2-410"><span class="linenos">410</span></a><span class="sd">    us : np.array</span>
-</span><span id="TheoryP2-411"><a href="#TheoryP2-411"><span class="linenos">411</span></a><span class="sd">        The thresholds at which the theoretical MFs are computed. </span>
-</span><span id="TheoryP2-412"><a href="#TheoryP2-412"><span class="linenos">412</span></a><span class="sd">        </span>
-</span><span id="TheoryP2-413"><a href="#TheoryP2-413"><span class="linenos">413</span></a><span class="sd">    μ : float</span>
-</span><span id="TheoryP2-414"><a href="#TheoryP2-414"><span class="linenos">414</span></a><span class="sd">        The derivative of the covariance function at the origin for the sum of two squared Gaussian isotropic fields.</span>
-</span><span id="TheoryP2-415"><a href="#TheoryP2-415"><span class="linenos">415</span></a><span class="sd">        </span>
-</span><span id="TheoryP2-416"><a href="#TheoryP2-416"><span class="linenos">416</span></a><span class="sd">    &quot;&quot;&quot;</span>    
-</span><span id="TheoryP2-417"><a href="#TheoryP2-417"><span class="linenos">417</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">us</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Cls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">μ</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">average_bin</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-</span><span id="TheoryP2-418"><a href="#TheoryP2-418"><span class="linenos">418</span></a>        <span class="sd">&quot;&quot;&quot;Class to compute the expected values of Minkowski functionals (MFs) for a Gaussian isotropic scalar field defined on the sphere.</span>
-</span><span id="TheoryP2-419"><a href="#TheoryP2-419"><span class="linenos">419</span></a>
-</span><span id="TheoryP2-420"><a href="#TheoryP2-420"><span class="linenos">420</span></a><span class="sd">        &quot;&quot;&quot;</span>    
-</span><span id="TheoryP2-421"><a href="#TheoryP2-421"><span class="linenos">421</span></a>        <span class="k">if</span> <span class="p">(</span><span class="n">us</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
-</span><span id="TheoryP2-422"><a href="#TheoryP2-422"><span class="linenos">422</span></a>            <span class="n">Δu</span> <span class="o">=</span> <span class="mf">0.05</span>
-</span><span id="TheoryP2-423"><a href="#TheoryP2-423"><span class="linenos">423</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">Δu</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">5.</span><span class="o">+</span><span class="n">Δu</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="n">Δu</span><span class="p">)</span>
-</span><span id="TheoryP2-424"><a href="#TheoryP2-424"><span class="linenos">424</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="n">Δu</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-</span><span id="TheoryP2-425"><a href="#TheoryP2-425"><span class="linenos">425</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="TheoryP2-426"><a href="#TheoryP2-426"><span class="linenos">426</span></a>            <span class="n">us</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">us</span><span class="p">)</span>
-</span><span id="TheoryP2-427"><a href="#TheoryP2-427"><span class="linenos">427</span></a>            <span class="k">if</span> <span class="n">us</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,):</span>
-</span><span id="TheoryP2-428"><a href="#TheoryP2-428"><span class="linenos">428</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="n">us</span>
-</span><span id="TheoryP2-429"><a href="#TheoryP2-429"><span class="linenos">429</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="mf">0.</span>
-</span><span id="TheoryP2-430"><a href="#TheoryP2-430"><span class="linenos">430</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="TheoryP2-431"><a href="#TheoryP2-431"><span class="linenos">431</span></a>                <span class="k">if</span> <span class="n">edges</span><span class="p">:</span>
-</span><span id="TheoryP2-432"><a href="#TheoryP2-432"><span class="linenos">432</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="p">(</span><span class="n">us</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">-</span><span class="n">us</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-</span><span id="TheoryP2-433"><a href="#TheoryP2-433"><span class="linenos">433</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="p">(</span><span class="n">us</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">+</span><span class="n">us</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mf">2.</span>
-</span><span id="TheoryP2-434"><a href="#TheoryP2-434"><span class="linenos">434</span></a>                <span class="k">else</span><span class="p">:</span>
-</span><span id="TheoryP2-435"><a href="#TheoryP2-435"><span class="linenos">435</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="n">us</span>
-</span><span id="TheoryP2-436"><a href="#TheoryP2-436"><span class="linenos">436</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="p">(</span><span class="n">us</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">us</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">us</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-</span><span id="TheoryP2-437"><a href="#TheoryP2-437"><span class="linenos">437</span></a>
-</span><span id="TheoryP2-438"><a href="#TheoryP2-438"><span class="linenos">438</span></a>        <span class="k">if</span> <span class="p">(</span><span class="n">Cls</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">μ</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
-</span><span id="TheoryP2-439"><a href="#TheoryP2-439"><span class="linenos">439</span></a>            <span class="k">if</span> <span class="p">(</span><span class="n">Cls</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">Cls</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="mi">2</span><span class="p">):</span>
-</span><span id="TheoryP2-440"><a href="#TheoryP2-440"><span class="linenos">440</span></a>                <span class="bp">cls</span> <span class="o">=</span> <span class="p">(</span><span class="bp">cls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="bp">cls</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mf">2.</span>
-</span><span id="TheoryP2-441"><a href="#TheoryP2-441"><span class="linenos">441</span></a>            <span class="k">elif</span> <span class="p">(</span><span class="n">Cls</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
-</span><span id="TheoryP2-442"><a href="#TheoryP2-442"><span class="linenos">442</span></a>                <span class="bp">cls</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">/</span><span class="mf">2.</span>
-</span><span id="TheoryP2-443"><a href="#TheoryP2-443"><span class="linenos">443</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="TheoryP2-444"><a href="#TheoryP2-444"><span class="linenos">444</span></a>                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Cls dimension has to be either (2,lmax+1) or (lmax+1)&quot;</span><span class="p">)</span>
-</span><span id="TheoryP2-445"><a href="#TheoryP2-445"><span class="linenos">445</span></a>                
-</span><span id="TheoryP2-446"><a href="#TheoryP2-446"><span class="linenos">446</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">μ</span> <span class="o">=</span> <span class="n">define_mu</span><span class="p">(</span><span class="n">Cls</span><span class="p">,</span><span class="n">μ</span><span class="p">)</span>   
-</span><span id="TheoryP2-447"><a href="#TheoryP2-447"><span class="linenos">447</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">average_bin</span><span class="p">:</span>
-</span><span id="TheoryP2-448"><a href="#TheoryP2-448"><span class="linenos">448</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="mf">0.</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span>
-</span><span id="TheoryP2-449"><a href="#TheoryP2-449"><span class="linenos">449</span></a>        
-</span><span id="TheoryP2-450"><a href="#TheoryP2-450"><span class="linenos">450</span></a>    
-</span><span id="TheoryP2-451"><a href="#TheoryP2-451"><span class="linenos">451</span></a>    <span class="k">def</span> <span class="nf">V0</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="TheoryP2-452"><a href="#TheoryP2-452"><span class="linenos">452</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised first MF v0 at the different thresholds us.</span>
-</span><span id="TheoryP2-453"><a href="#TheoryP2-453"><span class="linenos">453</span></a>
-</span><span id="TheoryP2-454"><a href="#TheoryP2-454"><span class="linenos">454</span></a><span class="sd">        &quot;&quot;&quot;</span>    
-</span><span id="TheoryP2-455"><a href="#TheoryP2-455"><span class="linenos">455</span></a>        <span class="k">return</span> <span class="p">(</span><span class="n">V0_th_P2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">))</span>
-</span><span id="TheoryP2-456"><a href="#TheoryP2-456"><span class="linenos">456</span></a>
-</span><span id="TheoryP2-457"><a href="#TheoryP2-457"><span class="linenos">457</span></a>    <span class="k">def</span> <span class="nf">V1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="TheoryP2-458"><a href="#TheoryP2-458"><span class="linenos">458</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised second MF v1 at the different thresholds us.</span>
-</span><span id="TheoryP2-459"><a href="#TheoryP2-459"><span class="linenos">459</span></a>
-</span><span id="TheoryP2-460"><a href="#TheoryP2-460"><span class="linenos">460</span></a><span class="sd">        &quot;&quot;&quot;</span> 
-</span><span id="TheoryP2-461"><a href="#TheoryP2-461"><span class="linenos">461</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
-</span><span id="TheoryP2-462"><a href="#TheoryP2-462"><span class="linenos">462</span></a>        <span class="n">v1_</span> <span class="o">=</span> <span class="n">V1_th_P2</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
-</span><span id="TheoryP2-463"><a href="#TheoryP2-463"><span class="linenos">463</span></a>        
-</span><span id="TheoryP2-464"><a href="#TheoryP2-464"><span class="linenos">464</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v1_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="TheoryP2-465"><a href="#TheoryP2-465"><span class="linenos">465</span></a>    
-</span><span id="TheoryP2-466"><a href="#TheoryP2-466"><span class="linenos">466</span></a>    <span class="k">def</span> <span class="nf">V2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="TheoryP2-467"><a href="#TheoryP2-467"><span class="linenos">467</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised third MF v2 at the different thresholds us.</span>
-</span><span id="TheoryP2-468"><a href="#TheoryP2-468"><span class="linenos">468</span></a>
-</span><span id="TheoryP2-469"><a href="#TheoryP2-469"><span class="linenos">469</span></a><span class="sd">        &quot;&quot;&quot;</span>    
-</span><span id="TheoryP2-470"><a href="#TheoryP2-470"><span class="linenos">470</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
-</span><span id="TheoryP2-471"><a href="#TheoryP2-471"><span class="linenos">471</span></a>        <span class="n">v2_</span> <span class="o">=</span> <span class="n">V2_th_P2</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
-</span><span id="TheoryP2-472"><a href="#TheoryP2-472"><span class="linenos">472</span></a>        
-</span><span id="TheoryP2-473"><a href="#TheoryP2-473"><span class="linenos">473</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v2_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <a class="headerlink" href="#get_μ"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="get_μ-8"><a href="#get_μ-8"><span class="linenos"> 8</span></a><span class="k">def</span> <span class="nf">get_μ</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+</span><span id="get_μ-9"><a href="#get_μ-9"><span class="linenos"> 9</span></a>    <span class="sd">&quot;&quot;&quot;Compute the first derivative of the covariance function at the origin for a Gaussian field </span>
+</span><span id="get_μ-10"><a href="#get_μ-10"><span class="linenos">10</span></a><span class="sd">    defined on the sphere with angular power spectrum &#39;cls&#39;.</span>
+</span><span id="get_μ-11"><a href="#get_μ-11"><span class="linenos">11</span></a>
+</span><span id="get_μ-12"><a href="#get_μ-12"><span class="linenos">12</span></a><span class="sd">    Parameters</span>
+</span><span id="get_μ-13"><a href="#get_μ-13"><span class="linenos">13</span></a><span class="sd">    ----------</span>
+</span><span id="get_μ-14"><a href="#get_μ-14"><span class="linenos">14</span></a><span class="sd">    cls : np.array</span>
+</span><span id="get_μ-15"><a href="#get_μ-15"><span class="linenos">15</span></a><span class="sd">        The angular power spectrum of the Gaussian field.</span>
+</span><span id="get_μ-16"><a href="#get_μ-16"><span class="linenos">16</span></a><span class="sd">    </span>
+</span><span id="get_μ-17"><a href="#get_μ-17"><span class="linenos">17</span></a><span class="sd">    Returns</span>
+</span><span id="get_μ-18"><a href="#get_μ-18"><span class="linenos">18</span></a><span class="sd">    -------</span>
+</span><span id="get_μ-19"><a href="#get_μ-19"><span class="linenos">19</span></a><span class="sd">    μ : float</span>
+</span><span id="get_μ-20"><a href="#get_μ-20"><span class="linenos">20</span></a><span class="sd">        The first derivative of the covariance function of a field at the origin.</span>
+</span><span id="get_μ-21"><a href="#get_μ-21"><span class="linenos">21</span></a><span class="sd">    </span>
+</span><span id="get_μ-22"><a href="#get_μ-22"><span class="linenos">22</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="get_μ-23"><a href="#get_μ-23"><span class="linenos">23</span></a>    <span class="bp">cls</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+</span><span id="get_μ-24"><a href="#get_μ-24"><span class="linenos">24</span></a>    <span class="n">ℓ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span><span id="get_μ-25"><a href="#get_μ-25"><span class="linenos">25</span></a>    <span class="bp">cls</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">cls</span> <span class="o">*</span> <span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">ℓ</span><span class="o">+</span><span class="mf">1.</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>
+</span><span id="get_μ-26"><a href="#get_μ-26"><span class="linenos">26</span></a>    <span class="n">μ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">cls</span> <span class="o">*</span> <span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">ℓ</span><span class="o">+</span><span class="mf">1.</span><span class="p">)</span> <span class="o">*</span> <span class="n">ℓ</span><span class="o">*</span><span class="p">(</span><span class="n">ℓ</span><span class="o">+</span><span class="mf">1.</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">8.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>
+</span><span id="get_μ-27"><a href="#get_μ-27"><span class="linenos">27</span></a>    <span class="k">return</span> <span class="n">μ</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Class to compute the expected values of Minkowski functionals (MFs) for the sum of two squared Gaussian isotropic fields normalised for their standard deviations defined on the sphere 
-like the polarised intensity of the CMB (P^2 = Q^2 + U^2).</p>
+            <div class="docstring"><p>Compute the first derivative of the covariance function at the origin for a Gaussian field 
+defined on the sphere with angular power spectrum 'cls'.</p>
 
 <h6 id="parameters">Parameters</h6>
 
 <ul>
-<li><strong>us</strong> (np.array, optional):
-The thresholds at which the theoretical MFs will be computed. 
-If not given, a range between 0 and 5σ with steps of 0.1σ is considered, 
-with σ=1 the expected standard deviation of the fields U and Q.</li>
-<li><strong>cls</strong> (np.array, optional):
-The angular power spectrum associated to the Gaussian isotropic fields. 
-Shape '(..., lmax+1)'. '...' can be 2 (EE, BB) or absent (assumed to be EE+BB).
-Default : None</li>
-<li><strong>μ</strong> (float, optional):
-The derivative of the covariance function at the origin for each of the two independent Gaussian isotropic fields (i.e., U and Q in the cosmological case).
-If both μ and cls are given, an error will be raised.
-If only cls is given, μ will be computed from input cls.
-If neither μ nor cls are given, μ is assumed to be 1.
-Default : None</li>
-<li><strong>average_bin</strong> (bool, optional):
-If True, the results of V1 and V2 are the average on each bin, to be compared with binned computations on maps.
-If False, the results are the evaluation on the center of each bin.
-The value is always exactly computed for V0, as the computation on maps does not imply binning.
-Defaul : True</li>
-<li><strong>edges</strong> (bool, optional):
-If False, the given 'us' is considered as an array of uniformly distributed thresholds. 
-If True, input 'us' is considered as a monotonically increasing array of bin edges, including the rightmost edge, allowing for non-uniform distributions of thresholds. 
-In this last case, the thresholds are the central value of the given bins.
-Neglected if 'us' is not given.
-Default : False.</li>
+<li><strong>cls</strong> (np.array):
+The angular power spectrum of the Gaussian field.</li>
 </ul>
 
-<h6 id="attributes">Attributes</h6>
+<h6 id="returns">Returns</h6>
 
 <ul>
-<li><strong>us</strong> (np.array):
-The thresholds at which the theoretical MFs are computed.</li>
 <li><strong>μ</strong> (float):
-The derivative of the covariance function at the origin for the sum of two squared Gaussian isotropic fields.</li>
+The first derivative of the covariance function of a field at the origin.</li>
 </ul>
 </div>
 
 
-                            <div id="TheoryP2.__init__" class="classattr">
-                                        <input id="TheoryP2.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr function">
-            
-        <span class="name">TheoryP2</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">us</span><span class="o">=</span><span class="kc">None</span>, </span><span class="param"><span class="n">Cls</span><span class="o">=</span><span class="kc">None</span>, </span><span class="param"><span class="n">μ</span><span class="o">=</span><span class="kc">None</span>, </span><span class="param"><span class="n">average_bin</span><span class="o">=</span><span class="kc">True</span>, </span><span class="param"><span class="n">edges</span><span class="o">=</span><span class="kc">False</span></span>)</span>
-
-                <label class="view-source-button" for="TheoryP2.__init__-view-source"><span>View Source</span></label>
-
-    </div>
-    <a class="headerlink" href="#TheoryP2.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="TheoryP2.__init__-417"><a href="#TheoryP2.__init__-417"><span class="linenos">417</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">us</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Cls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">μ</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">average_bin</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-</span><span id="TheoryP2.__init__-418"><a href="#TheoryP2.__init__-418"><span class="linenos">418</span></a>        <span class="sd">&quot;&quot;&quot;Class to compute the expected values of Minkowski functionals (MFs) for a Gaussian isotropic scalar field defined on the sphere.</span>
-</span><span id="TheoryP2.__init__-419"><a href="#TheoryP2.__init__-419"><span class="linenos">419</span></a>
-</span><span id="TheoryP2.__init__-420"><a href="#TheoryP2.__init__-420"><span class="linenos">420</span></a><span class="sd">        &quot;&quot;&quot;</span>    
-</span><span id="TheoryP2.__init__-421"><a href="#TheoryP2.__init__-421"><span class="linenos">421</span></a>        <span class="k">if</span> <span class="p">(</span><span class="n">us</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
-</span><span id="TheoryP2.__init__-422"><a href="#TheoryP2.__init__-422"><span class="linenos">422</span></a>            <span class="n">Δu</span> <span class="o">=</span> <span class="mf">0.05</span>
-</span><span id="TheoryP2.__init__-423"><a href="#TheoryP2.__init__-423"><span class="linenos">423</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">Δu</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">5.</span><span class="o">+</span><span class="n">Δu</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="n">Δu</span><span class="p">)</span>
-</span><span id="TheoryP2.__init__-424"><a href="#TheoryP2.__init__-424"><span class="linenos">424</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="n">Δu</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-</span><span id="TheoryP2.__init__-425"><a href="#TheoryP2.__init__-425"><span class="linenos">425</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="TheoryP2.__init__-426"><a href="#TheoryP2.__init__-426"><span class="linenos">426</span></a>            <span class="n">us</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">us</span><span class="p">)</span>
-</span><span id="TheoryP2.__init__-427"><a href="#TheoryP2.__init__-427"><span class="linenos">427</span></a>            <span class="k">if</span> <span class="n">us</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,):</span>
-</span><span id="TheoryP2.__init__-428"><a href="#TheoryP2.__init__-428"><span class="linenos">428</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="n">us</span>
-</span><span id="TheoryP2.__init__-429"><a href="#TheoryP2.__init__-429"><span class="linenos">429</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="mf">0.</span>
-</span><span id="TheoryP2.__init__-430"><a href="#TheoryP2.__init__-430"><span class="linenos">430</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="TheoryP2.__init__-431"><a href="#TheoryP2.__init__-431"><span class="linenos">431</span></a>                <span class="k">if</span> <span class="n">edges</span><span class="p">:</span>
-</span><span id="TheoryP2.__init__-432"><a href="#TheoryP2.__init__-432"><span class="linenos">432</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="p">(</span><span class="n">us</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">-</span><span class="n">us</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-</span><span id="TheoryP2.__init__-433"><a href="#TheoryP2.__init__-433"><span class="linenos">433</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="p">(</span><span class="n">us</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">+</span><span class="n">us</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mf">2.</span>
-</span><span id="TheoryP2.__init__-434"><a href="#TheoryP2.__init__-434"><span class="linenos">434</span></a>                <span class="k">else</span><span class="p">:</span>
-</span><span id="TheoryP2.__init__-435"><a href="#TheoryP2.__init__-435"><span class="linenos">435</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="n">us</span>
-</span><span id="TheoryP2.__init__-436"><a href="#TheoryP2.__init__-436"><span class="linenos">436</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="p">(</span><span class="n">us</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">us</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">us</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-</span><span id="TheoryP2.__init__-437"><a href="#TheoryP2.__init__-437"><span class="linenos">437</span></a>
-</span><span id="TheoryP2.__init__-438"><a href="#TheoryP2.__init__-438"><span class="linenos">438</span></a>        <span class="k">if</span> <span class="p">(</span><span class="n">Cls</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">μ</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
-</span><span id="TheoryP2.__init__-439"><a href="#TheoryP2.__init__-439"><span class="linenos">439</span></a>            <span class="k">if</span> <span class="p">(</span><span class="n">Cls</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">Cls</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="mi">2</span><span class="p">):</span>
-</span><span id="TheoryP2.__init__-440"><a href="#TheoryP2.__init__-440"><span class="linenos">440</span></a>                <span class="bp">cls</span> <span class="o">=</span> <span class="p">(</span><span class="bp">cls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="bp">cls</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mf">2.</span>
-</span><span id="TheoryP2.__init__-441"><a href="#TheoryP2.__init__-441"><span class="linenos">441</span></a>            <span class="k">elif</span> <span class="p">(</span><span class="n">Cls</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
-</span><span id="TheoryP2.__init__-442"><a href="#TheoryP2.__init__-442"><span class="linenos">442</span></a>                <span class="bp">cls</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">/</span><span class="mf">2.</span>
-</span><span id="TheoryP2.__init__-443"><a href="#TheoryP2.__init__-443"><span class="linenos">443</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="TheoryP2.__init__-444"><a href="#TheoryP2.__init__-444"><span class="linenos">444</span></a>                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Cls dimension has to be either (2,lmax+1) or (lmax+1)&quot;</span><span class="p">)</span>
-</span><span id="TheoryP2.__init__-445"><a href="#TheoryP2.__init__-445"><span class="linenos">445</span></a>                
-</span><span id="TheoryP2.__init__-446"><a href="#TheoryP2.__init__-446"><span class="linenos">446</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">μ</span> <span class="o">=</span> <span class="n">define_mu</span><span class="p">(</span><span class="n">Cls</span><span class="p">,</span><span class="n">μ</span><span class="p">)</span>   
-</span><span id="TheoryP2.__init__-447"><a href="#TheoryP2.__init__-447"><span class="linenos">447</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">average_bin</span><span class="p">:</span>
-</span><span id="TheoryP2.__init__-448"><a href="#TheoryP2.__init__-448"><span class="linenos">448</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="mf">0.</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span>
-</span></pre></div>
-
-
-            <div class="docstring"><p>Class to compute the expected values of Minkowski functionals (MFs) for a Gaussian isotropic scalar field defined on the sphere.</p>
-</div>
-
-
-                            </div>
-                            <div id="TheoryP2.V0" class="classattr">
-                                        <input id="TheoryP2.V0-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr function">
-            
-        <span class="def">def</span>
-        <span class="name">V0</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span>)</span>
-
-                <label class="view-source-button" for="TheoryP2.V0-view-source"><span>View Source</span></label>
-
-    </div>
-    <a class="headerlink" href="#TheoryP2.V0"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="TheoryP2.V0-451"><a href="#TheoryP2.V0-451"><span class="linenos">451</span></a>    <span class="k">def</span> <span class="nf">V0</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="TheoryP2.V0-452"><a href="#TheoryP2.V0-452"><span class="linenos">452</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised first MF v0 at the different thresholds us.</span>
-</span><span id="TheoryP2.V0-453"><a href="#TheoryP2.V0-453"><span class="linenos">453</span></a>
-</span><span id="TheoryP2.V0-454"><a href="#TheoryP2.V0-454"><span class="linenos">454</span></a><span class="sd">        &quot;&quot;&quot;</span>    
-</span><span id="TheoryP2.V0-455"><a href="#TheoryP2.V0-455"><span class="linenos">455</span></a>        <span class="k">return</span> <span class="p">(</span><span class="n">V0_th_P2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">))</span>
-</span></pre></div>
-
-
-            <div class="docstring"><p>Compute the expected values of the normalised first MF v0 at the different thresholds us.</p>
-</div>
-
-
-                            </div>
-                            <div id="TheoryP2.V1" class="classattr">
-                                        <input id="TheoryP2.V1-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr function">
-            
-        <span class="def">def</span>
-        <span class="name">V1</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span>)</span>
-
-                <label class="view-source-button" for="TheoryP2.V1-view-source"><span>View Source</span></label>
-
-    </div>
-    <a class="headerlink" href="#TheoryP2.V1"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="TheoryP2.V1-457"><a href="#TheoryP2.V1-457"><span class="linenos">457</span></a>    <span class="k">def</span> <span class="nf">V1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="TheoryP2.V1-458"><a href="#TheoryP2.V1-458"><span class="linenos">458</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised second MF v1 at the different thresholds us.</span>
-</span><span id="TheoryP2.V1-459"><a href="#TheoryP2.V1-459"><span class="linenos">459</span></a>
-</span><span id="TheoryP2.V1-460"><a href="#TheoryP2.V1-460"><span class="linenos">460</span></a><span class="sd">        &quot;&quot;&quot;</span> 
-</span><span id="TheoryP2.V1-461"><a href="#TheoryP2.V1-461"><span class="linenos">461</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
-</span><span id="TheoryP2.V1-462"><a href="#TheoryP2.V1-462"><span class="linenos">462</span></a>        <span class="n">v1_</span> <span class="o">=</span> <span class="n">V1_th_P2</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
-</span><span id="TheoryP2.V1-463"><a href="#TheoryP2.V1-463"><span class="linenos">463</span></a>        
-</span><span id="TheoryP2.V1-464"><a href="#TheoryP2.V1-464"><span class="linenos">464</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v1_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</span></pre></div>
-
-
-            <div class="docstring"><p>Compute the expected values of the normalised second MF v1 at the different thresholds us.</p>
-</div>
-
-
-                            </div>
-                            <div id="TheoryP2.V2" class="classattr">
-                                        <input id="TheoryP2.V2-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr function">
-            
-        <span class="def">def</span>
-        <span class="name">V2</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span>)</span>
-
-                <label class="view-source-button" for="TheoryP2.V2-view-source"><span>View Source</span></label>
-
-    </div>
-    <a class="headerlink" href="#TheoryP2.V2"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="TheoryP2.V2-466"><a href="#TheoryP2.V2-466"><span class="linenos">466</span></a>    <span class="k">def</span> <span class="nf">V2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="TheoryP2.V2-467"><a href="#TheoryP2.V2-467"><span class="linenos">467</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised third MF v2 at the different thresholds us.</span>
-</span><span id="TheoryP2.V2-468"><a href="#TheoryP2.V2-468"><span class="linenos">468</span></a>
-</span><span id="TheoryP2.V2-469"><a href="#TheoryP2.V2-469"><span class="linenos">469</span></a><span class="sd">        &quot;&quot;&quot;</span>    
-</span><span id="TheoryP2.V2-470"><a href="#TheoryP2.V2-470"><span class="linenos">470</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
-</span><span id="TheoryP2.V2-471"><a href="#TheoryP2.V2-471"><span class="linenos">471</span></a>        <span class="n">v2_</span> <span class="o">=</span> <span class="n">V2_th_P2</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
-</span><span id="TheoryP2.V2-472"><a href="#TheoryP2.V2-472"><span class="linenos">472</span></a>        
-</span><span id="TheoryP2.V2-473"><a href="#TheoryP2.V2-473"><span class="linenos">473</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v2_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</span></pre></div>
-
-
-            <div class="docstring"><p>Compute the expected values of the normalised third MF v2 at the different thresholds us.</p>
-</div>
-
-
-                            </div>
                 </section>
                 <section id="TheoryTemperature">
                             <input id="TheoryTemperature-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
@@ -949,27 +737,30 @@ The derivative of the covariance function at the origin for the sum of two squar
 </span><span id="TheoryTemperature-345"><a href="#TheoryTemperature-345"><span class="linenos">345</span></a>    
 </span><span id="TheoryTemperature-346"><a href="#TheoryTemperature-346"><span class="linenos">346</span></a>    <span class="k">def</span> <span class="nf">V0</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="TheoryTemperature-347"><a href="#TheoryTemperature-347"><span class="linenos">347</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised first MF v0 at the different thresholds us.</span>
-</span><span id="TheoryTemperature-348"><a href="#TheoryTemperature-348"><span class="linenos">348</span></a>
-</span><span id="TheoryTemperature-349"><a href="#TheoryTemperature-349"><span class="linenos">349</span></a><span class="sd">        &quot;&quot;&quot;</span>    
-</span><span id="TheoryTemperature-350"><a href="#TheoryTemperature-350"><span class="linenos">350</span></a>        <span class="k">return</span> <span class="p">(</span><span class="n">V0_th_s0</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">))</span>
-</span><span id="TheoryTemperature-351"><a href="#TheoryTemperature-351"><span class="linenos">351</span></a>
-</span><span id="TheoryTemperature-352"><a href="#TheoryTemperature-352"><span class="linenos">352</span></a>    <span class="k">def</span> <span class="nf">V1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="TheoryTemperature-353"><a href="#TheoryTemperature-353"><span class="linenos">353</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised second MF v1 at the different thresholds us.</span>
-</span><span id="TheoryTemperature-354"><a href="#TheoryTemperature-354"><span class="linenos">354</span></a>
-</span><span id="TheoryTemperature-355"><a href="#TheoryTemperature-355"><span class="linenos">355</span></a><span class="sd">        &quot;&quot;&quot;</span> 
-</span><span id="TheoryTemperature-356"><a href="#TheoryTemperature-356"><span class="linenos">356</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
-</span><span id="TheoryTemperature-357"><a href="#TheoryTemperature-357"><span class="linenos">357</span></a>        <span class="n">v1_</span> <span class="o">=</span> <span class="n">V1_th_s0</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
-</span><span id="TheoryTemperature-358"><a href="#TheoryTemperature-358"><span class="linenos">358</span></a>        
-</span><span id="TheoryTemperature-359"><a href="#TheoryTemperature-359"><span class="linenos">359</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v1_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="TheoryTemperature-360"><a href="#TheoryTemperature-360"><span class="linenos">360</span></a>
-</span><span id="TheoryTemperature-361"><a href="#TheoryTemperature-361"><span class="linenos">361</span></a>    <span class="k">def</span> <span class="nf">V2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="TheoryTemperature-362"><a href="#TheoryTemperature-362"><span class="linenos">362</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised third MF v2 at the different thresholds us.</span>
-</span><span id="TheoryTemperature-363"><a href="#TheoryTemperature-363"><span class="linenos">363</span></a>
-</span><span id="TheoryTemperature-364"><a href="#TheoryTemperature-364"><span class="linenos">364</span></a><span class="sd">        &quot;&quot;&quot;</span>    
-</span><span id="TheoryTemperature-365"><a href="#TheoryTemperature-365"><span class="linenos">365</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
-</span><span id="TheoryTemperature-366"><a href="#TheoryTemperature-366"><span class="linenos">366</span></a>        <span class="n">v2_</span> <span class="o">=</span> <span class="n">V2_th_s0</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
-</span><span id="TheoryTemperature-367"><a href="#TheoryTemperature-367"><span class="linenos">367</span></a>        
-</span><span id="TheoryTemperature-368"><a href="#TheoryTemperature-368"><span class="linenos">368</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v2_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="TheoryTemperature-348"><a href="#TheoryTemperature-348"><span class="linenos">348</span></a><span class="sd">        $$\mathbb{E}[ v_{0} ] =1 -\Phi (u)$$</span>
+</span><span id="TheoryTemperature-349"><a href="#TheoryTemperature-349"><span class="linenos">349</span></a><span class="sd">        where $\Phi$ is the cumulative normal distribution.</span>
+</span><span id="TheoryTemperature-350"><a href="#TheoryTemperature-350"><span class="linenos">350</span></a><span class="sd">        &quot;&quot;&quot;</span>    
+</span><span id="TheoryTemperature-351"><a href="#TheoryTemperature-351"><span class="linenos">351</span></a>        <span class="k">return</span> <span class="p">(</span><span class="n">V0_th_s0</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">))</span>
+</span><span id="TheoryTemperature-352"><a href="#TheoryTemperature-352"><span class="linenos">352</span></a>
+</span><span id="TheoryTemperature-353"><a href="#TheoryTemperature-353"><span class="linenos">353</span></a>    <span class="k">def</span> <span class="nf">V1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="TheoryTemperature-354"><a href="#TheoryTemperature-354"><span class="linenos">354</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised second MF v1 at the different thresholds us.</span>
+</span><span id="TheoryTemperature-355"><a href="#TheoryTemperature-355"><span class="linenos">355</span></a><span class="sd">        </span>
+</span><span id="TheoryTemperature-356"><a href="#TheoryTemperature-356"><span class="linenos">356</span></a><span class="sd">        $$\mathbb{E}[ v_{1}(u) ] = {1 \over 8} \exp{(- {u^2 \over 2})} \mu^{1/2}$$</span>
+</span><span id="TheoryTemperature-357"><a href="#TheoryTemperature-357"><span class="linenos">357</span></a><span class="sd">        &quot;&quot;&quot;</span> 
+</span><span id="TheoryTemperature-358"><a href="#TheoryTemperature-358"><span class="linenos">358</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
+</span><span id="TheoryTemperature-359"><a href="#TheoryTemperature-359"><span class="linenos">359</span></a>        <span class="n">v1_</span> <span class="o">=</span> <span class="n">V1_th_s0</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
+</span><span id="TheoryTemperature-360"><a href="#TheoryTemperature-360"><span class="linenos">360</span></a>        
+</span><span id="TheoryTemperature-361"><a href="#TheoryTemperature-361"><span class="linenos">361</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v1_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="TheoryTemperature-362"><a href="#TheoryTemperature-362"><span class="linenos">362</span></a>
+</span><span id="TheoryTemperature-363"><a href="#TheoryTemperature-363"><span class="linenos">363</span></a>    <span class="k">def</span> <span class="nf">V2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="TheoryTemperature-364"><a href="#TheoryTemperature-364"><span class="linenos">364</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised third MF v2 at the different thresholds us.</span>
+</span><span id="TheoryTemperature-365"><a href="#TheoryTemperature-365"><span class="linenos">365</span></a><span class="sd">        </span>
+</span><span id="TheoryTemperature-366"><a href="#TheoryTemperature-366"><span class="linenos">366</span></a><span class="sd">        $$\mathbb{E}[v_{2}(u)] = {2 \over \sqrt{(2\pi)^{3}}} \exp(-{u^{2} \over 2}) u$$</span>
+</span><span id="TheoryTemperature-367"><a href="#TheoryTemperature-367"><span class="linenos">367</span></a><span class="sd">        &quot;&quot;&quot;</span>    
+</span><span id="TheoryTemperature-368"><a href="#TheoryTemperature-368"><span class="linenos">368</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
+</span><span id="TheoryTemperature-369"><a href="#TheoryTemperature-369"><span class="linenos">369</span></a>        <span class="n">v2_</span> <span class="o">=</span> <span class="n">V2_th_s0</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
+</span><span id="TheoryTemperature-370"><a href="#TheoryTemperature-370"><span class="linenos">370</span></a>        
+</span><span id="TheoryTemperature-371"><a href="#TheoryTemperature-371"><span class="linenos">371</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v2_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -1072,13 +863,16 @@ The derivative of the covariance function at the origin for the Gaussian isotrop
     <a class="headerlink" href="#TheoryTemperature.V0"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="TheoryTemperature.V0-346"><a href="#TheoryTemperature.V0-346"><span class="linenos">346</span></a>    <span class="k">def</span> <span class="nf">V0</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="TheoryTemperature.V0-347"><a href="#TheoryTemperature.V0-347"><span class="linenos">347</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised first MF v0 at the different thresholds us.</span>
-</span><span id="TheoryTemperature.V0-348"><a href="#TheoryTemperature.V0-348"><span class="linenos">348</span></a>
-</span><span id="TheoryTemperature.V0-349"><a href="#TheoryTemperature.V0-349"><span class="linenos">349</span></a><span class="sd">        &quot;&quot;&quot;</span>    
-</span><span id="TheoryTemperature.V0-350"><a href="#TheoryTemperature.V0-350"><span class="linenos">350</span></a>        <span class="k">return</span> <span class="p">(</span><span class="n">V0_th_s0</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">))</span>
+</span><span id="TheoryTemperature.V0-348"><a href="#TheoryTemperature.V0-348"><span class="linenos">348</span></a><span class="sd">        $$\mathbb{E}[ v_{0} ] =1 -\Phi (u)$$</span>
+</span><span id="TheoryTemperature.V0-349"><a href="#TheoryTemperature.V0-349"><span class="linenos">349</span></a><span class="sd">        where $\Phi$ is the cumulative normal distribution.</span>
+</span><span id="TheoryTemperature.V0-350"><a href="#TheoryTemperature.V0-350"><span class="linenos">350</span></a><span class="sd">        &quot;&quot;&quot;</span>    
+</span><span id="TheoryTemperature.V0-351"><a href="#TheoryTemperature.V0-351"><span class="linenos">351</span></a>        <span class="k">return</span> <span class="p">(</span><span class="n">V0_th_s0</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">))</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Compute the expected values of the normalised first MF v0 at the different thresholds us.</p>
+            <div class="docstring"><p>Compute the expected values of the normalised first MF v0 at the different thresholds us.
+$$\mathbb{E}[ v_{0} ] =1 -\Phi (u)$$
+where $\Phi$ is the cumulative normal distribution.</p>
 </div>
 
 
@@ -1094,18 +888,21 @@ The derivative of the covariance function at the origin for the Gaussian isotrop
 
     </div>
     <a class="headerlink" href="#TheoryTemperature.V1"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="TheoryTemperature.V1-352"><a href="#TheoryTemperature.V1-352"><span class="linenos">352</span></a>    <span class="k">def</span> <span class="nf">V1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="TheoryTemperature.V1-353"><a href="#TheoryTemperature.V1-353"><span class="linenos">353</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised second MF v1 at the different thresholds us.</span>
-</span><span id="TheoryTemperature.V1-354"><a href="#TheoryTemperature.V1-354"><span class="linenos">354</span></a>
-</span><span id="TheoryTemperature.V1-355"><a href="#TheoryTemperature.V1-355"><span class="linenos">355</span></a><span class="sd">        &quot;&quot;&quot;</span> 
-</span><span id="TheoryTemperature.V1-356"><a href="#TheoryTemperature.V1-356"><span class="linenos">356</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
-</span><span id="TheoryTemperature.V1-357"><a href="#TheoryTemperature.V1-357"><span class="linenos">357</span></a>        <span class="n">v1_</span> <span class="o">=</span> <span class="n">V1_th_s0</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
-</span><span id="TheoryTemperature.V1-358"><a href="#TheoryTemperature.V1-358"><span class="linenos">358</span></a>        
-</span><span id="TheoryTemperature.V1-359"><a href="#TheoryTemperature.V1-359"><span class="linenos">359</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v1_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="TheoryTemperature.V1-353"><a href="#TheoryTemperature.V1-353"><span class="linenos">353</span></a>    <span class="k">def</span> <span class="nf">V1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="TheoryTemperature.V1-354"><a href="#TheoryTemperature.V1-354"><span class="linenos">354</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised second MF v1 at the different thresholds us.</span>
+</span><span id="TheoryTemperature.V1-355"><a href="#TheoryTemperature.V1-355"><span class="linenos">355</span></a><span class="sd">        </span>
+</span><span id="TheoryTemperature.V1-356"><a href="#TheoryTemperature.V1-356"><span class="linenos">356</span></a><span class="sd">        $$\mathbb{E}[ v_{1}(u) ] = {1 \over 8} \exp{(- {u^2 \over 2})} \mu^{1/2}$$</span>
+</span><span id="TheoryTemperature.V1-357"><a href="#TheoryTemperature.V1-357"><span class="linenos">357</span></a><span class="sd">        &quot;&quot;&quot;</span> 
+</span><span id="TheoryTemperature.V1-358"><a href="#TheoryTemperature.V1-358"><span class="linenos">358</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
+</span><span id="TheoryTemperature.V1-359"><a href="#TheoryTemperature.V1-359"><span class="linenos">359</span></a>        <span class="n">v1_</span> <span class="o">=</span> <span class="n">V1_th_s0</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
+</span><span id="TheoryTemperature.V1-360"><a href="#TheoryTemperature.V1-360"><span class="linenos">360</span></a>        
+</span><span id="TheoryTemperature.V1-361"><a href="#TheoryTemperature.V1-361"><span class="linenos">361</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v1_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </span></pre></div>
 
 
             <div class="docstring"><p>Compute the expected values of the normalised second MF v1 at the different thresholds us.</p>
+
+<p>$$\mathbb{E}[ v_{1}(u) ] = {1 \over 8} \exp{(- {u^2 \over 2})} \mu^{1/2}$$</p>
 </div>
 
 
@@ -1121,76 +918,326 @@ The derivative of the covariance function at the origin for the Gaussian isotrop
 
     </div>
     <a class="headerlink" href="#TheoryTemperature.V2"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="TheoryTemperature.V2-361"><a href="#TheoryTemperature.V2-361"><span class="linenos">361</span></a>    <span class="k">def</span> <span class="nf">V2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="TheoryTemperature.V2-362"><a href="#TheoryTemperature.V2-362"><span class="linenos">362</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised third MF v2 at the different thresholds us.</span>
-</span><span id="TheoryTemperature.V2-363"><a href="#TheoryTemperature.V2-363"><span class="linenos">363</span></a>
-</span><span id="TheoryTemperature.V2-364"><a href="#TheoryTemperature.V2-364"><span class="linenos">364</span></a><span class="sd">        &quot;&quot;&quot;</span>    
-</span><span id="TheoryTemperature.V2-365"><a href="#TheoryTemperature.V2-365"><span class="linenos">365</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
-</span><span id="TheoryTemperature.V2-366"><a href="#TheoryTemperature.V2-366"><span class="linenos">366</span></a>        <span class="n">v2_</span> <span class="o">=</span> <span class="n">V2_th_s0</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
-</span><span id="TheoryTemperature.V2-367"><a href="#TheoryTemperature.V2-367"><span class="linenos">367</span></a>        
-</span><span id="TheoryTemperature.V2-368"><a href="#TheoryTemperature.V2-368"><span class="linenos">368</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v2_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="TheoryTemperature.V2-363"><a href="#TheoryTemperature.V2-363"><span class="linenos">363</span></a>    <span class="k">def</span> <span class="nf">V2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="TheoryTemperature.V2-364"><a href="#TheoryTemperature.V2-364"><span class="linenos">364</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised third MF v2 at the different thresholds us.</span>
+</span><span id="TheoryTemperature.V2-365"><a href="#TheoryTemperature.V2-365"><span class="linenos">365</span></a><span class="sd">        </span>
+</span><span id="TheoryTemperature.V2-366"><a href="#TheoryTemperature.V2-366"><span class="linenos">366</span></a><span class="sd">        $$\mathbb{E}[v_{2}(u)] = {2 \over \sqrt{(2\pi)^{3}}} \exp(-{u^{2} \over 2}) u$$</span>
+</span><span id="TheoryTemperature.V2-367"><a href="#TheoryTemperature.V2-367"><span class="linenos">367</span></a><span class="sd">        &quot;&quot;&quot;</span>    
+</span><span id="TheoryTemperature.V2-368"><a href="#TheoryTemperature.V2-368"><span class="linenos">368</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
+</span><span id="TheoryTemperature.V2-369"><a href="#TheoryTemperature.V2-369"><span class="linenos">369</span></a>        <span class="n">v2_</span> <span class="o">=</span> <span class="n">V2_th_s0</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
+</span><span id="TheoryTemperature.V2-370"><a href="#TheoryTemperature.V2-370"><span class="linenos">370</span></a>        
+</span><span id="TheoryTemperature.V2-371"><a href="#TheoryTemperature.V2-371"><span class="linenos">371</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v2_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </span></pre></div>
 
 
             <div class="docstring"><p>Compute the expected values of the normalised third MF v2 at the different thresholds us.</p>
+
+<p>$$\mathbb{E}[v_{2}(u)] = {2 \over \sqrt{(2\pi)^{3}}} \exp(-{u^{2} \over 2}) u$$</p>
 </div>
 
 
                             </div>
                 </section>
-                <section id="get_μ">
-                            <input id="get_μ-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr function">
+                <section id="TheoryP2">
+                            <input id="TheoryP2-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
             
-        <span class="def">def</span>
-        <span class="name">get_μ</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">cls</span></span>)</span>
+    <span class="def">class</span>
+    <span class="name">TheoryP2</span>:
 
-                <label class="view-source-button" for="get_μ-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="TheoryP2-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#get_μ"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="get_μ-8"><a href="#get_μ-8"><span class="linenos"> 8</span></a><span class="k">def</span> <span class="nf">get_μ</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-</span><span id="get_μ-9"><a href="#get_μ-9"><span class="linenos"> 9</span></a>    <span class="sd">&quot;&quot;&quot;Compute the first derivative of the covariance function at the origin for a Gaussian field </span>
-</span><span id="get_μ-10"><a href="#get_μ-10"><span class="linenos">10</span></a><span class="sd">    defined on the sphere with angular power spectrum &#39;cls&#39;.</span>
-</span><span id="get_μ-11"><a href="#get_μ-11"><span class="linenos">11</span></a>
-</span><span id="get_μ-12"><a href="#get_μ-12"><span class="linenos">12</span></a><span class="sd">    Parameters</span>
-</span><span id="get_μ-13"><a href="#get_μ-13"><span class="linenos">13</span></a><span class="sd">    ----------</span>
-</span><span id="get_μ-14"><a href="#get_μ-14"><span class="linenos">14</span></a><span class="sd">    cls : np.array</span>
-</span><span id="get_μ-15"><a href="#get_μ-15"><span class="linenos">15</span></a><span class="sd">        The angular power spectrum of the Gaussian field.</span>
-</span><span id="get_μ-16"><a href="#get_μ-16"><span class="linenos">16</span></a><span class="sd">    </span>
-</span><span id="get_μ-17"><a href="#get_μ-17"><span class="linenos">17</span></a><span class="sd">    Returns</span>
-</span><span id="get_μ-18"><a href="#get_μ-18"><span class="linenos">18</span></a><span class="sd">    -------</span>
-</span><span id="get_μ-19"><a href="#get_μ-19"><span class="linenos">19</span></a><span class="sd">    μ : float</span>
-</span><span id="get_μ-20"><a href="#get_μ-20"><span class="linenos">20</span></a><span class="sd">        The first derivative of the covariance function of a field at the origin.</span>
-</span><span id="get_μ-21"><a href="#get_μ-21"><span class="linenos">21</span></a><span class="sd">    </span>
-</span><span id="get_μ-22"><a href="#get_μ-22"><span class="linenos">22</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="get_μ-23"><a href="#get_μ-23"><span class="linenos">23</span></a>    <span class="bp">cls</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-</span><span id="get_μ-24"><a href="#get_μ-24"><span class="linenos">24</span></a>    <span class="n">ℓ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-</span><span id="get_μ-25"><a href="#get_μ-25"><span class="linenos">25</span></a>    <span class="bp">cls</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">cls</span> <span class="o">*</span> <span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">ℓ</span><span class="o">+</span><span class="mf">1.</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>
-</span><span id="get_μ-26"><a href="#get_μ-26"><span class="linenos">26</span></a>    <span class="n">μ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">cls</span> <span class="o">*</span> <span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">ℓ</span><span class="o">+</span><span class="mf">1.</span><span class="p">)</span> <span class="o">*</span> <span class="n">ℓ</span><span class="o">*</span><span class="p">(</span><span class="n">ℓ</span><span class="o">+</span><span class="mf">1.</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">8.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>
-</span><span id="get_μ-27"><a href="#get_μ-27"><span class="linenos">27</span></a>    <span class="k">return</span> <span class="n">μ</span>
+    <a class="headerlink" href="#TheoryP2"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="TheoryP2-375"><a href="#TheoryP2-375"><span class="linenos">375</span></a><span class="k">class</span> <span class="nc">TheoryP2</span><span class="p">():</span>
+</span><span id="TheoryP2-376"><a href="#TheoryP2-376"><span class="linenos">376</span></a>    <span class="sd">&quot;&quot;&quot;Class to compute the expected values of Minkowski functionals (MFs) for the sum of two squared Gaussian isotropic fields normalised for their standard deviations defined on the sphere </span>
+</span><span id="TheoryP2-377"><a href="#TheoryP2-377"><span class="linenos">377</span></a><span class="sd">    like the polarised intensity of the CMB ($P^2 = Q^2 + U^2$).</span>
+</span><span id="TheoryP2-378"><a href="#TheoryP2-378"><span class="linenos">378</span></a>
+</span><span id="TheoryP2-379"><a href="#TheoryP2-379"><span class="linenos">379</span></a><span class="sd">    Parameters</span>
+</span><span id="TheoryP2-380"><a href="#TheoryP2-380"><span class="linenos">380</span></a><span class="sd">    ----------</span>
+</span><span id="TheoryP2-381"><a href="#TheoryP2-381"><span class="linenos">381</span></a><span class="sd">    us : np.array, optional</span>
+</span><span id="TheoryP2-382"><a href="#TheoryP2-382"><span class="linenos">382</span></a><span class="sd">        The thresholds at which the theoretical MFs will be computed. </span>
+</span><span id="TheoryP2-383"><a href="#TheoryP2-383"><span class="linenos">383</span></a><span class="sd">        If not given, a range between 0 and 5σ with steps of 0.1σ is considered, </span>
+</span><span id="TheoryP2-384"><a href="#TheoryP2-384"><span class="linenos">384</span></a><span class="sd">        with σ=1 the expected standard deviation of the fields U and Q.</span>
+</span><span id="TheoryP2-385"><a href="#TheoryP2-385"><span class="linenos">385</span></a><span class="sd">    </span>
+</span><span id="TheoryP2-386"><a href="#TheoryP2-386"><span class="linenos">386</span></a><span class="sd">    cls : np.array, optional</span>
+</span><span id="TheoryP2-387"><a href="#TheoryP2-387"><span class="linenos">387</span></a><span class="sd">        The angular power spectrum associated to the Gaussian isotropic fields. </span>
+</span><span id="TheoryP2-388"><a href="#TheoryP2-388"><span class="linenos">388</span></a><span class="sd">        Shape &#39;(..., lmax+1)&#39;. &#39;...&#39; can be 2 (EE, BB) or absent (assumed to be EE+BB).</span>
+</span><span id="TheoryP2-389"><a href="#TheoryP2-389"><span class="linenos">389</span></a><span class="sd">        Default : None </span>
+</span><span id="TheoryP2-390"><a href="#TheoryP2-390"><span class="linenos">390</span></a><span class="sd">    </span>
+</span><span id="TheoryP2-391"><a href="#TheoryP2-391"><span class="linenos">391</span></a><span class="sd">    μ : float, optional</span>
+</span><span id="TheoryP2-392"><a href="#TheoryP2-392"><span class="linenos">392</span></a><span class="sd">        The derivative of the covariance function at the origin for each of the two independent Gaussian isotropic fields (i.e., U and Q in the cosmological case).</span>
+</span><span id="TheoryP2-393"><a href="#TheoryP2-393"><span class="linenos">393</span></a><span class="sd">        If both μ and cls are given, an error will be raised.</span>
+</span><span id="TheoryP2-394"><a href="#TheoryP2-394"><span class="linenos">394</span></a><span class="sd">        If only cls is given, μ will be computed from input cls.</span>
+</span><span id="TheoryP2-395"><a href="#TheoryP2-395"><span class="linenos">395</span></a><span class="sd">        If neither μ nor cls are given, μ is assumed to be 1.</span>
+</span><span id="TheoryP2-396"><a href="#TheoryP2-396"><span class="linenos">396</span></a><span class="sd">        Default : None</span>
+</span><span id="TheoryP2-397"><a href="#TheoryP2-397"><span class="linenos">397</span></a><span class="sd">        </span>
+</span><span id="TheoryP2-398"><a href="#TheoryP2-398"><span class="linenos">398</span></a><span class="sd">    average_bin : bool, optional</span>
+</span><span id="TheoryP2-399"><a href="#TheoryP2-399"><span class="linenos">399</span></a><span class="sd">        If True, the results of V1 and V2 are the average on each bin, to be compared with binned computations on maps.</span>
+</span><span id="TheoryP2-400"><a href="#TheoryP2-400"><span class="linenos">400</span></a><span class="sd">        If False, the results are the evaluation on the center of each bin.</span>
+</span><span id="TheoryP2-401"><a href="#TheoryP2-401"><span class="linenos">401</span></a><span class="sd">        The value is always exactly computed for V0, as the computation on maps does not imply binning.</span>
+</span><span id="TheoryP2-402"><a href="#TheoryP2-402"><span class="linenos">402</span></a><span class="sd">        Defaul : True</span>
+</span><span id="TheoryP2-403"><a href="#TheoryP2-403"><span class="linenos">403</span></a><span class="sd">        </span>
+</span><span id="TheoryP2-404"><a href="#TheoryP2-404"><span class="linenos">404</span></a><span class="sd">    edges : bool, optional</span>
+</span><span id="TheoryP2-405"><a href="#TheoryP2-405"><span class="linenos">405</span></a><span class="sd">        If False, the given &#39;us&#39; is considered as an array of uniformly distributed thresholds. </span>
+</span><span id="TheoryP2-406"><a href="#TheoryP2-406"><span class="linenos">406</span></a><span class="sd">        If True, input &#39;us&#39; is considered as a monotonically increasing array of bin edges, including the rightmost edge, allowing for non-uniform distributions of thresholds. </span>
+</span><span id="TheoryP2-407"><a href="#TheoryP2-407"><span class="linenos">407</span></a><span class="sd">        In this last case, the thresholds are the central value of the given bins.</span>
+</span><span id="TheoryP2-408"><a href="#TheoryP2-408"><span class="linenos">408</span></a><span class="sd">        Neglected if &#39;us&#39; is not given.</span>
+</span><span id="TheoryP2-409"><a href="#TheoryP2-409"><span class="linenos">409</span></a><span class="sd">        Default : False.</span>
+</span><span id="TheoryP2-410"><a href="#TheoryP2-410"><span class="linenos">410</span></a>
+</span><span id="TheoryP2-411"><a href="#TheoryP2-411"><span class="linenos">411</span></a><span class="sd">    Attributes</span>
+</span><span id="TheoryP2-412"><a href="#TheoryP2-412"><span class="linenos">412</span></a><span class="sd">    ----------</span>
+</span><span id="TheoryP2-413"><a href="#TheoryP2-413"><span class="linenos">413</span></a><span class="sd">    us : np.array</span>
+</span><span id="TheoryP2-414"><a href="#TheoryP2-414"><span class="linenos">414</span></a><span class="sd">        The thresholds at which the theoretical MFs are computed. </span>
+</span><span id="TheoryP2-415"><a href="#TheoryP2-415"><span class="linenos">415</span></a><span class="sd">        </span>
+</span><span id="TheoryP2-416"><a href="#TheoryP2-416"><span class="linenos">416</span></a><span class="sd">    μ : float</span>
+</span><span id="TheoryP2-417"><a href="#TheoryP2-417"><span class="linenos">417</span></a><span class="sd">        The derivative of the covariance function at the origin for the sum of two squared Gaussian isotropic fields.</span>
+</span><span id="TheoryP2-418"><a href="#TheoryP2-418"><span class="linenos">418</span></a><span class="sd">        </span>
+</span><span id="TheoryP2-419"><a href="#TheoryP2-419"><span class="linenos">419</span></a><span class="sd">    &quot;&quot;&quot;</span>    
+</span><span id="TheoryP2-420"><a href="#TheoryP2-420"><span class="linenos">420</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">us</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Cls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">μ</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">average_bin</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span><span id="TheoryP2-421"><a href="#TheoryP2-421"><span class="linenos">421</span></a>        <span class="sd">&quot;&quot;&quot;Class to compute the expected values of Minkowski functionals (MFs) for a Gaussian isotropic scalar field defined on the sphere.</span>
+</span><span id="TheoryP2-422"><a href="#TheoryP2-422"><span class="linenos">422</span></a>
+</span><span id="TheoryP2-423"><a href="#TheoryP2-423"><span class="linenos">423</span></a><span class="sd">        &quot;&quot;&quot;</span>    
+</span><span id="TheoryP2-424"><a href="#TheoryP2-424"><span class="linenos">424</span></a>        <span class="k">if</span> <span class="p">(</span><span class="n">us</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+</span><span id="TheoryP2-425"><a href="#TheoryP2-425"><span class="linenos">425</span></a>            <span class="n">Δu</span> <span class="o">=</span> <span class="mf">0.05</span>
+</span><span id="TheoryP2-426"><a href="#TheoryP2-426"><span class="linenos">426</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">Δu</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">5.</span><span class="o">+</span><span class="n">Δu</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="n">Δu</span><span class="p">)</span>
+</span><span id="TheoryP2-427"><a href="#TheoryP2-427"><span class="linenos">427</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="n">Δu</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span><span id="TheoryP2-428"><a href="#TheoryP2-428"><span class="linenos">428</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="TheoryP2-429"><a href="#TheoryP2-429"><span class="linenos">429</span></a>            <span class="n">us</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">us</span><span class="p">)</span>
+</span><span id="TheoryP2-430"><a href="#TheoryP2-430"><span class="linenos">430</span></a>            <span class="k">if</span> <span class="n">us</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,):</span>
+</span><span id="TheoryP2-431"><a href="#TheoryP2-431"><span class="linenos">431</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="n">us</span>
+</span><span id="TheoryP2-432"><a href="#TheoryP2-432"><span class="linenos">432</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="mf">0.</span>
+</span><span id="TheoryP2-433"><a href="#TheoryP2-433"><span class="linenos">433</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="TheoryP2-434"><a href="#TheoryP2-434"><span class="linenos">434</span></a>                <span class="k">if</span> <span class="n">edges</span><span class="p">:</span>
+</span><span id="TheoryP2-435"><a href="#TheoryP2-435"><span class="linenos">435</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="p">(</span><span class="n">us</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">-</span><span class="n">us</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</span><span id="TheoryP2-436"><a href="#TheoryP2-436"><span class="linenos">436</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="p">(</span><span class="n">us</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">+</span><span class="n">us</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mf">2.</span>
+</span><span id="TheoryP2-437"><a href="#TheoryP2-437"><span class="linenos">437</span></a>                <span class="k">else</span><span class="p">:</span>
+</span><span id="TheoryP2-438"><a href="#TheoryP2-438"><span class="linenos">438</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="n">us</span>
+</span><span id="TheoryP2-439"><a href="#TheoryP2-439"><span class="linenos">439</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="p">(</span><span class="n">us</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">us</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">us</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span><span id="TheoryP2-440"><a href="#TheoryP2-440"><span class="linenos">440</span></a>
+</span><span id="TheoryP2-441"><a href="#TheoryP2-441"><span class="linenos">441</span></a>        <span class="k">if</span> <span class="p">(</span><span class="n">Cls</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">μ</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+</span><span id="TheoryP2-442"><a href="#TheoryP2-442"><span class="linenos">442</span></a>            <span class="k">if</span> <span class="p">(</span><span class="n">Cls</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">Cls</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="mi">2</span><span class="p">):</span>
+</span><span id="TheoryP2-443"><a href="#TheoryP2-443"><span class="linenos">443</span></a>                <span class="bp">cls</span> <span class="o">=</span> <span class="p">(</span><span class="bp">cls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="bp">cls</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mf">2.</span>
+</span><span id="TheoryP2-444"><a href="#TheoryP2-444"><span class="linenos">444</span></a>            <span class="k">elif</span> <span class="p">(</span><span class="n">Cls</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+</span><span id="TheoryP2-445"><a href="#TheoryP2-445"><span class="linenos">445</span></a>                <span class="bp">cls</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">/</span><span class="mf">2.</span>
+</span><span id="TheoryP2-446"><a href="#TheoryP2-446"><span class="linenos">446</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="TheoryP2-447"><a href="#TheoryP2-447"><span class="linenos">447</span></a>                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Cls dimension has to be either (2,lmax+1) or (lmax+1)&quot;</span><span class="p">)</span>
+</span><span id="TheoryP2-448"><a href="#TheoryP2-448"><span class="linenos">448</span></a>                
+</span><span id="TheoryP2-449"><a href="#TheoryP2-449"><span class="linenos">449</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">μ</span> <span class="o">=</span> <span class="n">define_mu</span><span class="p">(</span><span class="n">Cls</span><span class="p">,</span><span class="n">μ</span><span class="p">)</span>   
+</span><span id="TheoryP2-450"><a href="#TheoryP2-450"><span class="linenos">450</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">average_bin</span><span class="p">:</span>
+</span><span id="TheoryP2-451"><a href="#TheoryP2-451"><span class="linenos">451</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="mf">0.</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span>
+</span><span id="TheoryP2-452"><a href="#TheoryP2-452"><span class="linenos">452</span></a>        
+</span><span id="TheoryP2-453"><a href="#TheoryP2-453"><span class="linenos">453</span></a>    
+</span><span id="TheoryP2-454"><a href="#TheoryP2-454"><span class="linenos">454</span></a>    <span class="k">def</span> <span class="nf">V0</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="TheoryP2-455"><a href="#TheoryP2-455"><span class="linenos">455</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised first MF v0 at the different thresholds us.</span>
+</span><span id="TheoryP2-456"><a href="#TheoryP2-456"><span class="linenos">456</span></a>
+</span><span id="TheoryP2-457"><a href="#TheoryP2-457"><span class="linenos">457</span></a><span class="sd">        $$\mathbb{E}[{v_{0}(u)}] = \exp (-u/2)$$</span>
+</span><span id="TheoryP2-458"><a href="#TheoryP2-458"><span class="linenos">458</span></a><span class="sd">        &quot;&quot;&quot;</span>    
+</span><span id="TheoryP2-459"><a href="#TheoryP2-459"><span class="linenos">459</span></a>        <span class="k">return</span> <span class="p">(</span><span class="n">V0_th_P2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">))</span>
+</span><span id="TheoryP2-460"><a href="#TheoryP2-460"><span class="linenos">460</span></a>
+</span><span id="TheoryP2-461"><a href="#TheoryP2-461"><span class="linenos">461</span></a>    <span class="k">def</span> <span class="nf">V1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="TheoryP2-462"><a href="#TheoryP2-462"><span class="linenos">462</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised second MF v1 at the different thresholds us.</span>
+</span><span id="TheoryP2-463"><a href="#TheoryP2-463"><span class="linenos">463</span></a><span class="sd">        </span>
+</span><span id="TheoryP2-464"><a href="#TheoryP2-464"><span class="linenos">464</span></a><span class="sd">        $$\mathbb{E}[{v_{1}(u)}] = {\sqrt{2\pi } \over 8} \sqrt{\mu u}\exp (-{u \over 2})$$</span>
+</span><span id="TheoryP2-465"><a href="#TheoryP2-465"><span class="linenos">465</span></a><span class="sd">        &quot;&quot;&quot;</span> 
+</span><span id="TheoryP2-466"><a href="#TheoryP2-466"><span class="linenos">466</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
+</span><span id="TheoryP2-467"><a href="#TheoryP2-467"><span class="linenos">467</span></a>        <span class="n">v1_</span> <span class="o">=</span> <span class="n">V1_th_P2</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
+</span><span id="TheoryP2-468"><a href="#TheoryP2-468"><span class="linenos">468</span></a>        
+</span><span id="TheoryP2-469"><a href="#TheoryP2-469"><span class="linenos">469</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v1_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="TheoryP2-470"><a href="#TheoryP2-470"><span class="linenos">470</span></a>    
+</span><span id="TheoryP2-471"><a href="#TheoryP2-471"><span class="linenos">471</span></a>    <span class="k">def</span> <span class="nf">V2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="TheoryP2-472"><a href="#TheoryP2-472"><span class="linenos">472</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised third MF v2 at the different thresholds us.</span>
+</span><span id="TheoryP2-473"><a href="#TheoryP2-473"><span class="linenos">473</span></a><span class="sd">        </span>
+</span><span id="TheoryP2-474"><a href="#TheoryP2-474"><span class="linenos">474</span></a><span class="sd">        $$\mathbb{E}[{v_{2}(u)}] = \mu {(u-1)\exp (-u/2) \over 2\pi }$$</span>
+</span><span id="TheoryP2-475"><a href="#TheoryP2-475"><span class="linenos">475</span></a><span class="sd">        &quot;&quot;&quot;</span>    
+</span><span id="TheoryP2-476"><a href="#TheoryP2-476"><span class="linenos">476</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
+</span><span id="TheoryP2-477"><a href="#TheoryP2-477"><span class="linenos">477</span></a>        <span class="n">v2_</span> <span class="o">=</span> <span class="n">V2_th_P2</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
+</span><span id="TheoryP2-478"><a href="#TheoryP2-478"><span class="linenos">478</span></a>        
+</span><span id="TheoryP2-479"><a href="#TheoryP2-479"><span class="linenos">479</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v2_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Compute the first derivative of the covariance function at the origin for a Gaussian field 
-defined on the sphere with angular power spectrum 'cls'.</p>
+            <div class="docstring"><p>Class to compute the expected values of Minkowski functionals (MFs) for the sum of two squared Gaussian isotropic fields normalised for their standard deviations defined on the sphere 
+like the polarised intensity of the CMB ($P^2 = Q^2 + U^2$).</p>
 
 <h6 id="parameters">Parameters</h6>
 
 <ul>
-<li><strong>cls</strong> (np.array):
-The angular power spectrum of the Gaussian field.</li>
+<li><strong>us</strong> (np.array, optional):
+The thresholds at which the theoretical MFs will be computed. 
+If not given, a range between 0 and 5σ with steps of 0.1σ is considered, 
+with σ=1 the expected standard deviation of the fields U and Q.</li>
+<li><strong>cls</strong> (np.array, optional):
+The angular power spectrum associated to the Gaussian isotropic fields. 
+Shape '(..., lmax+1)'. '...' can be 2 (EE, BB) or absent (assumed to be EE+BB).
+Default : None</li>
+<li><strong>μ</strong> (float, optional):
+The derivative of the covariance function at the origin for each of the two independent Gaussian isotropic fields (i.e., U and Q in the cosmological case).
+If both μ and cls are given, an error will be raised.
+If only cls is given, μ will be computed from input cls.
+If neither μ nor cls are given, μ is assumed to be 1.
+Default : None</li>
+<li><strong>average_bin</strong> (bool, optional):
+If True, the results of V1 and V2 are the average on each bin, to be compared with binned computations on maps.
+If False, the results are the evaluation on the center of each bin.
+The value is always exactly computed for V0, as the computation on maps does not imply binning.
+Defaul : True</li>
+<li><strong>edges</strong> (bool, optional):
+If False, the given 'us' is considered as an array of uniformly distributed thresholds. 
+If True, input 'us' is considered as a monotonically increasing array of bin edges, including the rightmost edge, allowing for non-uniform distributions of thresholds. 
+In this last case, the thresholds are the central value of the given bins.
+Neglected if 'us' is not given.
+Default : False.</li>
 </ul>
 
-<h6 id="returns">Returns</h6>
+<h6 id="attributes">Attributes</h6>
 
 <ul>
+<li><strong>us</strong> (np.array):
+The thresholds at which the theoretical MFs are computed.</li>
 <li><strong>μ</strong> (float):
-The first derivative of the covariance function of a field at the origin.</li>
+The derivative of the covariance function at the origin for the sum of two squared Gaussian isotropic fields.</li>
 </ul>
 </div>
 
 
+                            <div id="TheoryP2.__init__" class="classattr">
+                                        <input id="TheoryP2.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="name">TheoryP2</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">us</span><span class="o">=</span><span class="kc">None</span>, </span><span class="param"><span class="n">Cls</span><span class="o">=</span><span class="kc">None</span>, </span><span class="param"><span class="n">μ</span><span class="o">=</span><span class="kc">None</span>, </span><span class="param"><span class="n">average_bin</span><span class="o">=</span><span class="kc">True</span>, </span><span class="param"><span class="n">edges</span><span class="o">=</span><span class="kc">False</span></span>)</span>
+
+                <label class="view-source-button" for="TheoryP2.__init__-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#TheoryP2.__init__"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="TheoryP2.__init__-420"><a href="#TheoryP2.__init__-420"><span class="linenos">420</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">us</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Cls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">μ</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">average_bin</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span><span id="TheoryP2.__init__-421"><a href="#TheoryP2.__init__-421"><span class="linenos">421</span></a>        <span class="sd">&quot;&quot;&quot;Class to compute the expected values of Minkowski functionals (MFs) for a Gaussian isotropic scalar field defined on the sphere.</span>
+</span><span id="TheoryP2.__init__-422"><a href="#TheoryP2.__init__-422"><span class="linenos">422</span></a>
+</span><span id="TheoryP2.__init__-423"><a href="#TheoryP2.__init__-423"><span class="linenos">423</span></a><span class="sd">        &quot;&quot;&quot;</span>    
+</span><span id="TheoryP2.__init__-424"><a href="#TheoryP2.__init__-424"><span class="linenos">424</span></a>        <span class="k">if</span> <span class="p">(</span><span class="n">us</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+</span><span id="TheoryP2.__init__-425"><a href="#TheoryP2.__init__-425"><span class="linenos">425</span></a>            <span class="n">Δu</span> <span class="o">=</span> <span class="mf">0.05</span>
+</span><span id="TheoryP2.__init__-426"><a href="#TheoryP2.__init__-426"><span class="linenos">426</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">Δu</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">5.</span><span class="o">+</span><span class="n">Δu</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="n">Δu</span><span class="p">)</span>
+</span><span id="TheoryP2.__init__-427"><a href="#TheoryP2.__init__-427"><span class="linenos">427</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="n">Δu</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span><span id="TheoryP2.__init__-428"><a href="#TheoryP2.__init__-428"><span class="linenos">428</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="TheoryP2.__init__-429"><a href="#TheoryP2.__init__-429"><span class="linenos">429</span></a>            <span class="n">us</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">us</span><span class="p">)</span>
+</span><span id="TheoryP2.__init__-430"><a href="#TheoryP2.__init__-430"><span class="linenos">430</span></a>            <span class="k">if</span> <span class="n">us</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,):</span>
+</span><span id="TheoryP2.__init__-431"><a href="#TheoryP2.__init__-431"><span class="linenos">431</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="n">us</span>
+</span><span id="TheoryP2.__init__-432"><a href="#TheoryP2.__init__-432"><span class="linenos">432</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="mf">0.</span>
+</span><span id="TheoryP2.__init__-433"><a href="#TheoryP2.__init__-433"><span class="linenos">433</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="TheoryP2.__init__-434"><a href="#TheoryP2.__init__-434"><span class="linenos">434</span></a>                <span class="k">if</span> <span class="n">edges</span><span class="p">:</span>
+</span><span id="TheoryP2.__init__-435"><a href="#TheoryP2.__init__-435"><span class="linenos">435</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="p">(</span><span class="n">us</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">-</span><span class="n">us</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</span><span id="TheoryP2.__init__-436"><a href="#TheoryP2.__init__-436"><span class="linenos">436</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="p">(</span><span class="n">us</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">+</span><span class="n">us</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mf">2.</span>
+</span><span id="TheoryP2.__init__-437"><a href="#TheoryP2.__init__-437"><span class="linenos">437</span></a>                <span class="k">else</span><span class="p">:</span>
+</span><span id="TheoryP2.__init__-438"><a href="#TheoryP2.__init__-438"><span class="linenos">438</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">us</span> <span class="o">=</span> <span class="n">us</span>
+</span><span id="TheoryP2.__init__-439"><a href="#TheoryP2.__init__-439"><span class="linenos">439</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="p">(</span><span class="n">us</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">us</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">us</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span><span id="TheoryP2.__init__-440"><a href="#TheoryP2.__init__-440"><span class="linenos">440</span></a>
+</span><span id="TheoryP2.__init__-441"><a href="#TheoryP2.__init__-441"><span class="linenos">441</span></a>        <span class="k">if</span> <span class="p">(</span><span class="n">Cls</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">μ</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+</span><span id="TheoryP2.__init__-442"><a href="#TheoryP2.__init__-442"><span class="linenos">442</span></a>            <span class="k">if</span> <span class="p">(</span><span class="n">Cls</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">Cls</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="mi">2</span><span class="p">):</span>
+</span><span id="TheoryP2.__init__-443"><a href="#TheoryP2.__init__-443"><span class="linenos">443</span></a>                <span class="bp">cls</span> <span class="o">=</span> <span class="p">(</span><span class="bp">cls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="bp">cls</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mf">2.</span>
+</span><span id="TheoryP2.__init__-444"><a href="#TheoryP2.__init__-444"><span class="linenos">444</span></a>            <span class="k">elif</span> <span class="p">(</span><span class="n">Cls</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+</span><span id="TheoryP2.__init__-445"><a href="#TheoryP2.__init__-445"><span class="linenos">445</span></a>                <span class="bp">cls</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">/</span><span class="mf">2.</span>
+</span><span id="TheoryP2.__init__-446"><a href="#TheoryP2.__init__-446"><span class="linenos">446</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="TheoryP2.__init__-447"><a href="#TheoryP2.__init__-447"><span class="linenos">447</span></a>                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Cls dimension has to be either (2,lmax+1) or (lmax+1)&quot;</span><span class="p">)</span>
+</span><span id="TheoryP2.__init__-448"><a href="#TheoryP2.__init__-448"><span class="linenos">448</span></a>                
+</span><span id="TheoryP2.__init__-449"><a href="#TheoryP2.__init__-449"><span class="linenos">449</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">μ</span> <span class="o">=</span> <span class="n">define_mu</span><span class="p">(</span><span class="n">Cls</span><span class="p">,</span><span class="n">μ</span><span class="p">)</span>   
+</span><span id="TheoryP2.__init__-450"><a href="#TheoryP2.__init__-450"><span class="linenos">450</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">average_bin</span><span class="p">:</span>
+</span><span id="TheoryP2.__init__-451"><a href="#TheoryP2.__init__-451"><span class="linenos">451</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">dus</span> <span class="o">=</span> <span class="mf">0.</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Class to compute the expected values of Minkowski functionals (MFs) for a Gaussian isotropic scalar field defined on the sphere.</p>
+</div>
+
+
+                            </div>
+                            <div id="TheoryP2.V0" class="classattr">
+                                        <input id="TheoryP2.V0-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">V0</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span>)</span>
+
+                <label class="view-source-button" for="TheoryP2.V0-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#TheoryP2.V0"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="TheoryP2.V0-454"><a href="#TheoryP2.V0-454"><span class="linenos">454</span></a>    <span class="k">def</span> <span class="nf">V0</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="TheoryP2.V0-455"><a href="#TheoryP2.V0-455"><span class="linenos">455</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised first MF v0 at the different thresholds us.</span>
+</span><span id="TheoryP2.V0-456"><a href="#TheoryP2.V0-456"><span class="linenos">456</span></a>
+</span><span id="TheoryP2.V0-457"><a href="#TheoryP2.V0-457"><span class="linenos">457</span></a><span class="sd">        $$\mathbb{E}[{v_{0}(u)}] = \exp (-u/2)$$</span>
+</span><span id="TheoryP2.V0-458"><a href="#TheoryP2.V0-458"><span class="linenos">458</span></a><span class="sd">        &quot;&quot;&quot;</span>    
+</span><span id="TheoryP2.V0-459"><a href="#TheoryP2.V0-459"><span class="linenos">459</span></a>        <span class="k">return</span> <span class="p">(</span><span class="n">V0_th_P2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">))</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Compute the expected values of the normalised first MF v0 at the different thresholds us.</p>
+
+<p>$$\mathbb{E}[{v_{0}(u)}] = \exp (-u/2)$$</p>
+</div>
+
+
+                            </div>
+                            <div id="TheoryP2.V1" class="classattr">
+                                        <input id="TheoryP2.V1-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">V1</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span>)</span>
+
+                <label class="view-source-button" for="TheoryP2.V1-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#TheoryP2.V1"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="TheoryP2.V1-461"><a href="#TheoryP2.V1-461"><span class="linenos">461</span></a>    <span class="k">def</span> <span class="nf">V1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="TheoryP2.V1-462"><a href="#TheoryP2.V1-462"><span class="linenos">462</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised second MF v1 at the different thresholds us.</span>
+</span><span id="TheoryP2.V1-463"><a href="#TheoryP2.V1-463"><span class="linenos">463</span></a><span class="sd">        </span>
+</span><span id="TheoryP2.V1-464"><a href="#TheoryP2.V1-464"><span class="linenos">464</span></a><span class="sd">        $$\mathbb{E}[{v_{1}(u)}] = {\sqrt{2\pi } \over 8} \sqrt{\mu u}\exp (-{u \over 2})$$</span>
+</span><span id="TheoryP2.V1-465"><a href="#TheoryP2.V1-465"><span class="linenos">465</span></a><span class="sd">        &quot;&quot;&quot;</span> 
+</span><span id="TheoryP2.V1-466"><a href="#TheoryP2.V1-466"><span class="linenos">466</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
+</span><span id="TheoryP2.V1-467"><a href="#TheoryP2.V1-467"><span class="linenos">467</span></a>        <span class="n">v1_</span> <span class="o">=</span> <span class="n">V1_th_P2</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
+</span><span id="TheoryP2.V1-468"><a href="#TheoryP2.V1-468"><span class="linenos">468</span></a>        
+</span><span id="TheoryP2.V1-469"><a href="#TheoryP2.V1-469"><span class="linenos">469</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v1_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Compute the expected values of the normalised second MF v1 at the different thresholds us.</p>
+
+<p>$$\mathbb{E}[{v_{1}(u)}] = {\sqrt{2\pi } \over 8} \sqrt{\mu u}\exp (-{u \over 2})$$</p>
+</div>
+
+
+                            </div>
+                            <div id="TheoryP2.V2" class="classattr">
+                                        <input id="TheoryP2.V2-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">V2</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span>)</span>
+
+                <label class="view-source-button" for="TheoryP2.V2-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#TheoryP2.V2"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="TheoryP2.V2-471"><a href="#TheoryP2.V2-471"><span class="linenos">471</span></a>    <span class="k">def</span> <span class="nf">V2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="TheoryP2.V2-472"><a href="#TheoryP2.V2-472"><span class="linenos">472</span></a>        <span class="sd">&quot;&quot;&quot;Compute the expected values of the normalised third MF v2 at the different thresholds us.</span>
+</span><span id="TheoryP2.V2-473"><a href="#TheoryP2.V2-473"><span class="linenos">473</span></a><span class="sd">        </span>
+</span><span id="TheoryP2.V2-474"><a href="#TheoryP2.V2-474"><span class="linenos">474</span></a><span class="sd">        $$\mathbb{E}[{v_{2}(u)}] = \mu {(u-1)\exp (-u/2) \over 2\pi }$$</span>
+</span><span id="TheoryP2.V2-475"><a href="#TheoryP2.V2-475"><span class="linenos">475</span></a><span class="sd">        &quot;&quot;&quot;</span>    
+</span><span id="TheoryP2.V2-476"><a href="#TheoryP2.V2-476"><span class="linenos">476</span></a>        <span class="n">us_</span> <span class="o">=</span> <span class="n">define_us_for_V</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">us</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">dus</span><span class="p">)</span>
+</span><span id="TheoryP2.V2-477"><a href="#TheoryP2.V2-477"><span class="linenos">477</span></a>        <span class="n">v2_</span> <span class="o">=</span> <span class="n">V2_th_P2</span><span class="p">(</span><span class="n">us_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">μ</span><span class="p">)</span>
+</span><span id="TheoryP2.V2-478"><a href="#TheoryP2.V2-478"><span class="linenos">478</span></a>        
+</span><span id="TheoryP2.V2-479"><a href="#TheoryP2.V2-479"><span class="linenos">479</span></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v2_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Compute the expected values of the normalised third MF v2 at the different thresholds us.</p>
+
+<p>$$\mathbb{E}[{v_{2}(u)}] = \mu {(u-1)\exp (-u/2) \over 2\pi }$$</p>
+</div>
+
+
+                            </div>
                 </section>
     </main>
 <script>
