@@ -1,0 +1,1766 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>pynkowski.data API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>pynkowski.data</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import numpy as np
+import healpy as hp
+
+try:
+    from tqdm.notebook import tqdm
+except:
+    tqdm = lambda x: x
+    print(&#39;tqdm not loaded&#39;)
+
+ 
+def get_theta(nside):
+    &#34;&#34;&#34;Define a HEALPix map with the value of θ in each pixel at the input nside&#34;&#34;&#34;
+    theta, _ = hp.pix2ang(nside, np.arange(12 * nside ** 2))
+    return np.pi/2. - theta
+
+def derivatives(mapp, lmax=None, gradient=False, **kwargs):
+    &#34;&#34;&#34;Find the derivatives d_theta, d_phi of a Healpix map. It uses the healpy alm2map_der1 function.
+
+    Parameters
+    ----------
+    mapp : np.array
+        The Healpix map to find its derivatives.
+    
+    lmax : int, optional
+        Maximum multipole to get the alm and the derivatives. It can create numerical errors if it is too high.
+        Default: 3*nside-1.
+        
+    gradient : bool, optional
+        If True, return the covariant derivatives. If False, return the partial derivatives. Default: False.
+        
+    **kwargs :
+        Extra keywords to pass to the map2alm function.
+        
+    Returns
+    -------
+    d_theta : np.array
+        A healpix map with the derivative with respect to theta.
+    
+    d_phi : np.array
+        A healpix map with the derivatives with respect to phi, without normalizing.
+    &#34;&#34;&#34;
+    nside = hp.get_nside(mapp)
+    if lmax is None:
+        lmax = 3 * nside - 1
+
+    alm = hp.map2alm(mapp, lmax=lmax, **kwargs)
+    [_, d_theta, d_phiosin] = hp.alm2map_der1(alm, nside, lmax=lmax)
+    d_theta = -d_theta
+
+    if gradient:
+        return (d_theta, d_phiosin)
+    
+    theta = get_theta(nside)
+
+    d_phi = d_phiosin * np.cos(theta)
+    return (d_theta, d_phi)
+
+
+def second_derivatives(d_theta, d_phi, lmax=None, **kwargs):
+    &#34;&#34;&#34;Find the Second derivatives for every pixel of a Healpix map given the first partial derivatives.
+
+    Parameters
+    ----------
+    d_theta : np.array
+        The partial theta derivative of the Healpix map.
+    
+    d_phi : np.array
+        The partial phi derivative of the Healpix map.
+    
+    lmax : int, optional
+        Maximum multipole to get the alm and the derivatives. It can create numerical errors if it is too high.
+        Default: 3*nside-1.
+        
+    Returns
+    -------
+    d_thetatheta : np.array
+        A Healpix map of the second partial derivative wrt theta.
+    
+    d_phiphi : np.array
+        A Healpix map of the second partial derivative wrt phi.
+        
+    d_phitheta : np.array
+        A Healpix map of the second partial derivative wrt theta and phi.
+        
+    &#34;&#34;&#34;
+    nside = hp.get_nside(d_theta)
+
+    theta = get_theta(nside)
+
+    if lmax is None:
+        lmax = 3 * nside - 1
+
+    d_phitheta, d_phiphi = derivatives(d_phi, lmax=lmax, **kwargs)
+
+    alm_theta = hp.map2alm(d_theta, lmax=lmax, **kwargs)
+    [_, d_thetatheta, _] = hp.alm2map_der1(alm_theta, nside, lmax=lmax)
+    d_thetatheta = -d_thetatheta
+
+    
+    return (d_thetatheta, d_phiphi, d_phitheta)
+
+
+class Scalar():
+    &#34;&#34;&#34;Class to compute Minkowski functionals (MFs) and extrema of Healpix scalar maps. It computes and stores spatial first and
+    second derivatives of Healpix scalar maps.
+
+    Parameters
+    ----------
+    Smap : np.array
+        The input Healpix map where all the statistics will be computed.
+    
+    normalise : bool, optional
+        If True, divide input Smap by its standard deviation. Default: True.
+    
+    mask : np.array, optional
+        An input Healpix mask. All the statiscal quantities will be computed only within this mask. Default: None (all sky is considered).
+    
+    Attributes
+    ----------
+    Smap : np.array
+        The Healpix map where all the statistics are computed.
+        
+    nside : int
+        The Nside parameter of Smap
+    
+    mask : np.array
+        A Healpix mask whithin which all the statiscal quantities are computed.
+        
+    grad_phi : np.array
+        The phi covariant first derivative of Smap (only if first or second MFs are computed).
+
+    grad_theta : np.array
+        The theta covariant first derivative of Smap (only if first or second MFs are computed).
+
+    der_phi : np.array
+        The phi partial first derivative of Smap (only if first or second MFs are computed). 
+
+    der_theta_phi : np.array
+        The second covariant derivative wrt theta and phi of Smap (only if second MF is computed). 
+
+    der_phi_phi : np.array
+        The second covariant derivative wrt phi of Smap (only if second MF is computed). 
+
+    der_theta_theta : np.array
+        The second covariant derivative wrt theta of Smap (only if second MF is computed). 
+
+    Notes
+    -----
+    The derivatives are always computed full-sky regardless of input mask.
+        
+    &#34;&#34;&#34;    
+    def __init__(self, Smap, normalise=True, mask=None):
+        &#34;&#34;&#34;Initialise the class to compute Minkowski functionals (MFs) and extrema of Healpix scalar maps. 
+
+        Parameters
+        ----------
+        Smap : np.array
+            The input Healpix map where all the statistics will be computed.
+
+        normalise : bool, optional
+            If True, divide input Smap by its standard deviation. Default: True.
+
+        mask : np.array, optional
+            An input Healpix mask. All the statiscal quantities will be computed only within this mask. Default: None (all sky is considered).
+
+
+        &#34;&#34;&#34;    
+        self.Smap = Smap.copy()
+        self.nside = hp.get_nside(Smap)
+        if mask is None:
+            self.mask = np.ones(Smap.shape, dtype=&#39;bool&#39;)
+        else:
+            self.mask = mask
+            if hp.get_nside(mask) != self.nside:
+                raise ValueError(&#39;The map and the mask have different nside&#39;)
+        if normalise:
+            σ = self.get_variance()
+            self.Smap /= np.sqrt(σ)
+        self.grad_phi = None
+        self.der_phi_phi = None
+    
+    
+    def __repr__(self):
+        return(f&#39;map = {self.Smap}&#39;)
+    
+    def get_variance(self):
+        &#34;&#34;&#34;compute the variance of the input Healpix scalar map within the input mask. 
+
+        Returns
+        -------
+        var : float
+            The variance of the input Healpix map within the input mask.
+
+        &#34;&#34;&#34;    
+        return (np.var(self.Smap[self.mask]))
+
+    def set_pix(self, pixs):
+        &#34;&#34;&#34;return the values of the input Healpix scalar map in pixels pixs. 
+
+        Parameters
+        ----------
+        pixs : np.array
+            The indices of the input map pixels whose values of the map are returned.
+
+        Returns
+        -------
+        values : np.array
+            The values of the input Healpix scalar map in pixels pixs.
+
+        &#34;&#34;&#34;    
+        return self.Smap[pixs]
+
+    def get_gradient(self):
+        &#34;&#34;&#34;Compute the covariant and partial first derivatives of the input Healpix scalar map. 
+        It stores:
+        
+        - first covariant derivative wrt theta in self.grad_theta
+        - first partial derivative wrt phi in self.der_phi
+        - first covariant derivative wrt phi in self.grad_phi
+
+        &#34;&#34;&#34;    
+        S_grad = derivatives(self.Smap, gradient=True)
+        theta = get_theta(self.nside)
+        self.grad_theta = Scalar(S_grad[0], normalise=False)
+        self.der_phi = Scalar(np.cos(theta) * S_grad[1], normalise=False)
+        self.grad_phi = Scalar(S_grad[1], normalise=False)   
+        
+        
+    def get_hessian(self):
+        &#34;&#34;&#34;compute the covariant second derivatives of the input Healpix scalar map. 
+        It stores:
+        
+        - second covariant derivative wrt theta in self.der_theta_theta
+        - second covariant derivative wrt phi in self.der_phi_phi
+        - second covariant derivative wrt theta and phi in self.der_theta_phi
+
+        &#34;&#34;&#34;    
+        if self.grad_phi == None:
+            self.get_gradient()
+        theta = get_theta(self.nside)
+        
+        S_der_der = second_derivatives(self.grad_theta.Smap, self.der_phi.Smap)
+        
+        self.der_theta_theta = Scalar(S_der_der[0], normalise=False)
+        self.der_phi_phi = Scalar(S_der_der[1]/np.cos(theta)**2. + self.grad_theta.Smap*np.tan(theta), normalise=False)
+        self.der_theta_phi = Scalar((S_der_der[2]/np.cos(theta) - self.grad_phi.Smap * np.tan(theta)) , normalise=False)
+        
+
+    def get_κ(self, pixs):
+        &#34;&#34;&#34;Compute the geodesic curvature multiplied by the modulus of the gradient in pixels pixs. If not already computed, it computes 
+        the first and second covariant derivatives of the input map.
+
+        Parameters
+        ----------
+        pixs : np.array
+            The indices of the input map pixels where geodesic curvature is computed.
+
+        Returns
+        -------
+        k : np.array
+            The geodesic curvature in pixels `pixs`.
+
+        &#34;&#34;&#34;    
+        num = 2.*self.grad_theta.set_pix(pixs)*self.grad_phi.set_pix(pixs)*self.der_theta_phi.set_pix(pixs) - self.grad_phi.set_pix(pixs)**2. * self.der_theta_theta.set_pix(pixs) - self.grad_theta.set_pix(pixs)**2. * self.der_phi_phi.set_pix(pixs)
+        den = self.grad_theta.set_pix(pixs)**2. + self.grad_phi.set_pix(pixs)**2.
+        return num / den
+        
+
+    def V0_pixel(self, u):
+        &#34;&#34;&#34;Determine where input Healpix scalar map Smap is greater than threshold u. 
+
+        Parameters
+        ----------
+        u : float
+            The threshold considered for the computation of first Minkowski functional V0.
+
+        Returns
+        -------
+        v0map : np.array
+            a bool array with the same shape as the input map, with False where input map values are lower than threshold u.
+
+        &#34;&#34;&#34;    
+        return self.Smap&gt;u
+    
+    def V0_iter(self, u):
+        &#34;&#34;&#34;Compute the normalised first Minkowski functional v0 at the threshold u within the given mask. 
+
+        Parameters
+        ----------
+        u : float
+            The threshold considered for the computation of v0.
+
+        Returns
+        -------
+        v0 : np.array
+            First normalised Minkowski functional evaluated at threshold u within the given mask.
+
+        &#34;&#34;&#34;    
+        return np.mean(self.V0_pixel(u)[self.mask])
+    
+    def V0(self, us):
+        &#34;&#34;&#34;Compute the normalised first Minkowski functional v0 at the different thresholds us within the given mask.
+
+        Parameters
+        ----------
+        us : np.array
+            The thresholds considered for the computation of v0.
+
+        Returns
+        -------
+        v0s : np.array
+            First normalised Minkowski functional evaluated at thresholds us within the given mask.
+
+        &#34;&#34;&#34;    
+        us = np.atleast_1d(us)
+        return np.array([self.V0_iter(u) for u in tqdm(us)])
+    
+    
+    def V1_pixel(self, u, du):
+        &#34;&#34;&#34;Compute the modulus of the gradient where the values of the input map are between `u-du/2` and `u+du/2`. 
+
+        Parameters
+        ----------
+        u : float
+            The centered value of the bin considered for the computation.
+
+        du : float
+            The width of the bin considered for the computation.
+
+        Returns
+        -------
+        v1map : np.array
+            Modulus of the gradient where `u-du/2 &lt; Smap &lt; u+du/2`.
+
+        &#34;&#34;&#34;    
+        theta = get_theta(self.nside)
+        
+        areas = np.zeros_like(theta)
+
+        mask = (u + du/2. &gt; self.Smap) &amp; (u - du/2. &lt;= self.Smap) &amp; ~(np.isclose(np.cos(theta),0, atol=1.e-2))
+        pixs = np.arange(12*self.nside**2)[mask]
+        
+        areas[pixs] = np.sqrt(self.grad_theta.set_pix(pixs)**2. + self.grad_phi.set_pix(pixs)**2.)
+        return areas/du / 4.
+    
+    def V1_iter(self, u, du):
+        &#34;&#34;&#34;Compute the normalised second Minkowski functional v1 in the bin `u-du/2` and `u+du/2` within the given mask. 
+
+        Parameters
+        ----------
+        u : float
+            The centered value of the bin considered for the computation of v1.
+
+        du : float
+            The width of the bin considered for the computation of v1.
+
+        Returns
+        -------
+        v1 : float
+            Second normalised Minkowski functional evaluated in the bin u-du/2 and u+du/2 within the given mask.
+
+        &#34;&#34;&#34;    
+        return np.mean(self.V1_pixel(u, du)[self.mask])
+    
+    def V1(self, us, edges=False):
+        &#34;&#34;&#34;Compute the normalised second Minkowski functional v1 at the different thresholds us within the given mask.
+
+        Parameters
+        ----------
+        us : np.array
+            The thresholds considered for the computation of v2. See &#39;edges&#39; for details.
+
+        edges : bool, optional
+            If False, us is considered as an array of uniformly distributed thresholds. 
+            If True, us is considered as a monotonically increasing array of bin edges, including the rightmost edge, allowing for non-uniform distributions of thresholds. 
+            In this last case, the thresholds are the central value of the given bins.
+            Default: False.
+
+        Returns
+        -------
+        v1s : np.array
+            Second normalised Minkowski functional evaluated at thresholds us within the given mask.
+
+        &#34;&#34;&#34;
+        if self.grad_phi == None:
+            self.get_gradient()
+            
+        us = np.atleast_1d(us)
+        
+        if edges:
+            dus = (us[1:]-us[:-1])
+            us = (us[1:]+us[:-1])/2.
+        else:
+            if us.shape == (1,):
+                dus = np.array([0.1])
+            else:
+                dus = (us[1]-us[0])*np.ones(us.shape[0])           
+                if not (np.isclose(us[1:]-us[:-1], dus[0])).all():
+                    raise ValueError(&#39;The thresholds distributions is not uniform. Please set edges=True&#39;)
+            
+        return np.array([self.V1_iter(u, du) for (u, du) in zip(tqdm(us), dus)])
+
+    
+    def V2_pixel(self, u, du):
+        &#34;&#34;&#34;Compute the geodesic curvature multiplied by the modulus of the gradient where the values of the input map are between `u-du/2` and `u+du/2`. 
+
+        Parameters
+        ----------
+        u : float
+            The centered value of the bin considered for the computation.
+
+        du : float
+            The width of the bin considered for the computation.
+
+        Returns
+        -------
+        v2map : np.array
+            Geodesic curvature multiplied by the modulus of the gradient where `u-du/2 &lt; Smap &lt; u+du/2`.
+
+        &#34;&#34;&#34;           
+        theta = get_theta(self.nside)
+        
+        mask = (u + du/2. &gt; self.Smap) &amp; (u -du/2. &lt;= self.Smap) &amp; ~(np.isclose(np.cos(theta),0, atol=1.e-2))
+        pixs = np.arange(12*self.nside**2)[mask]
+        areas = np.zeros_like(theta)
+        areas[mask] = self.get_κ(pixs)
+        
+        return (areas/du / (2.*np.pi))
+    
+     
+    def V2_iter(self, u, du):
+        &#34;&#34;&#34;Compute the normalised third Minkowski functional v2 in the bin `u-du/2` and `u+du/2` within the given mask. 
+
+        Parameters
+        ----------
+        u : float
+            The centered value of the bin considered for the computation of v2.
+
+        du : float
+            The width of the bin considered for the computation of v2.
+
+        Returns
+        -------
+        v2 : np.array
+            Third normalised Minkowski functional evaluated in the bin u-du/2 and u+du/2 within the given mask.
+
+        &#34;&#34;&#34;    
+        return np.mean(self.V2_pixel(u, du)[self.mask])
+    
+    def V2(self, us, edges=False):
+        &#34;&#34;&#34;Compute the normalised third Minkowski functional v2 at the different thresholds us within the given mask.
+
+        Parameters
+        ----------
+        us : np.array
+            The thresholds considered for the computation of v2. See &#39;edges&#39; for details.
+
+        edges : bool, optional
+            If False, us is considered as an array of uniformly distributed thresholds. 
+            If True, us is considered as a monotonically increasing array of bin edges, including the rightmost edge, allowing for non-uniform distributions of thresholds. 
+            In this last case, the thresholds are the central value of the given bins.
+            Default: False.
+
+        Returns
+        -------
+        v2s : np.array
+            Third normalised Minkowski functional evaluated at thresholds us within the given mask.
+
+        &#34;&#34;&#34;   
+        if self.grad_phi == None:
+            self.get_gradient()
+        if self.der_phi_phi == None:
+            self.get_hessian()
+            
+        us = np.atleast_1d(us)
+        
+        if edges:
+            dus = (us[1:]-us[:-1])
+            us = (us[1:]+us[:-1])/2.
+        else:
+            if us.shape == (1,):
+                dus = np.array([0.1])
+            else:
+                dus = (us[1]-us[0])*np.ones(us.shape[0])           
+                if not (np.isclose(us[1:]-us[:-1], dus[0])).all():
+                    raise ValueError(&#39;The thresholds distributions is not uniform. Please set edges=True&#39;)
+            
+        return np.array([self.V2_iter(u, du) for (u, du) in zip(tqdm(us), dus)])
+    
+
+    
+    def get_maxima(self):
+        &#34;&#34;&#34;Find the local maxima of the input scalar map.
+
+        Returns
+        -------
+        pixels : np.array
+            Indices of the pixels which are local maxima.
+
+        values : np.array
+            Values of input map which are local maxima.
+
+        &#34;&#34;&#34;    
+        neigh = hp.get_all_neighbours(self.nside, np.arange(12*self.nside**2))
+        
+        extT = np.concatenate([self.Smap, [np.min(self.Smap)-1.]])
+        neigh_matrix = extT[neigh]
+
+        mask = np.all(self.Smap &gt; neigh_matrix, axis=0)
+        pixels = np.argwhere(mask).flatten()
+        values = self.Smap[pixels].flatten()
+
+        return(pixels, values)
+    
+    def get_minima(self):
+        &#34;&#34;&#34;Find the local minima of the input scalar map.
+
+        Returns
+        -------
+        pixels : np.array
+            Indices of the pixels which are local minima
+
+        values : np.array
+            Values of input map which are local minima
+
+        &#34;&#34;&#34;    
+        self.Smap = -self.Smap
+        pixels, values = self.get_maxima()
+        self.Smap = -self.Smap
+        
+        return(pixels, -values)
+        
+        
+__all__ = [&#34;Scalar&#34;]</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="pynkowski.data.Scalar"><code class="flex name class">
+<span>class <span class="ident">Scalar</span></span>
+<span>(</span><span>Smap, normalise=True, mask=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class to compute Minkowski functionals (MFs) and extrema of Healpix scalar maps. It computes and stores spatial first and
+second derivatives of Healpix scalar maps.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>Smap</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>The input Healpix map where all the statistics will be computed.</dd>
+<dt><strong><code>normalise</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>If True, divide input Smap by its standard deviation. Default: True.</dd>
+<dt><strong><code>mask</code></strong> :&ensp;<code>np.array</code>, optional</dt>
+<dd>An input Healpix mask. All the statiscal quantities will be computed only within this mask. Default: None (all sky is considered).</dd>
+</dl>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>Smap</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>The Healpix map where all the statistics are computed.</dd>
+<dt><strong><code>nside</code></strong> :&ensp;<code>int</code></dt>
+<dd>The Nside parameter of Smap</dd>
+<dt><strong><code>mask</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>A Healpix mask whithin which all the statiscal quantities are computed.</dd>
+<dt><strong><code>grad_phi</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>The phi covariant first derivative of Smap (only if first or second MFs are computed).</dd>
+<dt><strong><code>grad_theta</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>The theta covariant first derivative of Smap (only if first or second MFs are computed).</dd>
+<dt><strong><code>der_phi</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>The phi partial first derivative of Smap (only if first or second MFs are computed).</dd>
+<dt><strong><code>der_theta_phi</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>The second covariant derivative wrt theta and phi of Smap (only if second MF is computed).</dd>
+<dt><strong><code>der_phi_phi</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>The second covariant derivative wrt phi of Smap (only if second MF is computed).</dd>
+<dt><strong><code>der_theta_theta</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>The second covariant derivative wrt theta of Smap (only if second MF is computed).</dd>
+</dl>
+<h2 id="notes">Notes</h2>
+<p>The derivatives are always computed full-sky regardless of input mask.</p>
+<p>Initialise the class to compute Minkowski functionals (MFs) and extrema of Healpix scalar maps. </p>
+<h2 id="parameters_1">Parameters</h2>
+<dl>
+<dt><strong><code>Smap</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>The input Healpix map where all the statistics will be computed.</dd>
+<dt><strong><code>normalise</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>If True, divide input Smap by its standard deviation. Default: True.</dd>
+<dt><strong><code>mask</code></strong> :&ensp;<code>np.array</code>, optional</dt>
+<dd>An input Healpix mask. All the statiscal quantities will be computed only within this mask. Default: None (all sky is considered).</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Scalar():
+    &#34;&#34;&#34;Class to compute Minkowski functionals (MFs) and extrema of Healpix scalar maps. It computes and stores spatial first and
+    second derivatives of Healpix scalar maps.
+
+    Parameters
+    ----------
+    Smap : np.array
+        The input Healpix map where all the statistics will be computed.
+    
+    normalise : bool, optional
+        If True, divide input Smap by its standard deviation. Default: True.
+    
+    mask : np.array, optional
+        An input Healpix mask. All the statiscal quantities will be computed only within this mask. Default: None (all sky is considered).
+    
+    Attributes
+    ----------
+    Smap : np.array
+        The Healpix map where all the statistics are computed.
+        
+    nside : int
+        The Nside parameter of Smap
+    
+    mask : np.array
+        A Healpix mask whithin which all the statiscal quantities are computed.
+        
+    grad_phi : np.array
+        The phi covariant first derivative of Smap (only if first or second MFs are computed).
+
+    grad_theta : np.array
+        The theta covariant first derivative of Smap (only if first or second MFs are computed).
+
+    der_phi : np.array
+        The phi partial first derivative of Smap (only if first or second MFs are computed). 
+
+    der_theta_phi : np.array
+        The second covariant derivative wrt theta and phi of Smap (only if second MF is computed). 
+
+    der_phi_phi : np.array
+        The second covariant derivative wrt phi of Smap (only if second MF is computed). 
+
+    der_theta_theta : np.array
+        The second covariant derivative wrt theta of Smap (only if second MF is computed). 
+
+    Notes
+    -----
+    The derivatives are always computed full-sky regardless of input mask.
+        
+    &#34;&#34;&#34;    
+    def __init__(self, Smap, normalise=True, mask=None):
+        &#34;&#34;&#34;Initialise the class to compute Minkowski functionals (MFs) and extrema of Healpix scalar maps. 
+
+        Parameters
+        ----------
+        Smap : np.array
+            The input Healpix map where all the statistics will be computed.
+
+        normalise : bool, optional
+            If True, divide input Smap by its standard deviation. Default: True.
+
+        mask : np.array, optional
+            An input Healpix mask. All the statiscal quantities will be computed only within this mask. Default: None (all sky is considered).
+
+
+        &#34;&#34;&#34;    
+        self.Smap = Smap.copy()
+        self.nside = hp.get_nside(Smap)
+        if mask is None:
+            self.mask = np.ones(Smap.shape, dtype=&#39;bool&#39;)
+        else:
+            self.mask = mask
+            if hp.get_nside(mask) != self.nside:
+                raise ValueError(&#39;The map and the mask have different nside&#39;)
+        if normalise:
+            σ = self.get_variance()
+            self.Smap /= np.sqrt(σ)
+        self.grad_phi = None
+        self.der_phi_phi = None
+    
+    
+    def __repr__(self):
+        return(f&#39;map = {self.Smap}&#39;)
+    
+    def get_variance(self):
+        &#34;&#34;&#34;compute the variance of the input Healpix scalar map within the input mask. 
+
+        Returns
+        -------
+        var : float
+            The variance of the input Healpix map within the input mask.
+
+        &#34;&#34;&#34;    
+        return (np.var(self.Smap[self.mask]))
+
+    def set_pix(self, pixs):
+        &#34;&#34;&#34;return the values of the input Healpix scalar map in pixels pixs. 
+
+        Parameters
+        ----------
+        pixs : np.array
+            The indices of the input map pixels whose values of the map are returned.
+
+        Returns
+        -------
+        values : np.array
+            The values of the input Healpix scalar map in pixels pixs.
+
+        &#34;&#34;&#34;    
+        return self.Smap[pixs]
+
+    def get_gradient(self):
+        &#34;&#34;&#34;Compute the covariant and partial first derivatives of the input Healpix scalar map. 
+        It stores:
+        
+        - first covariant derivative wrt theta in self.grad_theta
+        - first partial derivative wrt phi in self.der_phi
+        - first covariant derivative wrt phi in self.grad_phi
+
+        &#34;&#34;&#34;    
+        S_grad = derivatives(self.Smap, gradient=True)
+        theta = get_theta(self.nside)
+        self.grad_theta = Scalar(S_grad[0], normalise=False)
+        self.der_phi = Scalar(np.cos(theta) * S_grad[1], normalise=False)
+        self.grad_phi = Scalar(S_grad[1], normalise=False)   
+        
+        
+    def get_hessian(self):
+        &#34;&#34;&#34;compute the covariant second derivatives of the input Healpix scalar map. 
+        It stores:
+        
+        - second covariant derivative wrt theta in self.der_theta_theta
+        - second covariant derivative wrt phi in self.der_phi_phi
+        - second covariant derivative wrt theta and phi in self.der_theta_phi
+
+        &#34;&#34;&#34;    
+        if self.grad_phi == None:
+            self.get_gradient()
+        theta = get_theta(self.nside)
+        
+        S_der_der = second_derivatives(self.grad_theta.Smap, self.der_phi.Smap)
+        
+        self.der_theta_theta = Scalar(S_der_der[0], normalise=False)
+        self.der_phi_phi = Scalar(S_der_der[1]/np.cos(theta)**2. + self.grad_theta.Smap*np.tan(theta), normalise=False)
+        self.der_theta_phi = Scalar((S_der_der[2]/np.cos(theta) - self.grad_phi.Smap * np.tan(theta)) , normalise=False)
+        
+
+    def get_κ(self, pixs):
+        &#34;&#34;&#34;Compute the geodesic curvature multiplied by the modulus of the gradient in pixels pixs. If not already computed, it computes 
+        the first and second covariant derivatives of the input map.
+
+        Parameters
+        ----------
+        pixs : np.array
+            The indices of the input map pixels where geodesic curvature is computed.
+
+        Returns
+        -------
+        k : np.array
+            The geodesic curvature in pixels `pixs`.
+
+        &#34;&#34;&#34;    
+        num = 2.*self.grad_theta.set_pix(pixs)*self.grad_phi.set_pix(pixs)*self.der_theta_phi.set_pix(pixs) - self.grad_phi.set_pix(pixs)**2. * self.der_theta_theta.set_pix(pixs) - self.grad_theta.set_pix(pixs)**2. * self.der_phi_phi.set_pix(pixs)
+        den = self.grad_theta.set_pix(pixs)**2. + self.grad_phi.set_pix(pixs)**2.
+        return num / den
+        
+
+    def V0_pixel(self, u):
+        &#34;&#34;&#34;Determine where input Healpix scalar map Smap is greater than threshold u. 
+
+        Parameters
+        ----------
+        u : float
+            The threshold considered for the computation of first Minkowski functional V0.
+
+        Returns
+        -------
+        v0map : np.array
+            a bool array with the same shape as the input map, with False where input map values are lower than threshold u.
+
+        &#34;&#34;&#34;    
+        return self.Smap&gt;u
+    
+    def V0_iter(self, u):
+        &#34;&#34;&#34;Compute the normalised first Minkowski functional v0 at the threshold u within the given mask. 
+
+        Parameters
+        ----------
+        u : float
+            The threshold considered for the computation of v0.
+
+        Returns
+        -------
+        v0 : np.array
+            First normalised Minkowski functional evaluated at threshold u within the given mask.
+
+        &#34;&#34;&#34;    
+        return np.mean(self.V0_pixel(u)[self.mask])
+    
+    def V0(self, us):
+        &#34;&#34;&#34;Compute the normalised first Minkowski functional v0 at the different thresholds us within the given mask.
+
+        Parameters
+        ----------
+        us : np.array
+            The thresholds considered for the computation of v0.
+
+        Returns
+        -------
+        v0s : np.array
+            First normalised Minkowski functional evaluated at thresholds us within the given mask.
+
+        &#34;&#34;&#34;    
+        us = np.atleast_1d(us)
+        return np.array([self.V0_iter(u) for u in tqdm(us)])
+    
+    
+    def V1_pixel(self, u, du):
+        &#34;&#34;&#34;Compute the modulus of the gradient where the values of the input map are between `u-du/2` and `u+du/2`. 
+
+        Parameters
+        ----------
+        u : float
+            The centered value of the bin considered for the computation.
+
+        du : float
+            The width of the bin considered for the computation.
+
+        Returns
+        -------
+        v1map : np.array
+            Modulus of the gradient where `u-du/2 &lt; Smap &lt; u+du/2`.
+
+        &#34;&#34;&#34;    
+        theta = get_theta(self.nside)
+        
+        areas = np.zeros_like(theta)
+
+        mask = (u + du/2. &gt; self.Smap) &amp; (u - du/2. &lt;= self.Smap) &amp; ~(np.isclose(np.cos(theta),0, atol=1.e-2))
+        pixs = np.arange(12*self.nside**2)[mask]
+        
+        areas[pixs] = np.sqrt(self.grad_theta.set_pix(pixs)**2. + self.grad_phi.set_pix(pixs)**2.)
+        return areas/du / 4.
+    
+    def V1_iter(self, u, du):
+        &#34;&#34;&#34;Compute the normalised second Minkowski functional v1 in the bin `u-du/2` and `u+du/2` within the given mask. 
+
+        Parameters
+        ----------
+        u : float
+            The centered value of the bin considered for the computation of v1.
+
+        du : float
+            The width of the bin considered for the computation of v1.
+
+        Returns
+        -------
+        v1 : float
+            Second normalised Minkowski functional evaluated in the bin u-du/2 and u+du/2 within the given mask.
+
+        &#34;&#34;&#34;    
+        return np.mean(self.V1_pixel(u, du)[self.mask])
+    
+    def V1(self, us, edges=False):
+        &#34;&#34;&#34;Compute the normalised second Minkowski functional v1 at the different thresholds us within the given mask.
+
+        Parameters
+        ----------
+        us : np.array
+            The thresholds considered for the computation of v2. See &#39;edges&#39; for details.
+
+        edges : bool, optional
+            If False, us is considered as an array of uniformly distributed thresholds. 
+            If True, us is considered as a monotonically increasing array of bin edges, including the rightmost edge, allowing for non-uniform distributions of thresholds. 
+            In this last case, the thresholds are the central value of the given bins.
+            Default: False.
+
+        Returns
+        -------
+        v1s : np.array
+            Second normalised Minkowski functional evaluated at thresholds us within the given mask.
+
+        &#34;&#34;&#34;
+        if self.grad_phi == None:
+            self.get_gradient()
+            
+        us = np.atleast_1d(us)
+        
+        if edges:
+            dus = (us[1:]-us[:-1])
+            us = (us[1:]+us[:-1])/2.
+        else:
+            if us.shape == (1,):
+                dus = np.array([0.1])
+            else:
+                dus = (us[1]-us[0])*np.ones(us.shape[0])           
+                if not (np.isclose(us[1:]-us[:-1], dus[0])).all():
+                    raise ValueError(&#39;The thresholds distributions is not uniform. Please set edges=True&#39;)
+            
+        return np.array([self.V1_iter(u, du) for (u, du) in zip(tqdm(us), dus)])
+
+    
+    def V2_pixel(self, u, du):
+        &#34;&#34;&#34;Compute the geodesic curvature multiplied by the modulus of the gradient where the values of the input map are between `u-du/2` and `u+du/2`. 
+
+        Parameters
+        ----------
+        u : float
+            The centered value of the bin considered for the computation.
+
+        du : float
+            The width of the bin considered for the computation.
+
+        Returns
+        -------
+        v2map : np.array
+            Geodesic curvature multiplied by the modulus of the gradient where `u-du/2 &lt; Smap &lt; u+du/2`.
+
+        &#34;&#34;&#34;           
+        theta = get_theta(self.nside)
+        
+        mask = (u + du/2. &gt; self.Smap) &amp; (u -du/2. &lt;= self.Smap) &amp; ~(np.isclose(np.cos(theta),0, atol=1.e-2))
+        pixs = np.arange(12*self.nside**2)[mask]
+        areas = np.zeros_like(theta)
+        areas[mask] = self.get_κ(pixs)
+        
+        return (areas/du / (2.*np.pi))
+    
+     
+    def V2_iter(self, u, du):
+        &#34;&#34;&#34;Compute the normalised third Minkowski functional v2 in the bin `u-du/2` and `u+du/2` within the given mask. 
+
+        Parameters
+        ----------
+        u : float
+            The centered value of the bin considered for the computation of v2.
+
+        du : float
+            The width of the bin considered for the computation of v2.
+
+        Returns
+        -------
+        v2 : np.array
+            Third normalised Minkowski functional evaluated in the bin u-du/2 and u+du/2 within the given mask.
+
+        &#34;&#34;&#34;    
+        return np.mean(self.V2_pixel(u, du)[self.mask])
+    
+    def V2(self, us, edges=False):
+        &#34;&#34;&#34;Compute the normalised third Minkowski functional v2 at the different thresholds us within the given mask.
+
+        Parameters
+        ----------
+        us : np.array
+            The thresholds considered for the computation of v2. See &#39;edges&#39; for details.
+
+        edges : bool, optional
+            If False, us is considered as an array of uniformly distributed thresholds. 
+            If True, us is considered as a monotonically increasing array of bin edges, including the rightmost edge, allowing for non-uniform distributions of thresholds. 
+            In this last case, the thresholds are the central value of the given bins.
+            Default: False.
+
+        Returns
+        -------
+        v2s : np.array
+            Third normalised Minkowski functional evaluated at thresholds us within the given mask.
+
+        &#34;&#34;&#34;   
+        if self.grad_phi == None:
+            self.get_gradient()
+        if self.der_phi_phi == None:
+            self.get_hessian()
+            
+        us = np.atleast_1d(us)
+        
+        if edges:
+            dus = (us[1:]-us[:-1])
+            us = (us[1:]+us[:-1])/2.
+        else:
+            if us.shape == (1,):
+                dus = np.array([0.1])
+            else:
+                dus = (us[1]-us[0])*np.ones(us.shape[0])           
+                if not (np.isclose(us[1:]-us[:-1], dus[0])).all():
+                    raise ValueError(&#39;The thresholds distributions is not uniform. Please set edges=True&#39;)
+            
+        return np.array([self.V2_iter(u, du) for (u, du) in zip(tqdm(us), dus)])
+    
+
+    
+    def get_maxima(self):
+        &#34;&#34;&#34;Find the local maxima of the input scalar map.
+
+        Returns
+        -------
+        pixels : np.array
+            Indices of the pixels which are local maxima.
+
+        values : np.array
+            Values of input map which are local maxima.
+
+        &#34;&#34;&#34;    
+        neigh = hp.get_all_neighbours(self.nside, np.arange(12*self.nside**2))
+        
+        extT = np.concatenate([self.Smap, [np.min(self.Smap)-1.]])
+        neigh_matrix = extT[neigh]
+
+        mask = np.all(self.Smap &gt; neigh_matrix, axis=0)
+        pixels = np.argwhere(mask).flatten()
+        values = self.Smap[pixels].flatten()
+
+        return(pixels, values)
+    
+    def get_minima(self):
+        &#34;&#34;&#34;Find the local minima of the input scalar map.
+
+        Returns
+        -------
+        pixels : np.array
+            Indices of the pixels which are local minima
+
+        values : np.array
+            Values of input map which are local minima
+
+        &#34;&#34;&#34;    
+        self.Smap = -self.Smap
+        pixels, values = self.get_maxima()
+        self.Smap = -self.Smap
+        
+        return(pixels, -values)</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="pynkowski.data.Scalar.V0"><code class="name flex">
+<span>def <span class="ident">V0</span></span>(<span>self, us)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Compute the normalised first Minkowski functional v0 at the different thresholds us within the given mask.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>us</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>The thresholds considered for the computation of v0.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>v0s</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>First normalised Minkowski functional evaluated at thresholds us within the given mask.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def V0(self, us):
+    &#34;&#34;&#34;Compute the normalised first Minkowski functional v0 at the different thresholds us within the given mask.
+
+    Parameters
+    ----------
+    us : np.array
+        The thresholds considered for the computation of v0.
+
+    Returns
+    -------
+    v0s : np.array
+        First normalised Minkowski functional evaluated at thresholds us within the given mask.
+
+    &#34;&#34;&#34;    
+    us = np.atleast_1d(us)
+    return np.array([self.V0_iter(u) for u in tqdm(us)])</code></pre>
+</details>
+</dd>
+<dt id="pynkowski.data.Scalar.V0_iter"><code class="name flex">
+<span>def <span class="ident">V0_iter</span></span>(<span>self, u)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Compute the normalised first Minkowski functional v0 at the threshold u within the given mask. </p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>u</code></strong> :&ensp;<code>float</code></dt>
+<dd>The threshold considered for the computation of v0.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>v0</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>First normalised Minkowski functional evaluated at threshold u within the given mask.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def V0_iter(self, u):
+    &#34;&#34;&#34;Compute the normalised first Minkowski functional v0 at the threshold u within the given mask. 
+
+    Parameters
+    ----------
+    u : float
+        The threshold considered for the computation of v0.
+
+    Returns
+    -------
+    v0 : np.array
+        First normalised Minkowski functional evaluated at threshold u within the given mask.
+
+    &#34;&#34;&#34;    
+    return np.mean(self.V0_pixel(u)[self.mask])</code></pre>
+</details>
+</dd>
+<dt id="pynkowski.data.Scalar.V0_pixel"><code class="name flex">
+<span>def <span class="ident">V0_pixel</span></span>(<span>self, u)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Determine where input Healpix scalar map Smap is greater than threshold u. </p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>u</code></strong> :&ensp;<code>float</code></dt>
+<dd>The threshold considered for the computation of first Minkowski functional V0.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>v0map</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>a bool array with the same shape as the input map, with False where input map values are lower than threshold u.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def V0_pixel(self, u):
+    &#34;&#34;&#34;Determine where input Healpix scalar map Smap is greater than threshold u. 
+
+    Parameters
+    ----------
+    u : float
+        The threshold considered for the computation of first Minkowski functional V0.
+
+    Returns
+    -------
+    v0map : np.array
+        a bool array with the same shape as the input map, with False where input map values are lower than threshold u.
+
+    &#34;&#34;&#34;    
+    return self.Smap&gt;u</code></pre>
+</details>
+</dd>
+<dt id="pynkowski.data.Scalar.V1"><code class="name flex">
+<span>def <span class="ident">V1</span></span>(<span>self, us, edges=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Compute the normalised second Minkowski functional v1 at the different thresholds us within the given mask.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>us</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>The thresholds considered for the computation of v2. See 'edges' for details.</dd>
+<dt><strong><code>edges</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>If False, us is considered as an array of uniformly distributed thresholds.
+If True, us is considered as a monotonically increasing array of bin edges, including the rightmost edge, allowing for non-uniform distributions of thresholds.
+In this last case, the thresholds are the central value of the given bins.
+Default: False.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>v1s</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>Second normalised Minkowski functional evaluated at thresholds us within the given mask.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def V1(self, us, edges=False):
+    &#34;&#34;&#34;Compute the normalised second Minkowski functional v1 at the different thresholds us within the given mask.
+
+    Parameters
+    ----------
+    us : np.array
+        The thresholds considered for the computation of v2. See &#39;edges&#39; for details.
+
+    edges : bool, optional
+        If False, us is considered as an array of uniformly distributed thresholds. 
+        If True, us is considered as a monotonically increasing array of bin edges, including the rightmost edge, allowing for non-uniform distributions of thresholds. 
+        In this last case, the thresholds are the central value of the given bins.
+        Default: False.
+
+    Returns
+    -------
+    v1s : np.array
+        Second normalised Minkowski functional evaluated at thresholds us within the given mask.
+
+    &#34;&#34;&#34;
+    if self.grad_phi == None:
+        self.get_gradient()
+        
+    us = np.atleast_1d(us)
+    
+    if edges:
+        dus = (us[1:]-us[:-1])
+        us = (us[1:]+us[:-1])/2.
+    else:
+        if us.shape == (1,):
+            dus = np.array([0.1])
+        else:
+            dus = (us[1]-us[0])*np.ones(us.shape[0])           
+            if not (np.isclose(us[1:]-us[:-1], dus[0])).all():
+                raise ValueError(&#39;The thresholds distributions is not uniform. Please set edges=True&#39;)
+        
+    return np.array([self.V1_iter(u, du) for (u, du) in zip(tqdm(us), dus)])</code></pre>
+</details>
+</dd>
+<dt id="pynkowski.data.Scalar.V1_iter"><code class="name flex">
+<span>def <span class="ident">V1_iter</span></span>(<span>self, u, du)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Compute the normalised second Minkowski functional v1 in the bin <code>u-du/2</code> and <code>u+du/2</code> within the given mask. </p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>u</code></strong> :&ensp;<code>float</code></dt>
+<dd>The centered value of the bin considered for the computation of v1.</dd>
+<dt><strong><code>du</code></strong> :&ensp;<code>float</code></dt>
+<dd>The width of the bin considered for the computation of v1.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>v1</code></strong> :&ensp;<code>float</code></dt>
+<dd>Second normalised Minkowski functional evaluated in the bin u-du/2 and u+du/2 within the given mask.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def V1_iter(self, u, du):
+    &#34;&#34;&#34;Compute the normalised second Minkowski functional v1 in the bin `u-du/2` and `u+du/2` within the given mask. 
+
+    Parameters
+    ----------
+    u : float
+        The centered value of the bin considered for the computation of v1.
+
+    du : float
+        The width of the bin considered for the computation of v1.
+
+    Returns
+    -------
+    v1 : float
+        Second normalised Minkowski functional evaluated in the bin u-du/2 and u+du/2 within the given mask.
+
+    &#34;&#34;&#34;    
+    return np.mean(self.V1_pixel(u, du)[self.mask])</code></pre>
+</details>
+</dd>
+<dt id="pynkowski.data.Scalar.V1_pixel"><code class="name flex">
+<span>def <span class="ident">V1_pixel</span></span>(<span>self, u, du)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Compute the modulus of the gradient where the values of the input map are between <code>u-du/2</code> and <code>u+du/2</code>. </p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>u</code></strong> :&ensp;<code>float</code></dt>
+<dd>The centered value of the bin considered for the computation.</dd>
+<dt><strong><code>du</code></strong> :&ensp;<code>float</code></dt>
+<dd>The width of the bin considered for the computation.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>v1map</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>Modulus of the gradient where <code>u-du/2 &lt; Smap &lt; u+du/2</code>.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def V1_pixel(self, u, du):
+    &#34;&#34;&#34;Compute the modulus of the gradient where the values of the input map are between `u-du/2` and `u+du/2`. 
+
+    Parameters
+    ----------
+    u : float
+        The centered value of the bin considered for the computation.
+
+    du : float
+        The width of the bin considered for the computation.
+
+    Returns
+    -------
+    v1map : np.array
+        Modulus of the gradient where `u-du/2 &lt; Smap &lt; u+du/2`.
+
+    &#34;&#34;&#34;    
+    theta = get_theta(self.nside)
+    
+    areas = np.zeros_like(theta)
+
+    mask = (u + du/2. &gt; self.Smap) &amp; (u - du/2. &lt;= self.Smap) &amp; ~(np.isclose(np.cos(theta),0, atol=1.e-2))
+    pixs = np.arange(12*self.nside**2)[mask]
+    
+    areas[pixs] = np.sqrt(self.grad_theta.set_pix(pixs)**2. + self.grad_phi.set_pix(pixs)**2.)
+    return areas/du / 4.</code></pre>
+</details>
+</dd>
+<dt id="pynkowski.data.Scalar.V2"><code class="name flex">
+<span>def <span class="ident">V2</span></span>(<span>self, us, edges=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Compute the normalised third Minkowski functional v2 at the different thresholds us within the given mask.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>us</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>The thresholds considered for the computation of v2. See 'edges' for details.</dd>
+<dt><strong><code>edges</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>If False, us is considered as an array of uniformly distributed thresholds.
+If True, us is considered as a monotonically increasing array of bin edges, including the rightmost edge, allowing for non-uniform distributions of thresholds.
+In this last case, the thresholds are the central value of the given bins.
+Default: False.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>v2s</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>Third normalised Minkowski functional evaluated at thresholds us within the given mask.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def V2(self, us, edges=False):
+    &#34;&#34;&#34;Compute the normalised third Minkowski functional v2 at the different thresholds us within the given mask.
+
+    Parameters
+    ----------
+    us : np.array
+        The thresholds considered for the computation of v2. See &#39;edges&#39; for details.
+
+    edges : bool, optional
+        If False, us is considered as an array of uniformly distributed thresholds. 
+        If True, us is considered as a monotonically increasing array of bin edges, including the rightmost edge, allowing for non-uniform distributions of thresholds. 
+        In this last case, the thresholds are the central value of the given bins.
+        Default: False.
+
+    Returns
+    -------
+    v2s : np.array
+        Third normalised Minkowski functional evaluated at thresholds us within the given mask.
+
+    &#34;&#34;&#34;   
+    if self.grad_phi == None:
+        self.get_gradient()
+    if self.der_phi_phi == None:
+        self.get_hessian()
+        
+    us = np.atleast_1d(us)
+    
+    if edges:
+        dus = (us[1:]-us[:-1])
+        us = (us[1:]+us[:-1])/2.
+    else:
+        if us.shape == (1,):
+            dus = np.array([0.1])
+        else:
+            dus = (us[1]-us[0])*np.ones(us.shape[0])           
+            if not (np.isclose(us[1:]-us[:-1], dus[0])).all():
+                raise ValueError(&#39;The thresholds distributions is not uniform. Please set edges=True&#39;)
+        
+    return np.array([self.V2_iter(u, du) for (u, du) in zip(tqdm(us), dus)])</code></pre>
+</details>
+</dd>
+<dt id="pynkowski.data.Scalar.V2_iter"><code class="name flex">
+<span>def <span class="ident">V2_iter</span></span>(<span>self, u, du)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Compute the normalised third Minkowski functional v2 in the bin <code>u-du/2</code> and <code>u+du/2</code> within the given mask. </p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>u</code></strong> :&ensp;<code>float</code></dt>
+<dd>The centered value of the bin considered for the computation of v2.</dd>
+<dt><strong><code>du</code></strong> :&ensp;<code>float</code></dt>
+<dd>The width of the bin considered for the computation of v2.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>v2</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>Third normalised Minkowski functional evaluated in the bin u-du/2 and u+du/2 within the given mask.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def V2_iter(self, u, du):
+    &#34;&#34;&#34;Compute the normalised third Minkowski functional v2 in the bin `u-du/2` and `u+du/2` within the given mask. 
+
+    Parameters
+    ----------
+    u : float
+        The centered value of the bin considered for the computation of v2.
+
+    du : float
+        The width of the bin considered for the computation of v2.
+
+    Returns
+    -------
+    v2 : np.array
+        Third normalised Minkowski functional evaluated in the bin u-du/2 and u+du/2 within the given mask.
+
+    &#34;&#34;&#34;    
+    return np.mean(self.V2_pixel(u, du)[self.mask])</code></pre>
+</details>
+</dd>
+<dt id="pynkowski.data.Scalar.V2_pixel"><code class="name flex">
+<span>def <span class="ident">V2_pixel</span></span>(<span>self, u, du)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Compute the geodesic curvature multiplied by the modulus of the gradient where the values of the input map are between <code>u-du/2</code> and <code>u+du/2</code>. </p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>u</code></strong> :&ensp;<code>float</code></dt>
+<dd>The centered value of the bin considered for the computation.</dd>
+<dt><strong><code>du</code></strong> :&ensp;<code>float</code></dt>
+<dd>The width of the bin considered for the computation.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>v2map</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>Geodesic curvature multiplied by the modulus of the gradient where <code>u-du/2 &lt; Smap &lt; u+du/2</code>.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def V2_pixel(self, u, du):
+    &#34;&#34;&#34;Compute the geodesic curvature multiplied by the modulus of the gradient where the values of the input map are between `u-du/2` and `u+du/2`. 
+
+    Parameters
+    ----------
+    u : float
+        The centered value of the bin considered for the computation.
+
+    du : float
+        The width of the bin considered for the computation.
+
+    Returns
+    -------
+    v2map : np.array
+        Geodesic curvature multiplied by the modulus of the gradient where `u-du/2 &lt; Smap &lt; u+du/2`.
+
+    &#34;&#34;&#34;           
+    theta = get_theta(self.nside)
+    
+    mask = (u + du/2. &gt; self.Smap) &amp; (u -du/2. &lt;= self.Smap) &amp; ~(np.isclose(np.cos(theta),0, atol=1.e-2))
+    pixs = np.arange(12*self.nside**2)[mask]
+    areas = np.zeros_like(theta)
+    areas[mask] = self.get_κ(pixs)
+    
+    return (areas/du / (2.*np.pi))</code></pre>
+</details>
+</dd>
+<dt id="pynkowski.data.Scalar.get_gradient"><code class="name flex">
+<span>def <span class="ident">get_gradient</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Compute the covariant and partial first derivatives of the input Healpix scalar map.
+It stores:</p>
+<ul>
+<li>first covariant derivative wrt theta in self.grad_theta</li>
+<li>first partial derivative wrt phi in self.der_phi</li>
+<li>first covariant derivative wrt phi in self.grad_phi</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_gradient(self):
+    &#34;&#34;&#34;Compute the covariant and partial first derivatives of the input Healpix scalar map. 
+    It stores:
+    
+    - first covariant derivative wrt theta in self.grad_theta
+    - first partial derivative wrt phi in self.der_phi
+    - first covariant derivative wrt phi in self.grad_phi
+
+    &#34;&#34;&#34;    
+    S_grad = derivatives(self.Smap, gradient=True)
+    theta = get_theta(self.nside)
+    self.grad_theta = Scalar(S_grad[0], normalise=False)
+    self.der_phi = Scalar(np.cos(theta) * S_grad[1], normalise=False)
+    self.grad_phi = Scalar(S_grad[1], normalise=False)   </code></pre>
+</details>
+</dd>
+<dt id="pynkowski.data.Scalar.get_hessian"><code class="name flex">
+<span>def <span class="ident">get_hessian</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>compute the covariant second derivatives of the input Healpix scalar map.
+It stores:</p>
+<ul>
+<li>second covariant derivative wrt theta in self.der_theta_theta</li>
+<li>second covariant derivative wrt phi in self.der_phi_phi</li>
+<li>second covariant derivative wrt theta and phi in self.der_theta_phi</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_hessian(self):
+    &#34;&#34;&#34;compute the covariant second derivatives of the input Healpix scalar map. 
+    It stores:
+    
+    - second covariant derivative wrt theta in self.der_theta_theta
+    - second covariant derivative wrt phi in self.der_phi_phi
+    - second covariant derivative wrt theta and phi in self.der_theta_phi
+
+    &#34;&#34;&#34;    
+    if self.grad_phi == None:
+        self.get_gradient()
+    theta = get_theta(self.nside)
+    
+    S_der_der = second_derivatives(self.grad_theta.Smap, self.der_phi.Smap)
+    
+    self.der_theta_theta = Scalar(S_der_der[0], normalise=False)
+    self.der_phi_phi = Scalar(S_der_der[1]/np.cos(theta)**2. + self.grad_theta.Smap*np.tan(theta), normalise=False)
+    self.der_theta_phi = Scalar((S_der_der[2]/np.cos(theta) - self.grad_phi.Smap * np.tan(theta)) , normalise=False)</code></pre>
+</details>
+</dd>
+<dt id="pynkowski.data.Scalar.get_maxima"><code class="name flex">
+<span>def <span class="ident">get_maxima</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Find the local maxima of the input scalar map.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pixels</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>Indices of the pixels which are local maxima.</dd>
+<dt><strong><code>values</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>Values of input map which are local maxima.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_maxima(self):
+    &#34;&#34;&#34;Find the local maxima of the input scalar map.
+
+    Returns
+    -------
+    pixels : np.array
+        Indices of the pixels which are local maxima.
+
+    values : np.array
+        Values of input map which are local maxima.
+
+    &#34;&#34;&#34;    
+    neigh = hp.get_all_neighbours(self.nside, np.arange(12*self.nside**2))
+    
+    extT = np.concatenate([self.Smap, [np.min(self.Smap)-1.]])
+    neigh_matrix = extT[neigh]
+
+    mask = np.all(self.Smap &gt; neigh_matrix, axis=0)
+    pixels = np.argwhere(mask).flatten()
+    values = self.Smap[pixels].flatten()
+
+    return(pixels, values)</code></pre>
+</details>
+</dd>
+<dt id="pynkowski.data.Scalar.get_minima"><code class="name flex">
+<span>def <span class="ident">get_minima</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Find the local minima of the input scalar map.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pixels</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>Indices of the pixels which are local minima</dd>
+<dt><strong><code>values</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>Values of input map which are local minima</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_minima(self):
+    &#34;&#34;&#34;Find the local minima of the input scalar map.
+
+    Returns
+    -------
+    pixels : np.array
+        Indices of the pixels which are local minima
+
+    values : np.array
+        Values of input map which are local minima
+
+    &#34;&#34;&#34;    
+    self.Smap = -self.Smap
+    pixels, values = self.get_maxima()
+    self.Smap = -self.Smap
+    
+    return(pixels, -values)</code></pre>
+</details>
+</dd>
+<dt id="pynkowski.data.Scalar.get_variance"><code class="name flex">
+<span>def <span class="ident">get_variance</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>compute the variance of the input Healpix scalar map within the input mask. </p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>var</code></strong> :&ensp;<code>float</code></dt>
+<dd>The variance of the input Healpix map within the input mask.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_variance(self):
+    &#34;&#34;&#34;compute the variance of the input Healpix scalar map within the input mask. 
+
+    Returns
+    -------
+    var : float
+        The variance of the input Healpix map within the input mask.
+
+    &#34;&#34;&#34;    
+    return (np.var(self.Smap[self.mask]))</code></pre>
+</details>
+</dd>
+<dt id="pynkowski.data.Scalar.get_κ"><code class="name flex">
+<span>def <span class="ident">get_κ</span></span>(<span>self, pixs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Compute the geodesic curvature multiplied by the modulus of the gradient in pixels pixs. If not already computed, it computes
+the first and second covariant derivatives of the input map.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>pixs</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>The indices of the input map pixels where geodesic curvature is computed.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>k</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>The geodesic curvature in pixels <code>pixs</code>.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_κ(self, pixs):
+    &#34;&#34;&#34;Compute the geodesic curvature multiplied by the modulus of the gradient in pixels pixs. If not already computed, it computes 
+    the first and second covariant derivatives of the input map.
+
+    Parameters
+    ----------
+    pixs : np.array
+        The indices of the input map pixels where geodesic curvature is computed.
+
+    Returns
+    -------
+    k : np.array
+        The geodesic curvature in pixels `pixs`.
+
+    &#34;&#34;&#34;    
+    num = 2.*self.grad_theta.set_pix(pixs)*self.grad_phi.set_pix(pixs)*self.der_theta_phi.set_pix(pixs) - self.grad_phi.set_pix(pixs)**2. * self.der_theta_theta.set_pix(pixs) - self.grad_theta.set_pix(pixs)**2. * self.der_phi_phi.set_pix(pixs)
+    den = self.grad_theta.set_pix(pixs)**2. + self.grad_phi.set_pix(pixs)**2.
+    return num / den</code></pre>
+</details>
+</dd>
+<dt id="pynkowski.data.Scalar.set_pix"><code class="name flex">
+<span>def <span class="ident">set_pix</span></span>(<span>self, pixs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>return the values of the input Healpix scalar map in pixels pixs. </p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>pixs</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>The indices of the input map pixels whose values of the map are returned.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>values</code></strong> :&ensp;<code>np.array</code></dt>
+<dd>The values of the input Healpix scalar map in pixels pixs.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_pix(self, pixs):
+    &#34;&#34;&#34;return the values of the input Healpix scalar map in pixels pixs. 
+
+    Parameters
+    ----------
+    pixs : np.array
+        The indices of the input map pixels whose values of the map are returned.
+
+    Returns
+    -------
+    values : np.array
+        The values of the input Healpix scalar map in pixels pixs.
+
+    &#34;&#34;&#34;    
+    return self.Smap[pixs]</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="pynkowski" href="index.html">pynkowski</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="pynkowski.data.Scalar" href="#pynkowski.data.Scalar">Scalar</a></code></h4>
+<ul class="two-column">
+<li><code><a title="pynkowski.data.Scalar.V0" href="#pynkowski.data.Scalar.V0">V0</a></code></li>
+<li><code><a title="pynkowski.data.Scalar.V0_iter" href="#pynkowski.data.Scalar.V0_iter">V0_iter</a></code></li>
+<li><code><a title="pynkowski.data.Scalar.V0_pixel" href="#pynkowski.data.Scalar.V0_pixel">V0_pixel</a></code></li>
+<li><code><a title="pynkowski.data.Scalar.V1" href="#pynkowski.data.Scalar.V1">V1</a></code></li>
+<li><code><a title="pynkowski.data.Scalar.V1_iter" href="#pynkowski.data.Scalar.V1_iter">V1_iter</a></code></li>
+<li><code><a title="pynkowski.data.Scalar.V1_pixel" href="#pynkowski.data.Scalar.V1_pixel">V1_pixel</a></code></li>
+<li><code><a title="pynkowski.data.Scalar.V2" href="#pynkowski.data.Scalar.V2">V2</a></code></li>
+<li><code><a title="pynkowski.data.Scalar.V2_iter" href="#pynkowski.data.Scalar.V2_iter">V2_iter</a></code></li>
+<li><code><a title="pynkowski.data.Scalar.V2_pixel" href="#pynkowski.data.Scalar.V2_pixel">V2_pixel</a></code></li>
+<li><code><a title="pynkowski.data.Scalar.get_gradient" href="#pynkowski.data.Scalar.get_gradient">get_gradient</a></code></li>
+<li><code><a title="pynkowski.data.Scalar.get_hessian" href="#pynkowski.data.Scalar.get_hessian">get_hessian</a></code></li>
+<li><code><a title="pynkowski.data.Scalar.get_maxima" href="#pynkowski.data.Scalar.get_maxima">get_maxima</a></code></li>
+<li><code><a title="pynkowski.data.Scalar.get_minima" href="#pynkowski.data.Scalar.get_minima">get_minima</a></code></li>
+<li><code><a title="pynkowski.data.Scalar.get_variance" href="#pynkowski.data.Scalar.get_variance">get_variance</a></code></li>
+<li><code><a title="pynkowski.data.Scalar.get_κ" href="#pynkowski.data.Scalar.get_κ">get_κ</a></code></li>
+<li><code><a title="pynkowski.data.Scalar.set_pix" href="#pynkowski.data.Scalar.set_pix">set_pix</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

@@ -9,3 +9,8 @@ from .theory import (TheoryP2,
                      get_μ)
 
 from .version import __version__
+
+
+
+
+__pdoc__ = {"version":False}

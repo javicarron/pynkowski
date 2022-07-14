@@ -9,6 +9,7 @@ except:
 
  
 def get_theta(nside):
+    """Define a HEALPix map with the value of θ in each pixel at the input nside"""
     theta, _ = hp.pix2ang(nside, np.arange(12 * nside ** 2))
     return np.pi/2. - theta
 
@@ -27,7 +28,7 @@ def derivatives(mapp, lmax=None, gradient=False, **kwargs):
     gradient : bool, optional
         If True, return the covariant derivatives. If False, return the partial derivatives. Default: False.
         
-    **kwargs : dict
+    **kwargs :
         Extra keywords to pass to the map2alm function.
         
     Returns
@@ -187,7 +188,7 @@ class Scalar():
 
         Returns
         -------
-        var : float, scalar
+        var : float
             The variance of the input Healpix map within the input mask.
 
         """    
@@ -198,12 +199,12 @@ class Scalar():
 
         Parameters
         ----------
-        pixs : int, array-like
+        pixs : np.array
             The indices of the input map pixels whose values of the map are returned.
 
         Returns
         -------
-        var : float, array-like
+        values : np.array
             The values of the input Healpix scalar map in pixels pixs.
 
         """    
@@ -212,6 +213,7 @@ class Scalar():
     def get_gradient(self):
         """Compute the covariant and partial first derivatives of the input Healpix scalar map. 
         It stores:
+        
         - first covariant derivative wrt theta in self.grad_theta
         - first partial derivative wrt phi in self.der_phi
         - first covariant derivative wrt phi in self.grad_phi
@@ -227,6 +229,7 @@ class Scalar():
     def get_hessian(self):
         """compute the covariant second derivatives of the input Healpix scalar map. 
         It stores:
+        
         - second covariant derivative wrt theta in self.der_theta_theta
         - second covariant derivative wrt phi in self.der_phi_phi
         - second covariant derivative wrt theta and phi in self.der_theta_phi
@@ -249,13 +252,13 @@ class Scalar():
 
         Parameters
         ----------
-        pixs : int, array-like
+        pixs : np.array
             The indices of the input map pixels where geodesic curvature is computed.
 
         Returns
         -------
-        k : float, array-like
-            The geodesic curvature in pixels pixs.
+        k : np.array
+            The geodesic curvature in pixels `pixs`.
 
         """    
         num = 2.*self.grad_theta.set_pix(pixs)*self.grad_phi.set_pix(pixs)*self.der_theta_phi.set_pix(pixs) - self.grad_phi.set_pix(pixs)**2. * self.der_theta_theta.set_pix(pixs) - self.grad_theta.set_pix(pixs)**2. * self.der_phi_phi.set_pix(pixs)
@@ -268,12 +271,13 @@ class Scalar():
 
         Parameters
         ----------
-        u : float, scalar
+        u : float
             The threshold considered for the computation of first Minkowski functional V0.
 
         Returns
         -------
-        a bool array with the same shape as the input map, with False where input map values are lower than threshold u.
+        v0map : np.array
+            a bool array with the same shape as the input map, with False where input map values are lower than threshold u.
 
         """    
         return self.Smap>u
@@ -283,13 +287,13 @@ class Scalar():
 
         Parameters
         ----------
-        u : float, scalar
+        u : float
             The threshold considered for the computation of v0.
 
         Returns
         -------
-        v0 : float, scalar 
-        First normalised Minkowski functional evaluated at threshold u within the given mask.
+        v0 : np.array
+            First normalised Minkowski functional evaluated at threshold u within the given mask.
 
         """    
         return np.mean(self.V0_pixel(u)[self.mask])
@@ -299,13 +303,13 @@ class Scalar():
 
         Parameters
         ----------
-        us : float, array-like
+        us : np.array
             The thresholds considered for the computation of v0.
 
         Returns
         -------
-        v0s : float, array-like
-        First normalised Minkowski functional evaluated at thresholds us within the given mask.
+        v0s : np.array
+            First normalised Minkowski functional evaluated at thresholds us within the given mask.
 
         """    
         us = np.atleast_1d(us)
@@ -313,20 +317,20 @@ class Scalar():
     
     
     def V1_pixel(self, u, du):
-        """Compute the modulus of the gradient where the values of the input map are between u-du/2 and u+du/2. 
+        """Compute the modulus of the gradient where the values of the input map are between `u-du/2` and `u+du/2`. 
 
         Parameters
         ----------
-        u : float, scalar
+        u : float
             The centered value of the bin considered for the computation.
 
-        du : float, scalar
+        du : float
             The width of the bin considered for the computation.
 
         Returns
         -------
-        V1 : float, array-like
-        Modulus of the gradient where u-du/2 < Smap < u+du/2.
+        v1map : np.array
+            Modulus of the gradient where `u-du/2 < Smap < u+du/2`.
 
         """    
         theta = get_theta(self.nside)
@@ -340,20 +344,20 @@ class Scalar():
         return areas/du / 4.
     
     def V1_iter(self, u, du):
-        """Compute the normalised second Minkowski functional v1 in the bin u-du/2 and u+du/2 within the given mask. 
+        """Compute the normalised second Minkowski functional v1 in the bin `u-du/2` and `u+du/2` within the given mask. 
 
         Parameters
         ----------
-        u : float, scalar
+        u : float
             The centered value of the bin considered for the computation of v1.
 
-        du : float, scalar
+        du : float
             The width of the bin considered for the computation of v1.
 
         Returns
         -------
-        v1 : float, scalar 
-        Second normalised Minkowski functional evaluated in the bin u-du/2 and u+du/2 within the given mask.
+        v1 : float
+            Second normalised Minkowski functional evaluated in the bin u-du/2 and u+du/2 within the given mask.
 
         """    
         return np.mean(self.V1_pixel(u, du)[self.mask])
@@ -363,7 +367,7 @@ class Scalar():
 
         Parameters
         ----------
-        us : float, array-like
+        us : np.array
             The thresholds considered for the computation of v2. See 'edges' for details.
 
         edges : bool, optional
@@ -374,8 +378,8 @@ class Scalar():
 
         Returns
         -------
-        v1s : float, array-like
-        Second normalised Minkowski functional evaluated at thresholds us within the given mask.
+        v1s : np.array
+            Second normalised Minkowski functional evaluated at thresholds us within the given mask.
 
         """
         if self.grad_phi == None:
@@ -398,20 +402,20 @@ class Scalar():
 
     
     def V2_pixel(self, u, du):
-        """Compute the geodesic curvature multiplied by the modulus of the gradient where the values of the input map are between u-du/2 and u+du/2. 
+        """Compute the geodesic curvature multiplied by the modulus of the gradient where the values of the input map are between `u-du/2` and `u+du/2`. 
 
         Parameters
         ----------
-        u : float, scalar
+        u : float
             The centered value of the bin considered for the computation.
 
-        du : float, scalar
+        du : float
             The width of the bin considered for the computation.
 
         Returns
         -------
-        V2 : float, array-like
-        Geodesic curvature multiplied by the modulus of the gradient where u-du/2 < Smap < u+du/2.
+        v2map : np.array
+            Geodesic curvature multiplied by the modulus of the gradient where `u-du/2 < Smap < u+du/2`.
 
         """           
         theta = get_theta(self.nside)
@@ -425,20 +429,20 @@ class Scalar():
     
      
     def V2_iter(self, u, du):
-        """Compute the normalised third Minkowski functional v2 in the bin u-du/2 and u+du/2 within the given mask. 
+        """Compute the normalised third Minkowski functional v2 in the bin `u-du/2` and `u+du/2` within the given mask. 
 
         Parameters
         ----------
-        u : float, scalar
+        u : float
             The centered value of the bin considered for the computation of v2.
 
-        du : float, scalar
+        du : float
             The width of the bin considered for the computation of v2.
 
         Returns
         -------
-        v2 : float, scalar 
-        Third normalised Minkowski functional evaluated in the bin u-du/2 and u+du/2 within the given mask.
+        v2 : np.array
+            Third normalised Minkowski functional evaluated in the bin u-du/2 and u+du/2 within the given mask.
 
         """    
         return np.mean(self.V2_pixel(u, du)[self.mask])
@@ -448,7 +452,7 @@ class Scalar():
 
         Parameters
         ----------
-        us : float, array-like
+        us : np.array
             The thresholds considered for the computation of v2. See 'edges' for details.
 
         edges : bool, optional
@@ -459,8 +463,8 @@ class Scalar():
 
         Returns
         -------
-        v2s : float, array-like
-        Third normalised Minkowski functional evaluated at thresholds us within the given mask.
+        v2s : np.array
+            Third normalised Minkowski functional evaluated at thresholds us within the given mask.
 
         """   
         if self.grad_phi == None:
@@ -490,11 +494,11 @@ class Scalar():
 
         Returns
         -------
-        pixels : int, array-like
-        the indices of the pixels which are local maxima
+        pixels : np.array
+            Indices of the pixels which are local maxima.
 
-        values : float, array-like
-        the values of input map which are local maxima
+        values : np.array
+            Values of input map which are local maxima.
 
         """    
         neigh = hp.get_all_neighbours(self.nside, np.arange(12*self.nside**2))
@@ -513,11 +517,11 @@ class Scalar():
 
         Returns
         -------
-        pixels : int, array-like
-        the indices of the pixels which are local minima
+        pixels : np.array
+            Indices of the pixels which are local minima
 
-        values : float, array-like
-        the values of input map which are local minima
+        values : np.array
+            Values of input map which are local minima
 
         """    
         self.Smap = -self.Smap
@@ -527,3 +531,4 @@ class Scalar():
         return(pixels, -values)
         
         
+__all__ = ["Scalar"]
