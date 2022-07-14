@@ -1,6 +1,6 @@
 # Pynkowski
 
-A Python package to compute Minkowski Functionals, as well as their Gaussian isotropic expected values.
+A Python package to compute Minkowski Functionals of input fields, as well as their expected values in the case of Gaussian isotropic fields.
 
 The formats supported for **input data** are the following:
 - Scalar HEALPix maps, as the ones used by [healpy](https://healpy.readthedocs.io/) (see paper).
