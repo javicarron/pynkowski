@@ -14,6 +14,8 @@ The **theoretical expectation** for Gaussian isotropic fields are implemented in
 
 ...and more to come, feel free to contact us (by [email](mailto:javier.carron@roma2.infn.it) or opening an issue) to implement more theoretical expectations.
 
+The repository can be found on [https://github.com/javicarron/pynkowski](https://github.com/javicarron/pynkowski).
+
 ## Installation
 
 This package can be installed with: 
@@ -27,11 +29,19 @@ The dependencies are:
 - [healpy](https://healpy.readthedocs.io/)
 - [tqdm](https://github.com/tqdm/tqdm) (optional, notebook only)
 
+## Documentation
+
+The documentation can be found on [https://javicarron.github.io/pynkowski](https://javicarron.github.io/pynkowski)
 
 ## Example notebooks
 
 - Get the Minkowski Functionals of a CMB temperature $T$ map and compare with theory.
 - Get the Minkowski Functionals of a CMB polarization $P^2=Q^2+U^2$ map and compare with theory.
+
+
+## Authors
+
+This package has been developed by [Javier Carrón Duque](https:www.javiercarron.com) and Alessandro Carones.
 '''
 
 from .data import Scalar
