@@ -40,4 +40,4 @@ The documentation can be found on [https://javicarron.github.io/pynkowski](https
 
 ## Authors
 
-This package has been developed by [Javier Carrón Duque](https:www.javiercarron.com) and Alessandro Carones.
+This package has been developed by [Javier Carrón Duque](https://www.javiercarron.com) and Alessandro Carones.
