@@ -1,4 +1,4 @@
-'''This module contains all the classes to compute Minkwoski Functionals on data. So far, they are the following:
+'''This module contains all the classes to compute Minkowski Functionals on data. So far, they are the following:
 
 - [`scalar`](data/scalar.html): scalar maps on the sphere, in the healpix convention,
 
