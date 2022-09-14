@@ -11,5 +11,6 @@ dist/
 .ipynb_checkpoints/
 Pynkowski_test.ipynb
 
+*.egg-info
 *.kate-swp
 *.pyc
