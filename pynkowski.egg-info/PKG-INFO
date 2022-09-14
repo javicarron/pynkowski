@@ -1,0 +1,14 @@
+Metadata-Version: 2.1
+Name: pynkowski
+Version: 0.2.1
+Summary: A Python package to compute Minkowski Functionals of input fields, as well as their expected values in the case of Gaussian isotropic fields.
+Home-page: https://github.com/javicarron/pynkowski
+Author: Carrón Duque, Javier and Carones, Alessando
+Author-email: javier.carron@roma2.infn.it
+License: GNU General Public License v3.0
+Keywords: minkowski-functionals,non-gaussian,spherical,anisotropy,healpy,polarization,minkowski,cmb,healpix,curvature,cosmology,gaussian,maps,topology
+Platform: UNKNOWN
+License-File: LICENSE
+
+UNKNOWN
+
