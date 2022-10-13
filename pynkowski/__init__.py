@@ -31,7 +31,7 @@ The dependencies are:
 
 ## Documentation
 
-The documentation can be found on [https://javicarron.github.io/pynkowski](https://javicarron.github.io/pynkowski)
+The documentation can be found on <https://javicarron.github.io/pynkowski>
 
 ## Example notebooks
 
