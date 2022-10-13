@@ -130,7 +130,7 @@
 </span><span id="L-2"><a href="#L-2"><span class="linenos">  2</span></a><span class="kn">import</span> <span class="nn">healpy</span> <span class="k">as</span> <span class="nn">hp</span>
 </span><span id="L-3"><a href="#L-3"><span class="linenos">  3</span></a>
 </span><span id="L-4"><a href="#L-4"><span class="linenos">  4</span></a><span class="k">try</span><span class="p">:</span>
-</span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a>    <span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a>    <span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
 </span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="k">except</span><span class="p">:</span>
 </span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a>    <span class="n">tqdm</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span>
 </span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;tqdm not loaded&#39;</span><span class="p">)</span>
@@ -224,7 +224,7 @@
 </span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a>        <span class="k">return</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;map = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Smap</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a>    
 </span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a>    <span class="k">def</span> <span class="nf">get_variance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a>        <span class="sd">&quot;&quot;&quot;compute the variance of the input Healpix scalar map within the input mask. </span>
+</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a>        <span class="sd">&quot;&quot;&quot;Compute the variance of the input Healpix scalar map within the input mask. </span>
 </span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>
 </span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a><span class="sd">        Returns</span>
 </span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a><span class="sd">        -------</span>
@@ -235,7 +235,7 @@
 </span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a>        <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Smap</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">]))</span>
 </span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a>
 </span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a>    <span class="k">def</span> <span class="nf">set_pix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pixs</span><span class="p">):</span>
-</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>        <span class="sd">&quot;&quot;&quot;return the values of the input Healpix scalar map in pixels pixs. </span>
+</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>        <span class="sd">&quot;&quot;&quot;Return the values of the input Healpix scalar map in pixels pixs. </span>
 </span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a>
 </span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a><span class="sd">        Parameters</span>
 </span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a><span class="sd">        ----------</span>
@@ -267,7 +267,7 @@
 </span><span id="L-139"><a href="#L-139"><span class="linenos">139</span></a>        
 </span><span id="L-140"><a href="#L-140"><span class="linenos">140</span></a>        
 </span><span id="L-141"><a href="#L-141"><span class="linenos">141</span></a>    <span class="k">def</span> <span class="nf">get_hessian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a>        <span class="sd">&quot;&quot;&quot;compute the covariant second derivatives of the input Healpix scalar map. </span>
+</span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a>        <span class="sd">&quot;&quot;&quot;Compute the covariant second derivatives of the input Healpix scalar map. </span>
 </span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a><span class="sd">        It stores:</span>
 </span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a><span class="sd">        </span>
 </span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a><span class="sd">        - second covariant derivative wrt theta in self.der_theta_theta</span>
@@ -297,8 +297,8 @@
 </span><span id="L-169"><a href="#L-169"><span class="linenos">169</span></a>
 </span><span id="L-170"><a href="#L-170"><span class="linenos">170</span></a><span class="sd">        Returns</span>
 </span><span id="L-171"><a href="#L-171"><span class="linenos">171</span></a><span class="sd">        -------</span>
-</span><span id="L-172"><a href="#L-172"><span class="linenos">172</span></a><span class="sd">        k : np.array</span>
-</span><span id="L-173"><a href="#L-173"><span class="linenos">173</span></a><span class="sd">            The geodesic curvature in pixels `pixs`.</span>
+</span><span id="L-172"><a href="#L-172"><span class="linenos">172</span></a><span class="sd">        κ : np.array</span>
+</span><span id="L-173"><a href="#L-173"><span class="linenos">173</span></a><span class="sd">            The geodesic curvature in pixels `pixs`, already multiplied by the modulus of the gradient.</span>
 </span><span id="L-174"><a href="#L-174"><span class="linenos">174</span></a>
 </span><span id="L-175"><a href="#L-175"><span class="linenos">175</span></a><span class="sd">        &quot;&quot;&quot;</span>    
 </span><span id="L-176"><a href="#L-176"><span class="linenos">176</span></a>        <span class="n">num</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">grad_theta</span><span class="o">.</span><span class="n">set_pix</span><span class="p">(</span><span class="n">pixs</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">grad_phi</span><span class="o">.</span><span class="n">set_pix</span><span class="p">(</span><span class="n">pixs</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">der_theta_phi</span><span class="o">.</span><span class="n">set_pix</span><span class="p">(</span><span class="n">pixs</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">grad_phi</span><span class="o">.</span><span class="n">set_pix</span><span class="p">(</span><span class="n">pixs</span><span class="p">)</span><span class="o">**</span><span class="mf">2.</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">der_theta_theta</span><span class="o">.</span><span class="n">set_pix</span><span class="p">(</span><span class="n">pixs</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">grad_theta</span><span class="o">.</span><span class="n">set_pix</span><span class="p">(</span><span class="n">pixs</span><span class="p">)</span><span class="o">**</span><span class="mf">2.</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">der_phi_phi</span><span class="o">.</span><span class="n">set_pix</span><span class="p">(</span><span class="n">pixs</span><span class="p">)</span>
@@ -317,7 +317,7 @@
 </span><span id="L-189"><a href="#L-189"><span class="linenos">189</span></a><span class="sd">        Returns</span>
 </span><span id="L-190"><a href="#L-190"><span class="linenos">190</span></a><span class="sd">        -------</span>
 </span><span id="L-191"><a href="#L-191"><span class="linenos">191</span></a><span class="sd">        v0map : np.array</span>
-</span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a><span class="sd">            a bool array with the same shape as the input map, with False where input map values are lower than threshold u.</span>
+</span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a><span class="sd">            A bool array with the same shape as the input map, with False where input map values are lower than threshold u.</span>
 </span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a>
 </span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a><span class="sd">        &quot;&quot;&quot;</span>    
 </span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Smap</span><span class="o">&gt;</span><span class="n">u</span>
@@ -673,7 +673,7 @@
 </span><span id="Scalar-97"><a href="#Scalar-97"><span class="linenos"> 97</span></a>        <span class="k">return</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;map = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">Smap</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </span><span id="Scalar-98"><a href="#Scalar-98"><span class="linenos"> 98</span></a>    
 </span><span id="Scalar-99"><a href="#Scalar-99"><span class="linenos"> 99</span></a>    <span class="k">def</span> <span class="nf">get_variance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Scalar-100"><a href="#Scalar-100"><span class="linenos">100</span></a>        <span class="sd">&quot;&quot;&quot;compute the variance of the input Healpix scalar map within the input mask. </span>
+</span><span id="Scalar-100"><a href="#Scalar-100"><span class="linenos">100</span></a>        <span class="sd">&quot;&quot;&quot;Compute the variance of the input Healpix scalar map within the input mask. </span>
 </span><span id="Scalar-101"><a href="#Scalar-101"><span class="linenos">101</span></a>
 </span><span id="Scalar-102"><a href="#Scalar-102"><span class="linenos">102</span></a><span class="sd">        Returns</span>
 </span><span id="Scalar-103"><a href="#Scalar-103"><span class="linenos">103</span></a><span class="sd">        -------</span>
@@ -684,7 +684,7 @@
 </span><span id="Scalar-108"><a href="#Scalar-108"><span class="linenos">108</span></a>        <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Smap</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">]))</span>
 </span><span id="Scalar-109"><a href="#Scalar-109"><span class="linenos">109</span></a>
 </span><span id="Scalar-110"><a href="#Scalar-110"><span class="linenos">110</span></a>    <span class="k">def</span> <span class="nf">set_pix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pixs</span><span class="p">):</span>
-</span><span id="Scalar-111"><a href="#Scalar-111"><span class="linenos">111</span></a>        <span class="sd">&quot;&quot;&quot;return the values of the input Healpix scalar map in pixels pixs. </span>
+</span><span id="Scalar-111"><a href="#Scalar-111"><span class="linenos">111</span></a>        <span class="sd">&quot;&quot;&quot;Return the values of the input Healpix scalar map in pixels pixs. </span>
 </span><span id="Scalar-112"><a href="#Scalar-112"><span class="linenos">112</span></a>
 </span><span id="Scalar-113"><a href="#Scalar-113"><span class="linenos">113</span></a><span class="sd">        Parameters</span>
 </span><span id="Scalar-114"><a href="#Scalar-114"><span class="linenos">114</span></a><span class="sd">        ----------</span>
@@ -716,7 +716,7 @@
 </span><span id="Scalar-140"><a href="#Scalar-140"><span class="linenos">140</span></a>        
 </span><span id="Scalar-141"><a href="#Scalar-141"><span class="linenos">141</span></a>        
 </span><span id="Scalar-142"><a href="#Scalar-142"><span class="linenos">142</span></a>    <span class="k">def</span> <span class="nf">get_hessian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Scalar-143"><a href="#Scalar-143"><span class="linenos">143</span></a>        <span class="sd">&quot;&quot;&quot;compute the covariant second derivatives of the input Healpix scalar map. </span>
+</span><span id="Scalar-143"><a href="#Scalar-143"><span class="linenos">143</span></a>        <span class="sd">&quot;&quot;&quot;Compute the covariant second derivatives of the input Healpix scalar map. </span>
 </span><span id="Scalar-144"><a href="#Scalar-144"><span class="linenos">144</span></a><span class="sd">        It stores:</span>
 </span><span id="Scalar-145"><a href="#Scalar-145"><span class="linenos">145</span></a><span class="sd">        </span>
 </span><span id="Scalar-146"><a href="#Scalar-146"><span class="linenos">146</span></a><span class="sd">        - second covariant derivative wrt theta in self.der_theta_theta</span>
@@ -746,8 +746,8 @@
 </span><span id="Scalar-170"><a href="#Scalar-170"><span class="linenos">170</span></a>
 </span><span id="Scalar-171"><a href="#Scalar-171"><span class="linenos">171</span></a><span class="sd">        Returns</span>
 </span><span id="Scalar-172"><a href="#Scalar-172"><span class="linenos">172</span></a><span class="sd">        -------</span>
-</span><span id="Scalar-173"><a href="#Scalar-173"><span class="linenos">173</span></a><span class="sd">        k : np.array</span>
-</span><span id="Scalar-174"><a href="#Scalar-174"><span class="linenos">174</span></a><span class="sd">            The geodesic curvature in pixels `pixs`.</span>
+</span><span id="Scalar-173"><a href="#Scalar-173"><span class="linenos">173</span></a><span class="sd">        κ : np.array</span>
+</span><span id="Scalar-174"><a href="#Scalar-174"><span class="linenos">174</span></a><span class="sd">            The geodesic curvature in pixels `pixs`, already multiplied by the modulus of the gradient.</span>
 </span><span id="Scalar-175"><a href="#Scalar-175"><span class="linenos">175</span></a>
 </span><span id="Scalar-176"><a href="#Scalar-176"><span class="linenos">176</span></a><span class="sd">        &quot;&quot;&quot;</span>    
 </span><span id="Scalar-177"><a href="#Scalar-177"><span class="linenos">177</span></a>        <span class="n">num</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">grad_theta</span><span class="o">.</span><span class="n">set_pix</span><span class="p">(</span><span class="n">pixs</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">grad_phi</span><span class="o">.</span><span class="n">set_pix</span><span class="p">(</span><span class="n">pixs</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">der_theta_phi</span><span class="o">.</span><span class="n">set_pix</span><span class="p">(</span><span class="n">pixs</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">grad_phi</span><span class="o">.</span><span class="n">set_pix</span><span class="p">(</span><span class="n">pixs</span><span class="p">)</span><span class="o">**</span><span class="mf">2.</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">der_theta_theta</span><span class="o">.</span><span class="n">set_pix</span><span class="p">(</span><span class="n">pixs</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">grad_theta</span><span class="o">.</span><span class="n">set_pix</span><span class="p">(</span><span class="n">pixs</span><span class="p">)</span><span class="o">**</span><span class="mf">2.</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">der_phi_phi</span><span class="o">.</span><span class="n">set_pix</span><span class="p">(</span><span class="n">pixs</span><span class="p">)</span>
@@ -766,7 +766,7 @@
 </span><span id="Scalar-190"><a href="#Scalar-190"><span class="linenos">190</span></a><span class="sd">        Returns</span>
 </span><span id="Scalar-191"><a href="#Scalar-191"><span class="linenos">191</span></a><span class="sd">        -------</span>
 </span><span id="Scalar-192"><a href="#Scalar-192"><span class="linenos">192</span></a><span class="sd">        v0map : np.array</span>
-</span><span id="Scalar-193"><a href="#Scalar-193"><span class="linenos">193</span></a><span class="sd">            a bool array with the same shape as the input map, with False where input map values are lower than threshold u.</span>
+</span><span id="Scalar-193"><a href="#Scalar-193"><span class="linenos">193</span></a><span class="sd">            A bool array with the same shape as the input map, with False where input map values are lower than threshold u.</span>
 </span><span id="Scalar-194"><a href="#Scalar-194"><span class="linenos">194</span></a>
 </span><span id="Scalar-195"><a href="#Scalar-195"><span class="linenos">195</span></a><span class="sd">        &quot;&quot;&quot;</span>    
 </span><span id="Scalar-196"><a href="#Scalar-196"><span class="linenos">196</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Smap</span><span class="o">&gt;</span><span class="n">u</span>
@@ -1134,7 +1134,7 @@ An input Healpix mask. All the statiscal quantities will be computed only within
     </div>
     <a class="headerlink" href="#Scalar.get_variance"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="Scalar.get_variance-99"><a href="#Scalar.get_variance-99"><span class="linenos"> 99</span></a>    <span class="k">def</span> <span class="nf">get_variance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Scalar.get_variance-100"><a href="#Scalar.get_variance-100"><span class="linenos">100</span></a>        <span class="sd">&quot;&quot;&quot;compute the variance of the input Healpix scalar map within the input mask. </span>
+</span><span id="Scalar.get_variance-100"><a href="#Scalar.get_variance-100"><span class="linenos">100</span></a>        <span class="sd">&quot;&quot;&quot;Compute the variance of the input Healpix scalar map within the input mask. </span>
 </span><span id="Scalar.get_variance-101"><a href="#Scalar.get_variance-101"><span class="linenos">101</span></a>
 </span><span id="Scalar.get_variance-102"><a href="#Scalar.get_variance-102"><span class="linenos">102</span></a><span class="sd">        Returns</span>
 </span><span id="Scalar.get_variance-103"><a href="#Scalar.get_variance-103"><span class="linenos">103</span></a><span class="sd">        -------</span>
@@ -1146,7 +1146,7 @@ An input Healpix mask. All the statiscal quantities will be computed only within
 </span></pre></div>
 
 
-            <div class="docstring"><p>compute the variance of the input Healpix scalar map within the input mask. </p>
+            <div class="docstring"><p>Compute the variance of the input Healpix scalar map within the input mask. </p>
 
 <h6 id="returns">Returns</h6>
 
@@ -1170,7 +1170,7 @@ The variance of the input Healpix map within the input mask.</li>
     </div>
     <a class="headerlink" href="#Scalar.set_pix"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="Scalar.set_pix-110"><a href="#Scalar.set_pix-110"><span class="linenos">110</span></a>    <span class="k">def</span> <span class="nf">set_pix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pixs</span><span class="p">):</span>
-</span><span id="Scalar.set_pix-111"><a href="#Scalar.set_pix-111"><span class="linenos">111</span></a>        <span class="sd">&quot;&quot;&quot;return the values of the input Healpix scalar map in pixels pixs. </span>
+</span><span id="Scalar.set_pix-111"><a href="#Scalar.set_pix-111"><span class="linenos">111</span></a>        <span class="sd">&quot;&quot;&quot;Return the values of the input Healpix scalar map in pixels pixs. </span>
 </span><span id="Scalar.set_pix-112"><a href="#Scalar.set_pix-112"><span class="linenos">112</span></a>
 </span><span id="Scalar.set_pix-113"><a href="#Scalar.set_pix-113"><span class="linenos">113</span></a><span class="sd">        Parameters</span>
 </span><span id="Scalar.set_pix-114"><a href="#Scalar.set_pix-114"><span class="linenos">114</span></a><span class="sd">        ----------</span>
@@ -1187,7 +1187,7 @@ The variance of the input Healpix map within the input mask.</li>
 </span></pre></div>
 
 
-            <div class="docstring"><p>return the values of the input Healpix scalar map in pixels pixs. </p>
+            <div class="docstring"><p>Return the values of the input Healpix scalar map in pixels pixs. </p>
 
 <h6 id="parameters">Parameters</h6>
 
@@ -1258,7 +1258,7 @@ It stores:</p>
     </div>
     <a class="headerlink" href="#Scalar.get_hessian"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="Scalar.get_hessian-142"><a href="#Scalar.get_hessian-142"><span class="linenos">142</span></a>    <span class="k">def</span> <span class="nf">get_hessian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Scalar.get_hessian-143"><a href="#Scalar.get_hessian-143"><span class="linenos">143</span></a>        <span class="sd">&quot;&quot;&quot;compute the covariant second derivatives of the input Healpix scalar map. </span>
+</span><span id="Scalar.get_hessian-143"><a href="#Scalar.get_hessian-143"><span class="linenos">143</span></a>        <span class="sd">&quot;&quot;&quot;Compute the covariant second derivatives of the input Healpix scalar map. </span>
 </span><span id="Scalar.get_hessian-144"><a href="#Scalar.get_hessian-144"><span class="linenos">144</span></a><span class="sd">        It stores:</span>
 </span><span id="Scalar.get_hessian-145"><a href="#Scalar.get_hessian-145"><span class="linenos">145</span></a><span class="sd">        </span>
 </span><span id="Scalar.get_hessian-146"><a href="#Scalar.get_hessian-146"><span class="linenos">146</span></a><span class="sd">        - second covariant derivative wrt theta in self.der_theta_theta</span>
@@ -1278,7 +1278,7 @@ It stores:</p>
 </span></pre></div>
 
 
-            <div class="docstring"><p>compute the covariant second derivatives of the input Healpix scalar map. 
+            <div class="docstring"><p>Compute the covariant second derivatives of the input Healpix scalar map. 
 It stores:</p>
 
 <ul>
@@ -1312,8 +1312,8 @@ It stores:</p>
 </span><span id="Scalar.get_κ-170"><a href="#Scalar.get_κ-170"><span class="linenos">170</span></a>
 </span><span id="Scalar.get_κ-171"><a href="#Scalar.get_κ-171"><span class="linenos">171</span></a><span class="sd">        Returns</span>
 </span><span id="Scalar.get_κ-172"><a href="#Scalar.get_κ-172"><span class="linenos">172</span></a><span class="sd">        -------</span>
-</span><span id="Scalar.get_κ-173"><a href="#Scalar.get_κ-173"><span class="linenos">173</span></a><span class="sd">        k : np.array</span>
-</span><span id="Scalar.get_κ-174"><a href="#Scalar.get_κ-174"><span class="linenos">174</span></a><span class="sd">            The geodesic curvature in pixels `pixs`.</span>
+</span><span id="Scalar.get_κ-173"><a href="#Scalar.get_κ-173"><span class="linenos">173</span></a><span class="sd">        κ : np.array</span>
+</span><span id="Scalar.get_κ-174"><a href="#Scalar.get_κ-174"><span class="linenos">174</span></a><span class="sd">            The geodesic curvature in pixels `pixs`, already multiplied by the modulus of the gradient.</span>
 </span><span id="Scalar.get_κ-175"><a href="#Scalar.get_κ-175"><span class="linenos">175</span></a>
 </span><span id="Scalar.get_κ-176"><a href="#Scalar.get_κ-176"><span class="linenos">176</span></a><span class="sd">        &quot;&quot;&quot;</span>    
 </span><span id="Scalar.get_κ-177"><a href="#Scalar.get_κ-177"><span class="linenos">177</span></a>        <span class="n">num</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">grad_theta</span><span class="o">.</span><span class="n">set_pix</span><span class="p">(</span><span class="n">pixs</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">grad_phi</span><span class="o">.</span><span class="n">set_pix</span><span class="p">(</span><span class="n">pixs</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">der_theta_phi</span><span class="o">.</span><span class="n">set_pix</span><span class="p">(</span><span class="n">pixs</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">grad_phi</span><span class="o">.</span><span class="n">set_pix</span><span class="p">(</span><span class="n">pixs</span><span class="p">)</span><span class="o">**</span><span class="mf">2.</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">der_theta_theta</span><span class="o">.</span><span class="n">set_pix</span><span class="p">(</span><span class="n">pixs</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">grad_theta</span><span class="o">.</span><span class="n">set_pix</span><span class="p">(</span><span class="n">pixs</span><span class="p">)</span><span class="o">**</span><span class="mf">2.</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">der_phi_phi</span><span class="o">.</span><span class="n">set_pix</span><span class="p">(</span><span class="n">pixs</span><span class="p">)</span>
@@ -1335,8 +1335,8 @@ The indices of the input map pixels where geodesic curvature is computed.</li>
 <h6 id="returns">Returns</h6>
 
 <ul>
-<li><strong>k</strong> (np.array):
-The geodesic curvature in pixels <code>pixs</code>.</li>
+<li><strong>κ</strong> (np.array):
+The geodesic curvature in pixels <code>pixs</code>, already multiplied by the modulus of the gradient.</li>
 </ul>
 </div>
 
@@ -1364,7 +1364,7 @@ The geodesic curvature in pixels <code>pixs</code>.</li>
 </span><span id="Scalar.V0_pixel-190"><a href="#Scalar.V0_pixel-190"><span class="linenos">190</span></a><span class="sd">        Returns</span>
 </span><span id="Scalar.V0_pixel-191"><a href="#Scalar.V0_pixel-191"><span class="linenos">191</span></a><span class="sd">        -------</span>
 </span><span id="Scalar.V0_pixel-192"><a href="#Scalar.V0_pixel-192"><span class="linenos">192</span></a><span class="sd">        v0map : np.array</span>
-</span><span id="Scalar.V0_pixel-193"><a href="#Scalar.V0_pixel-193"><span class="linenos">193</span></a><span class="sd">            a bool array with the same shape as the input map, with False where input map values are lower than threshold u.</span>
+</span><span id="Scalar.V0_pixel-193"><a href="#Scalar.V0_pixel-193"><span class="linenos">193</span></a><span class="sd">            A bool array with the same shape as the input map, with False where input map values are lower than threshold u.</span>
 </span><span id="Scalar.V0_pixel-194"><a href="#Scalar.V0_pixel-194"><span class="linenos">194</span></a>
 </span><span id="Scalar.V0_pixel-195"><a href="#Scalar.V0_pixel-195"><span class="linenos">195</span></a><span class="sd">        &quot;&quot;&quot;</span>    
 </span><span id="Scalar.V0_pixel-196"><a href="#Scalar.V0_pixel-196"><span class="linenos">196</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Smap</span><span class="o">&gt;</span><span class="n">u</span>
@@ -1384,7 +1384,7 @@ The threshold considered for the computation of first Minkowski functional V0.</
 
 <ul>
 <li><strong>v0map</strong> (np.array):
-a bool array with the same shape as the input map, with False where input map values are lower than threshold u.</li>
+A bool array with the same shape as the input map, with False where input map values are lower than threshold u.</li>
 </ul>
 </div>
 

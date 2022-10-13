@@ -10,7 +10,7 @@ import numpy as np
 import healpy as hp
 
 try:
-    from tqdm.notebook import tqdm
+    from tqdm.auto import tqdm
 except:
     tqdm = lambda x: x
     print('tqdm not loaded')

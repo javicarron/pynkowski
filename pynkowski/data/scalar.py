@@ -2,7 +2,7 @@ import numpy as np
 import healpy as hp
 
 try:
-    from tqdm.notebook import tqdm
+    from tqdm.auto import tqdm
 except:
     tqdm = lambda x: x
     print('tqdm not loaded')
@@ -96,7 +96,7 @@ class Scalar():
         return(f'map = {self.Smap}')
     
     def get_variance(self):
-        """compute the variance of the input Healpix scalar map within the input mask. 
+        """Compute the variance of the input Healpix scalar map within the input mask. 
 
         Returns
         -------
@@ -107,7 +107,7 @@ class Scalar():
         return (np.var(self.Smap[self.mask]))
 
     def set_pix(self, pixs):
-        """return the values of the input Healpix scalar map in pixels pixs. 
+        """Return the values of the input Healpix scalar map in pixels pixs. 
 
         Parameters
         ----------
@@ -139,7 +139,7 @@ class Scalar():
         
         
     def get_hessian(self):
-        """compute the covariant second derivatives of the input Healpix scalar map. 
+        """Compute the covariant second derivatives of the input Healpix scalar map. 
         It stores:
         
         - second covariant derivative wrt theta in self.der_theta_theta
@@ -169,8 +169,8 @@ class Scalar():
 
         Returns
         -------
-        k : np.array
-            The geodesic curvature in pixels `pixs`.
+        κ : np.array
+            The geodesic curvature in pixels `pixs`, already multiplied by the modulus of the gradient.
 
         """    
         num = 2.*self.grad_theta.set_pix(pixs)*self.grad_phi.set_pix(pixs)*self.der_theta_phi.set_pix(pixs) - self.grad_phi.set_pix(pixs)**2. * self.der_theta_theta.set_pix(pixs) - self.grad_theta.set_pix(pixs)**2. * self.der_phi_phi.set_pix(pixs)
@@ -189,7 +189,7 @@ class Scalar():
         Returns
         -------
         v0map : np.array
-            a bool array with the same shape as the input map, with False where input map values are lower than threshold u.
+            A bool array with the same shape as the input map, with False where input map values are lower than threshold u.
 
         """    
         return self.Smap>u
