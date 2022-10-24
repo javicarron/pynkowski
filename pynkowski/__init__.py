@@ -35,8 +35,8 @@ The documentation can be found on <https://javicarron.github.io/pynkowski>
 
 ## Example notebooks
 
-- Get the Minkowski Functionals of a CMB temperature $T$ map and compare with theory.
-- Get the Minkowski Functionals of a CMB polarization $P^2=Q^2+U^2$ map and compare with theory.
+- [Get the Minkowski Functionals of a CMB temperature $T$ map and compare with theory](https://github.com/javicarron/pynkowski/blob/main/examples/Temperature.ipynb).
+- Get the Minkowski Functionals of a CMB polarization $P^2=Q^2+U^2$ map and compare with theory (coming soon).
 
 
 ## Authors
