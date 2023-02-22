@@ -110,7 +110,7 @@ class TheoryP2():
         The derivative of the covariance function at the origin for the sum of two squared Gaussian isotropic fields.
         
     """    
-    def __init__(self, us=None, Cls=None, μ=None, average_bin=True, edges=False):
+    def __init__(self, us=None, cls=None, μ=None, average_bin=True, edges=False):
         """Class to compute the expected values of Minkowski functionals (MFs) for a Gaussian isotropic scalar field defined on the sphere.
 
         """    
@@ -131,15 +131,17 @@ class TheoryP2():
                     self.us = us
                     self.dus = (us[1]-us[0])*np.ones(us.shape[0])
 
-        if (Cls is not None) and (μ is None):
-            if (Cls.ndim == 2) and (Cls.shape[0]==2):
-                cls = (cls[0]+cls[1])/2.
-            elif (Cls.ndim == 1):
-                cls = cls/2.
+        if (cls is not None) and (μ is None):
+            if (cls.ndim == 2) and (cls.shape[0]==2):
+                clss = (cls[0]+cls[1])/2.
+            elif (cls.ndim == 1):
+                clss = cls/2.
             else:
                 raise ValueError(r"Cls dimension has to be either (2,lmax+1) or (lmax+1)")
-                
-        self.μ = define_mu(Cls,μ)   
+        else:
+            clss=cls
+            
+        self.μ = define_mu(clss,μ)   
         if not average_bin:
             self.dus = 0.*self.dus
         
