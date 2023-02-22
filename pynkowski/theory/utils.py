@@ -3,7 +3,7 @@ import numpy as np
 
 def get_μ(cls):
     """Compute the first derivative of the covariance function at the origin for a Gaussian field 
-    defined on the sphere with angular power spectrum 'cls'.
+    defined on the sphere with angular power spectrum 'cls', which are normalised to unit variance.
 
     Parameters
     ----------
