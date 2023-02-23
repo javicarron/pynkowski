@@ -4,7 +4,6 @@
 pynkowski/__pycache__/
 pynkowski/data/__pycache__/
 pynkowski/theory/__pycache__/
-pynkowski/data/__pycache__/__init__.cpython-39.pyc
 pynkowski/pynkowski.egg-info/
 sphinx/
 dist/
