@@ -3,20 +3,22 @@
 A Python package to compute Minkowski Functionals of input fields, as well as their expected values in the case of Gaussian isotropic fields.
 
 The formats supported for **input data** are the following:
-- Scalar HEALPix maps, as the ones used by [healpy](https://healpy.readthedocs.io/) (see paper).
 
-...and more to come, feel free to contact us (by [email](mailto:javier.carron@roma2.infn.it) or opening an issue) to implement more schemes.
+- Scalar HEALPix maps, as the ones used by [healpy](https://healpy.readthedocs.io/) (see [paper 1](https://arxiv.org/abs/2211.07562)).
+
+...and more to come, feel free to contact us (by email [[1](mailto:javier.carron@roma2.infn.it) and [2](mailto:alessandro.carones@roma2.infn.it )] or opening an issue) to implement more schemes.
 
 
-The **theoretical expectation** for Gaussian isotropic fields are implemented in the following cases:
-- Gaussian scalar maps on the sphere (such as CMB $T$, see paper).
-- $\chi^2$ maps on the sphere (such as CMB $P^2$, see paper).
+The **theoretical expectation** for different fields are implemented in the following cases:
 
-...and more to come, feel free to contact us (by [email](mailto:javier.carron@roma2.infn.it) or opening an issue) to implement more theoretical expectations.
+- Gaussian scalar maps on the sphere (such as CMB $T$, see [paper 1](https://arxiv.org/abs/2211.07562)).
+- $\chi^2$ maps on the sphere (such as CMB $P^2$, see [paper 1](https://arxiv.org/abs/2211.07562)).
+
+...and more to come, feel free to contact us (by email [[1](mailto:javier.carron@roma2.infn.it) and [2](mailto:alessandro.carones@roma2.infn.it )] or opening an issue) to implement more theoretical expectations.
 
 The repository can be found on [https://github.com/javicarron/pynkowski](https://github.com/javicarron/pynkowski).
 
-## Installation
+# Installation
 
 This package can be installed with: 
 ```
@@ -24,24 +26,39 @@ pip install pynkowski
 ```
 
 The dependencies are:
+
 - [numpy](https://numpy.org/)
 - [scipy](https://scipy.org/)
 - [healpy](https://healpy.readthedocs.io/)
-- [tqdm](https://github.com/tqdm/tqdm) (optional, notebook only)
+- [tqdm](https://github.com/tqdm/tqdm) (optional)
 
-## Documentation
+# Documentation
 
-The documentation can be found on <https://javicarron.github.io/pynkowski>
+The documentation can be found on [https://javicarron.github.io/pynkowski](https://javicarron.github.io/pynkowski).
 
-## Example notebooks
-
-- [Get the Minkowski Functionals of a CMB temperature $T$ map and compare with theory](https://github.com/javicarron/pynkowski/blob/main/examples/Temperature.ipynb).
-- Get the Minkowski Functionals of a CMB polarization $P^2=Q^2+U^2$ map and compare with theory (coming soon).
+This package is divided into two modules: `data` and `theory`. Each module has a submodule for each kind of dataset or theoretical field, plus a general utilities submodule. In this way, extending the code to a new usecase is reduced to creating a new submodule. The structure is the following:
 
 
-## Authors
+- [`data`](https://javicarron.github.io/pynkowski/pynkowski/data.html)
+    - [`scalar`](https://javicarron.github.io/pynkowski/pynkowski/data/scalar.html)
+    - [`utils`](https://javicarron.github.io/pynkowski/pynkowski/data/utils.html)
+  
+  
+- [`theory`](https://javicarron.github.io/pynkowski/pynkowski/theory.html)
+    - [`temperature`](https://javicarron.github.io/pynkowski/pynkowski/theory/temperature.html)
+    - [`p2`](https://javicarron.github.io/pynkowski/pynkowski/theory/p2.html)
+    - [`utils`](https://javicarron.github.io/pynkowski/pynkowski/theory/utils.html)
 
-This package has been developed by [Javier Carrón Duque](https:www.javiercarron.com) and Alessandro Carones.
+
+# Example notebooks
+
+- [Minkowski Functionals of a CMB temperature map and comparison with theory](https://github.com/javicarron/pynkowski/blob/main/examples/Temperature.ipynb).
+- [Minkowski Functionals of a CMB polarization P² map and comparison with theory](https://github.com/javicarron/pynkowski/blob/main/examples/P2.ipynb).
+
+# Authors
+
+This package has been developed by [Javier Carrón Duque](https://www.javiercarron.com) and Alessandro Carones.
+
 '''
 
 from .data import Scalar
