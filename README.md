@@ -5,7 +5,7 @@ A Python package to compute Minkowski Functionals of input fields, as well as th
 The formats supported for **input data** are the following:
 
 - Scalar HEALPix maps, as the ones used by [healpy](https://healpy.readthedocs.io/) (see [paper 1](https://arxiv.org/abs/2211.07562)).
-- Polarisation HEALPix maps in the $SO(3)$ formalism (coming  soon, see [paper 2](https://arxiv.org/abs/2301.13191).
+- Polarisation HEALPix maps in the $SO(3)$ formalism (coming  soon, see [paper 2](https://arxiv.org/abs/2301.13191)).
 
 ...and more to come, feel free to contact us (by email [[1](mailto:javier.carron@roma2.infn.it) and [2](mailto:alessandro.carones@roma2.infn.it )] or opening an issue) to implement more schemes.
 
@@ -14,7 +14,7 @@ The **theoretical expectation** for different fields are implemented in the foll
 
 - Gaussian scalar maps on the sphere (such as CMB $T$, see [paper 1](https://arxiv.org/abs/2211.07562)).
 - $\chi^2$ maps on the sphere (such as CMB $P^2$, see [paper 1](https://arxiv.org/abs/2211.07562)).
-- Spin 2 maps in the $SO(3)$ formalism (coming  soon, see [paper 2](https://arxiv.org/abs/2301.13191).
+- Spin 2 maps in the $SO(3)$ formalism (coming  soon, see [paper 2](https://arxiv.org/abs/2301.13191)).
 
 ...and more to come, feel free to contact us (by email [[1](mailto:javier.carron@roma2.infn.it) and [2](mailto:alessandro.carones@roma2.infn.it )] or opening an issue) to implement more theoretical expectations.
 
