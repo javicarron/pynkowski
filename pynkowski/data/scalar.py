@@ -280,7 +280,7 @@ class Scalar():
         Parameters
         ----------
         us : np.array
-            The thresholds considered for the computation of v2. See 'edges' for details.
+            The thresholds considered for the computation of v1. See 'edges' for details.
 
         edges : bool, optional
             If False, us is considered as an array of uniformly distributed thresholds. 
@@ -308,7 +308,7 @@ class Scalar():
             else:
                 dus = (us[1]-us[0])*np.ones(us.shape[0])           
                 if not (np.isclose(us[1:]-us[:-1], dus[0])).all():
-                    raise ValueError('The thresholds distributions is not uniform. Please set edges=True')
+                    raise ValueError('The threshold distribution is not uniform. Please set edges=True')
             
         return np.array([self.V1_iter(u, du) for (u, du) in zip(tqdm(us), dus)])
 
