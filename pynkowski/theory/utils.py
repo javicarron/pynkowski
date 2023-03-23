@@ -1,6 +1,25 @@
  
 import numpy as np
 
+def get_σ(cls):
+    """Compute the variance of a field with an angular power spectrum 'cls'.
+
+    Parameters
+    ----------
+    cls : np.array
+        The angular power spectrum of the Gaussian field.
+    
+    Returns
+    -------
+    σ² : float
+        The variance of the field.
+    
+    """
+    cls = np.array(cls, dtype=float)
+    ℓ = np.arange(cls.shape[0])
+    return np.sum(cls * (2.*ℓ+1.) / (4.*np.pi))
+
+
 def get_μ(cls):
     """Compute the first derivative of the covariance function at the origin for a Gaussian field 
     defined on the sphere with angular power spectrum 'cls', which are normalised to unit variance.
