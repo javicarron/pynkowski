@@ -1,5 +1,6 @@
  
 import numpy as np
+from scipy.special import eval_hermitenorm, gamma, comb, factorial, gammainc
 
 def get_σ(cls):
     """Compute the variance of a field with an angular power spectrum 'cls'.
@@ -100,9 +101,191 @@ def subsample_us(us, dus, iters=1_000):
     return np.vstack([np.linspace(u-du/2, u+du/2, iters) for u, du in zip(us, dus)])
 
 
+def flag(kj, k):
+    """Compute flag coefficients.
+
+    Parameters
+    ----------
+    ki : int
+        The upper index of the flag coefficient.
+        
+    k : int
+        The lower index of the flag coefficient.
+    
+    Returns
+    -------
+    flag : float
+        The value of the float coefficient.
+    
+    """
+    assert np.all(kj>=k), 'The first argument must be larger than the second.'
+    return comb(kj, k) * omega(kj) / (omega(k) * omega(kj-k))
+    
+def omega(j):
+    """Compute the volume of the $j$—dimensional ball, $\omega_j$.
+
+    Parameters
+    ----------
+    j : int
+        The dimension of the ball.
+    
+    Returns
+    -------
+    omega : float
+        The volume of the $j$—dimensional ball.
+    
+    """
+    return np.pi**(j/2.) / gamma(j/2. +1.)
 
 
-__all__ = ["get_μ", "define_mu", "define_us_for_V"]
+def rho(k, us):
+    """Compute the density functions $\rho_k(us)$ for Gaussian fields needed for the Gaussian Kinematic Formula.
+
+    Parameters
+    ----------
+    k : int
+        The order of the density function.
+        
+    us : np.array
+        The thresholds where the density function is evaluated.
+    
+    Returns
+    -------
+    rho : np.array
+        The density function evaluated at the thresholds.
+    
+    """
+    if k==0:
+        return 1. - norm.cdf(us)
+    else:
+        return 1. / (2. * np.pi)**(k/2.) * norm.pdf(us) * eval_hermitenorm(k-1, us)
+    
+def rho_Chi2(k, dof, us):
+    """Compute the density functions $\rho_{k, \Chi^2}(us)$ for $\Chi^2_k$ fields (with $k$ degrees of freedom), needed for the Gaussian Kinematic Formula.
+
+    Parameters
+    ----------
+    k : int
+        The order of the density function.
+        
+    dof : int
+        The degrees of freedom of the $\Chi^2$.
+        
+    us : np.array
+        The thresholds where the density function is evaluated.
+    
+    Returns
+    -------
+    rho : np.array
+        The density function evaluated at the thresholds.
+    
+    """
+    if k==0:
+        return 1.- (us >= 0.) * gammainc(dof/2., us/2.)
+    else:
+        factor = (us >= 0.) * us**((dof-k)/2.) * np.exp(-us/2.) / ((2.*np.pi)**(k/2.) * gamma(dof/2.) * 2.**((dof-2)/2.))
+        summ = np.zeros_like(us)
+        for l in np.arange(0, ((k-1)//2)+1):
+            for m in np.arange(0,k-1-2*l+1):
+                summ += (dof>= k - m - 2*l) * comb(dof-1, k-1-m-2*l) * (-1)**(k-1+m+l) * factorial(k-1) / (factorial(m) * factorial(l) * 2**l ) * us**(m+l)
+        return factor*summ
+
+def __prepare_lkc(dim, lkc_ambient):
+    """Define the Lipschitz–Killing Curvatures of the ambient manifold as the default ones (unit volume and the rest are 0), or verify their consistency. 
+    If no argument is given, it defaults to a default 2D space.
+
+    Parameters
+    ----------
+    dim : int, optional
+        The dimension of the ambient manifold.
+        
+    lkc_ambient : list, optional
+        A list of the Lipschitz–Killing Curvatures of the ambient manifold. Its lenght must be `dim+1` if both arguments are given.
+        
+    Returns
+    ----------
+    dim : int 
+        The dimension of the ambient manifold.
+        
+    lkc_ambient : list or None, optional
+        A list of the Lipschitz–Killing Curvatures of the ambient manifold.
+    """
+    if lkc_ambient is None: 
+        if dim is None:
+            dim = 2
+        lkc_ambient = np.zeros(dim+1)
+        lkc_ambient[-1] = 1.
+    else:
+        if dim is None:
+            dim = len(lkc_ambient) -1
+        else:
+            assert len(lkc_ambient) == dim +1, 'If both dim and lkc_ambient are given, len(lkc_ambient) == dim +1'
+    return dim, lkc_ambient
+    
+def LKC(j, us, mu, dim=None, lkc_ambient=None):
+    """Compute the expected value of the Lipschitz–Killing Curvatures (LKC) of the excursion set for Gaussian Isotropic fields.
+
+    Parameters
+    ----------
+    j : int
+        The index of the LKC.
+        
+    us : np.array
+        The thresholds where the LKC is evaluated.
+
+    mu : float
+        The value of the derivative of the covariance function at the origin for the field.
+        
+    dim : int, optional
+        The dimension of the ambient manifold.
+        
+    lkc_ambient : list, optional
+        A list of the Lipschitz–Killing Curvatures of the ambient manifold. Its lenght must be `dim+1` if `dim` is also given.
+        
+    Returns
+    ----------
+    LKC : np.array
+        The expected value of the Lipschitz–Killing Curvatures at the thresholds.
+    """
+    dim, lkc_ambient = __prepare_lkc(dim, lkc_ambient)
+    result = np.zeros_like(us)
+    for k in np.arange(0,dim-j+1):
+        result += flag(k+j, k) * rho(k, us) * lkc_ambient[k+j] * mu**(k/2.)
+    return result
+    
+def LKC_P2(j, us, mu, dim=None, lkc_ambient=None):
+    """Compute the expected value of the Lipschitz–Killing Curvatures (LKC) of the excursion set  for $\Chi^2_2$ fields.
+
+    Parameters
+    ----------
+    j : int
+        The index of the LKC.
+        
+    us : np.array
+        The thresholds where the LKC is evaluated.
+
+    mu : float
+        The value of the derivative of the covariance function at the origin for the original Gaussian fields.
+        
+    dim : int, optional
+        The dimension of the ambient manifold.
+        
+    lkc_ambient : list, optional
+        A list of the Lipschitz–Killing Curvatures of the ambient manifold. Its lenght must be `dim+1` if `dim` is also given.
+        
+    Returns
+    ----------
+    LKC : np.array
+        The expected value of the Lipschitz–Killing Curvatures at the thresholds.
+    """
+    dim, lkc_ambient = __prepare_lkc(dim, lkc_ambient)
+    result = np.zeros_like(us)
+    for k in np.arange(0,dim-j+1):
+        result += flag(k+j, k) * rho_Chi2(k, 2, us) * lkc_ambient[k+j] * mu**(k/2.)
+    return result
+    
+
+__all__ = ["get_μ", "define_mu", "subsample_us", "flag", "omega", "rho", "rho_Chi2", "LKC", "LKC_P2"]
 
 __docformat__ = "numpy"
 
