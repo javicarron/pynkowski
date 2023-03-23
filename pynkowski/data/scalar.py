@@ -7,7 +7,7 @@ except:
     tqdm = lambda x: x
     print('tqdm not loaded')
     
-from .utils import get_theta, derivatives, second_derivatives
+from .utils import get_theta, healpix_derivatives, healpix_second_derivatives
  
  
  
@@ -77,7 +77,7 @@ class Scalar():
 
 
         """    
-        self.Smap = Smap.copy()
+        self.field = Smap.copy()
         self.nside = hp.get_nside(Smap)
         if mask is None:
             self.mask = np.ones(Smap.shape, dtype='bool')
@@ -86,8 +86,8 @@ class Scalar():
             if hp.get_nside(mask) != self.nside:
                 raise ValueError('The map and the mask have different nside')
         if normalise:
-            σ = self.get_variance()
-            self.Smap /= np.sqrt(σ)
+            σ2 = self.get_variance()
+            self.field /= np.sqrt(σ2)
         self.grad_phi = None
         self.der_phi_phi = None
     
@@ -104,7 +104,7 @@ class Scalar():
             The variance of the input Healpix map within the input mask.
 
         """    
-        return (np.var(self.Smap[self.mask]))
+        return (np.var(self.field[self.mask]))
 
     def set_pix(self, pixs):
         """Return the values of the input Healpix scalar map in pixels pixs. 
@@ -131,7 +131,7 @@ class Scalar():
         - first covariant derivative wrt phi in self.grad_phi
 
         """    
-        S_grad = derivatives(self.Smap, gradient=True)
+        S_grad = healpix_derivatives(self.Smap, gradient=True)
         theta = get_theta(self.nside)
         self.grad_theta = Scalar(S_grad[0], normalise=False)
         self.der_phi = Scalar(np.cos(theta) * S_grad[1], normalise=False)
@@ -151,7 +151,7 @@ class Scalar():
             self.get_gradient()
         theta = get_theta(self.nside)
         
-        S_der_der = second_derivatives(self.grad_theta.Smap, self.der_phi.Smap)
+        S_der_der = healpix_second_derivatives(self.grad_theta.Smap, self.der_phi.Smap)
         
         self.der_theta_theta = Scalar(S_der_der[0], normalise=False)
         self.der_phi_phi = Scalar(S_der_der[1]/np.cos(theta)**2. + self.grad_theta.Smap*np.tan(theta), normalise=False)
@@ -192,7 +192,7 @@ class Scalar():
             A bool array with the same shape as the input map, with False where input map values are lower than threshold u.
 
         """    
-        return self.Smap>u
+        return self.field>u
     
     def V0_iter(self, u):
         """Compute the normalised first Minkowski functional v0 at the threshold u within the given mask. 

@@ -74,7 +74,7 @@ def define_mu(cls,μ):
     if (cls is None) and (μ is None):
         return 1.
     
-def define_us_for_V(us,dus,iters=1000):
+def subsample_us(us, dus, iters=1_000):
     """Return the thresholds where MFs (except for v0) are computed before averaging within the bins 'dus'.
 
     Parameters
