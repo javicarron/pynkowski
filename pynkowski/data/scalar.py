@@ -93,7 +93,7 @@ class Scalar():
     
     
     def __repr__(self):
-        return(f'map = {self.Smap}')
+        return(f'map = {self.field}')
     
     def get_variance(self):
         """Compute the variance of the input Healpix scalar map within the input mask. 
@@ -120,7 +120,7 @@ class Scalar():
             The values of the input Healpix scalar map in pixels pixs.
 
         """    
-        return self.Smap[pixs]
+        return self.field[pixs]
 
     def get_gradient(self):
         """Compute the covariant and partial first derivatives of the input Healpix scalar map. 
@@ -131,7 +131,7 @@ class Scalar():
         - first covariant derivative wrt phi in self.grad_phi
 
         """    
-        S_grad = healpix_derivatives(self.Smap, gradient=True)
+        S_grad = healpix_derivatives(self.field, gradient=True)
         theta = get_theta(self.nside)
         self.grad_theta = Scalar(S_grad[0], normalise=False)
         self.der_phi = Scalar(np.cos(theta) * S_grad[1], normalise=False)
@@ -151,11 +151,11 @@ class Scalar():
             self.get_gradient()
         theta = get_theta(self.nside)
         
-        S_der_der = healpix_second_derivatives(self.grad_theta.Smap, self.der_phi.Smap)
+        S_der_der = healpix_second_derivatives(self.grad_theta.field, self.der_phi.field)
         
         self.der_theta_theta = Scalar(S_der_der[0], normalise=False)
-        self.der_phi_phi = Scalar(S_der_der[1]/np.cos(theta)**2. + self.grad_theta.Smap*np.tan(theta), normalise=False)
-        self.der_theta_phi = Scalar((S_der_der[2]/np.cos(theta) - self.grad_phi.Smap * np.tan(theta)) , normalise=False)
+        self.der_phi_phi = Scalar(S_der_der[1]/np.cos(theta)**2. + self.grad_theta.field*np.tan(theta), normalise=False)
+        self.der_theta_phi = Scalar((S_der_der[2]/np.cos(theta) - self.grad_phi.field * np.tan(theta)) , normalise=False)
         
 
     def get_κ(self, pixs):
@@ -249,7 +249,7 @@ class Scalar():
         
         areas = np.zeros_like(theta)
 
-        mask = (u + du/2. > self.Smap) & (u - du/2. <= self.Smap) & ~(np.isclose(np.cos(theta),0, atol=1.e-2))
+        mask = (u + du/2. > self.field) & (u - du/2. <= self.field) & ~(np.isclose(np.cos(theta),0, atol=1.e-2))
         pixs = np.arange(12*self.nside**2)[mask]
         
         areas[pixs] = np.sqrt(self.grad_theta.set_pix(pixs)**2. + self.grad_phi.set_pix(pixs)**2.)
@@ -332,7 +332,7 @@ class Scalar():
         """           
         theta = get_theta(self.nside)
         
-        mask = (u + du/2. > self.Smap) & (u -du/2. <= self.Smap) & ~(np.isclose(np.cos(theta),0, atol=1.e-2))
+        mask = (u + du/2. > self.field) & (u -du/2. <= self.field) & ~(np.isclose(np.cos(theta),0, atol=1.e-2))
         pixs = np.arange(12*self.nside**2)[mask]
         areas = np.zeros_like(theta)
         areas[mask] = self.get_κ(pixs)
@@ -415,12 +415,12 @@ class Scalar():
         """    
         neigh = hp.get_all_neighbours(self.nside, np.arange(12*self.nside**2))
         
-        extT = np.concatenate([self.Smap, [np.min(self.Smap)-1.]])
+        extT = np.concatenate([self.field, [np.min(self.field)-1.]])
         neigh_matrix = extT[neigh]
 
-        mask = np.all(self.Smap > neigh_matrix, axis=0)
+        mask = np.all(self.field > neigh_matrix, axis=0)
         pixels = np.argwhere(mask).flatten()
-        values = self.Smap[pixels].flatten()
+        values = self.field[pixels].flatten()
 
         return(pixels, values)
     
@@ -436,9 +436,9 @@ class Scalar():
             Values of input map which are local minima
 
         """    
-        self.Smap = -self.Smap
+        self.field = -self.field
         pixels, values = self.get_maxima()
-        self.Smap = -self.Smap
+        self.field = -self.field
         
         return(pixels, -values)
         
