@@ -2,7 +2,6 @@ import numpy as np
 import healpy as hp
 
 
- 
 def get_theta(nside):
     """Define a HEALPix map with the value of θ in each pixel at the input `nside`
     

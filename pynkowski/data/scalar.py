@@ -9,8 +9,6 @@ except:
     
 from .utils_da import get_theta, healpix_derivatives, healpix_second_derivatives
  
- 
- 
 
 class Scalar():
     """Class to compute Minkowski functionals (MFs) and extrema of Healpix scalar maps. It computes and stores spatial first and

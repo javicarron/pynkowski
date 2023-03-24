@@ -14,8 +14,13 @@
 # except:
 #     tqdm = lambda x: x
 #     print('tqdm not loaded')
-    
-from .scalar import Scalar
+
+try:
+    import healpy as hp
+    from .scalar import Scalar
+except ImportError:
+    hp = None
+    print("healpy was not loaded, some functionality will be unavailable")
  
 
         
