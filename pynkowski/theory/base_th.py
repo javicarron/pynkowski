@@ -54,3 +54,8 @@ class TheoryField():
         return(f'"{self.name}" TheoryField, {self.dim}D, σ = {self.sigma:.1f}, μ = {self.mu:.1f}')
         
       
+__all__ = ["TheoryField"]
+
+__docformat__ = "numpy"
+
+ 

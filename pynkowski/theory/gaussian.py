@@ -3,7 +3,11 @@ Isotropic Gaussian fields defined on particular spaces.
 """
 import numpy as np
 from base_th import TheoryField
-        
+from utils_th import get_μ, get_σ, LKC, lkc_ambient_dict
+from scipy.special import comb
+from scipy.stats import norm
+
+
 class Gaussian(TheoryField):
     """General class for Isotropic Gaussian fields, to be used directly or as the base for specific Gaussian fields.
 
