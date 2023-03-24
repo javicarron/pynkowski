@@ -65,7 +65,8 @@ This package has been developed by [Javier Carrón Duque](https://www.javiercarr
 
 from .data import Scalar
 
-from .theory import (get_μ,
+from .theory import (TheoryField,
+                     get_μ,
                      TheoryTemperature,
                      TheoryP2)
 
