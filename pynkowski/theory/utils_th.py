@@ -209,8 +209,8 @@ def __prepare_lkc(dim, lkc_ambient):
     dim : int 
         The dimension of the ambient manifold.
         
-    lkc_ambient : list or None, optional
-        A list of the Lipschitz–Killing Curvatures of the ambient manifold.
+    lkc_ambient : np.array or None, optional
+        An array of the Lipschitz–Killing Curvatures of the ambient manifold.
     """
     if lkc_ambient is None: 
         if dim is None:
@@ -241,8 +241,8 @@ def LKC(j, us, mu, dim=None, lkc_ambient=None):
     dim : int, optional
         The dimension of the ambient manifold.
         
-    lkc_ambient : list, optional
-        A list of the Lipschitz–Killing Curvatures of the ambient manifold. Its lenght must be `dim+1` if `dim` is also given.
+    lkc_ambient : np.array, optional
+        An array of the Lipschitz–Killing Curvatures of the ambient manifold. Its lenght must be `dim+1` if `dim` is also given.
         
     Returns
     ----------
@@ -272,8 +272,8 @@ def LKC_P2(j, us, mu, dim=None, lkc_ambient=None):
     dim : int, optional
         The dimension of the ambient manifold.
         
-    lkc_ambient : list, optional
-        A list of the Lipschitz–Killing Curvatures of the ambient manifold. Its lenght must be `dim+1` if `dim` is also given.
+    lkc_ambient : np.array, optional
+        An array of the Lipschitz–Killing Curvatures of the ambient manifold. Its lenght must be `dim+1` if `dim` is also given.
         
     Returns
     ----------
@@ -286,8 +286,15 @@ def LKC_P2(j, us, mu, dim=None, lkc_ambient=None):
         result += flag(k+j, k) * rho_Chi2(k, 2, us) * lkc_ambient[k+j] * mu**(k/2.)
     return result
     
+    
+lkc_ambient_dict = {"2D":np.array([0., 0., 1.]),
+                    "3D":np.array([0., 0., 0., 1.]),
+                    "sphere":np.array([0., 0., 4.*np.pi]) / (4.*np.pi),
+                    "SO3":np.array([0., 6.*np.pi, 0., 4.*np.pi**2]) / (4.*np.pi**2)}
+"""Dictionary with the characterization of different spaces through their Lipschitz–Killing Curvatures"""
 
-__all__ = ["get_μ", "define_mu", "subsample_us", "flag", "omega", "rho", "rho_Chi2", "LKC", "LKC_P2"]
+
+__all__ = ["get_μ", "define_mu", "subsample_us", "flag", "omega", "rho", "rho_Chi2", "LKC", "LKC_P2", "lkc_ambient_dict"]
 
 __docformat__ = "numpy"
 

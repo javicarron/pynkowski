@@ -7,7 +7,7 @@ except:
     tqdm = lambda x: x
     print('tqdm not loaded')
     
-from .utils import get_theta, healpix_derivatives, healpix_second_derivatives
+from .utils_da import get_theta, healpix_derivatives, healpix_second_derivatives
  
  
  
