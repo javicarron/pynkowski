@@ -1,6 +1,6 @@
-
 import numpy as np
 from scipy.special import comb, gamma
+from utils_st import subsample_us, define_ubins
 
 def __MF_prefactor(d,j):
     """Compute the prefactor in the definition of Minkowski Functionals. This factor multiplies the integral of the curvatures.
@@ -48,9 +48,10 @@ def V0(field, us, edges=False, verbose=True):
     
     """
     us = np.atleast_1d(us)
+    us, dus = define_ubins(us, edges)
     
     if isinstance(field, TheoryField):
-        us = mf.theory.subsample_us(us, dus)
+        us = subsample_us(us, dus)
         try:
             return np.mean(field.V0(us), axis=1)
         except AttributeError:
@@ -98,7 +99,7 @@ def V1(field, us, edges=False, verbose=True):
     us, dus = define_ubins(us, edges)
     
     if isinstance(field, TheoryField):
-        us = mf.theory.subsample_us(us, dus)
+        us = subsample_us(us, dus)
         try:
             return np.mean(field.V1(us), axis=1)
         except AttributeError:
@@ -204,7 +205,7 @@ def V2(field, us, edges=False, verbose=True):
     us, dus = define_ubins(us, edges)
     
     if isinstance(field, TheoryField):
-        us = mf.theory.subsample_us(us, dus)
+        us = subsample_us(us, dus)
         try:
             return np.mean(field.V2(us), axis=1)
         except AttributeError:
