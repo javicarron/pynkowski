@@ -1,6 +1,8 @@
  
 import numpy as np
 from scipy.special import eval_hermitenorm, gamma, comb, factorial, gammainc
+from scipy.stats import norm
+
 
 def get_σ(cls):
     """Compute the variance of a field with an angular power spectrum 'cls'.
