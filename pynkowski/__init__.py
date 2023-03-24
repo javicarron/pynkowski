@@ -66,6 +66,8 @@ This package has been developed by [Javier Carrón Duque](https://www.javiercarr
 from .data import Scalar
 
 from .theory import (TheoryField,
+                     Gaussian,
+                     SphericalGaussian,
                      get_μ,
                      TheoryTemperature,
                      TheoryP2)
