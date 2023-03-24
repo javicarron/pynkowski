@@ -6,18 +6,7 @@
 - There is also a general utilities submodule called [`utils`](stats/utils.html).
 '''
 
-
-# import numpy as np
-# import healpy as hp
-
-try:
-    from tqdm.auto import tqdm
-except:
-    tqdm = lambda x: x
-    print('tqdm not loaded')
-    
-# from .scalar import Scalar
- 
+from .minkowski import V0, V1, V2
 
         
 #__all__ = ["Scalar"]
