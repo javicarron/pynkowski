@@ -68,7 +68,7 @@ from .data import Scalar
 from .theory import (TheoryField,
                      Gaussian,
                      SphericalGaussian,
-                     get_μ,
+                    #  get_μ,
                      TheoryTemperature,
                      TheoryP2)
 
