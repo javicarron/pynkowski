@@ -15,6 +15,8 @@
 #     tqdm = lambda x: x
 #     print('tqdm not loaded')
 
+from .base_da import DataField
+
 try:
     import healpy as hp
     from .scalar import Scalar
