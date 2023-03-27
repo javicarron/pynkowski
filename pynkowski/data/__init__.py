@@ -19,6 +19,7 @@ from .base_da import DataField
 
 try:
     import healpy as hp
+    from .healpix import Healpix
     from .scalar import Scalar
 except ImportError:
     hp = None
@@ -26,5 +27,5 @@ except ImportError:
  
 
         
-#__all__ = ["Scalar"]
+# __all__ = ["Healpix", "Scalar"]
 __docformat__ = "numpy"

@@ -63,7 +63,7 @@ This package has been developed by [Javier Carrón Duque](https://www.javiercarr
 
 '''
 
-from .data import Scalar
+from .data import Scalar, Healpix
 
 from .theory import (TheoryField,
                      Gaussian,
