@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.special import comb, gamma
-from utils_st import subsample_us, define_ubins
+from .utils_st import subsample_us, define_ubins
 
 def __MF_prefactor(d,j):
     """Compute the prefactor in the definition of Minkowski Functionals. This factor multiplies the integral of the curvatures.

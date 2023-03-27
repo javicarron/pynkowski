@@ -72,6 +72,8 @@ from .theory import (TheoryField,
                      TheoryTemperature,
                      TheoryP2)
 
+from .stats import (V0, V1, V2)
+
 from .__version import __version__
 
 
