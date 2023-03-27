@@ -1,6 +1,14 @@
 import numpy as np
 from scipy.special import comb, gamma
 from .utils_st import subsample_us, define_ubins
+from ..data.base_da import DataField
+from ..theory.base_th import TheoryField
+
+try:
+    from tqdm.auto import tqdm
+except:
+    tqdm = lambda x: x
+    print('tqdm not loaded')
 
 def __MF_prefactor(d,j):
     """Compute the prefactor in the definition of Minkowski Functionals. This factor multiplies the integral of the curvatures.
