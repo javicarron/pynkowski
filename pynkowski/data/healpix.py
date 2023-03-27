@@ -13,7 +13,7 @@ class Healpix(DataField):
         Values of the scalar field in HEALPix format in RING scheme.
         
     normalise : bool, optional
-        If `True`, the map is normalise to have unit variance. Note: the mean of the map is not forced to be 0.
+        If `True`, the map is normalised to have unit variance. Note: the mean of the map is not forced to be 0.
     
     mask : np.array or None, optional
         Mask where the field if considered. It is a bool array of the same shape that `field`.
@@ -81,11 +81,6 @@ class Healpix(DataField):
         """    
         self.first_der = np.array(healpix_derivatives(self.field, gradient=True, lmax=lmax))  # order: θ, ϕ
         theta = get_theta(self.nside)
-        
-        # self.grad_theta = Scalar(S_grad[0], normalise=False)
-        # self.der_phi = Scalar(np.cos(theta) * S_grad[1], normalise=False)
-        # self.grad_phi = Scalar(S_grad[1], normalise=False)   
-        
             
     def get_second_der(self, lmax=None):
         """Compute the covariant second derivatives of the input Healpix scalar map. 
@@ -110,11 +105,6 @@ class Healpix(DataField):
         self.second_der = np.array([second_partial[0],
                                     second_partial[1]/np.cos(theta)**2. + self.first_der[0]*np.tan(theta),
                                     (second_partial[2]/np.cos(theta) - self.first_der[1] * np.tan(theta))])  #order θθ, ϕϕ, θϕ
-        
-        # self.der_theta_theta = Scalar(S_der_der[0], normalise=False)
-        # self.der_phi_phi = Scalar(S_der_der[1]/np.cos(theta)**2. + self.grad_theta.Smap*np.tan(theta), normalise=False)
-        # self.der_theta_phi = Scalar((S_der_der[2]/np.cos(theta) - self.grad_phi.Smap * np.tan(theta)) , normalise=False)
-        
 
 
 
