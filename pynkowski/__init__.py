@@ -68,6 +68,8 @@ from .data import Scalar, Healpix
 from .theory import (TheoryField,
                      Gaussian,
                      SphericalGaussian,
+                     Chi2,
+                     SphericalChi2,
                     #  get_μ,
                      TheoryTemperature,
                      TheoryP2)

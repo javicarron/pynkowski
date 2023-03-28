@@ -229,7 +229,7 @@ def LKC(j, us, mu, dim=None, lkc_ambient=None):
         result += flag(k+j, k) * rho(k, us) * lkc_ambient[k+j] * mu**(k/2.)
     return result
     
-def LKC_P2(j, us, mu, dim=None, lkc_ambient=None):
+def LKC_Chi2(j, us, mu, dof=2, dim=None, lkc_ambient=None):
     """Compute the expected value of the Lipschitz–Killing Curvatures (LKC) of the excursion set  for $\Chi^2_2$ fields.
 
     Parameters
@@ -242,6 +242,10 @@ def LKC_P2(j, us, mu, dim=None, lkc_ambient=None):
 
     mu : float
         The value of the derivative of the covariance function at the origin for the original Gaussian fields.
+
+    dof : int, optional
+        Number of degrees of freedom of the $\Chi^2$ field (i.e., number of squared Gaussian distributions that are summed). 
+        Default: 2.
         
     dim : int, optional
         The dimension of the ambient manifold.
@@ -257,10 +261,10 @@ def LKC_P2(j, us, mu, dim=None, lkc_ambient=None):
     dim, lkc_ambient = __prepare_lkc(dim, lkc_ambient)
     result = np.zeros_like(us)
     for k in np.arange(0,dim-j+1):
-        result += flag(k+j, k) * rho_Chi2(k, 2, us) * lkc_ambient[k+j] * mu**(k/2.)
+        result += flag(k+j, k) * rho_Chi2(k, dof, us) * lkc_ambient[k+j] * mu**(k/2.)
     return result
     
-    
+
 lkc_ambient_dict = {"2D":np.array([0., 0., 1.]),
                     "3D":np.array([0., 0., 0., 1.]),
                     "sphere":np.array([0., 0., 4.*np.pi]) / (4.*np.pi),

@@ -15,6 +15,7 @@
 # from .utils_th import get_μ, define_mu, subsample_us   #define_us_for_V
 from .base_th import TheoryField
 from .gaussian import SphericalGaussian, Gaussian
+from .chi2 import SphericalChi2, Chi2
 
 from .temperature import TheoryTemperature
 from .p2 import TheoryP2
