@@ -76,32 +76,6 @@ def define_mu(cls,μ):
         return μ
     if (cls is None) and (μ is None):
         return 1.
-    
-def subsample_us(us, dus, iters=1_000):
-    """Return the thresholds where MFs (except for v0) are computed before averaging within the bins 'dus'.
-
-    Parameters
-    ----------
-    us : np.array
-        The thresholds at which MFs have to be computed.
-
-    dus : np.array
-        The width of the bins associated to the thresholds 'us'.
-        
-    iters : int, optional
-        the number of thresholds to consider within each bin.
-
-    Returns
-    -------
-    us_ : np.array
-        The sequence of thresholds where MFs are computed before averaging within each bin, with shape (us.shape, iters)
-        
-    iters : int, optional
-        the number of thresholds considered within each bin.
-    
-    """
-    return np.vstack([np.linspace(u-du/2, u+du/2, iters) for u, du in zip(us, dus)])
-
 
 def flag(kj, k):
     """Compute flag coefficients.
@@ -294,7 +268,7 @@ lkc_ambient_dict = {"2D":np.array([0., 0., 1.]),
 """Dictionary with the characterization of different spaces through their Lipschitz–Killing Curvatures"""
 
 
-__all__ = ["get_μ", "define_mu", "subsample_us", "flag", "omega", "rho", "rho_Chi2", "LKC", "LKC_P2", "lkc_ambient_dict"]
+__all__ = ["get_μ", "define_mu", "flag", "omega", "rho", "rho_Chi2", "LKC", "LKC_P2", "lkc_ambient_dict"]
 
 __docformat__ = "numpy"
 
