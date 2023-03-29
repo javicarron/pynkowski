@@ -107,6 +107,79 @@ class Healpix(DataField):
                                     (second_partial[2]/np.cos(theta) - self.first_der[1] * np.tan(theta))])  #order θθ, ϕϕ, θϕ
 
 
+class HealpixP2(Healpix):
+    """Class for spherical scalar fields in HEALPix format.
 
-__all__ = ["Healpix"]
+    Parameters
+    ----------
+    Q : np.array
+        Values of the Q component in HEALPix format in RING scheme.
+        
+    Q : np.array
+        Values of the U component in HEALPix format in RING scheme.
+        
+    normalise : bool, optional
+        If `True`, Q and U are normalised to unit variance. Note: the normalisation is computed as the average of both variances, the mean of both maps are not forced to be 0.
+    
+    mask : np.array or None, optional
+        Mask where the field if considered. It is a bool array of the same shape that `field`.
+        Default: all data is included.
+        
+    Attributes
+    ----------
+    Q : np.array
+        Data of the $Q$ component as a HEALPix map in RING scheme.
+        
+    U : np.array
+        Data of the $U$ component as a HEALPix map in RING scheme.
+        
+    field : np.array
+        Data of the $P^2$ field as a HEALPix map in RING scheme.
+        
+    nside : int
+        Parameter `nside` of the map. The number of pixels is `12*nside**2`.
+    
+    dim : int
+        Dimension of the space where the field is defined. In this case, the space is the sphere and this is 2.
+        
+    name : str
+        Name of the field. In this case, "HEALPix map"
+    
+    first_der : np.array or None
+        First **covariant** derivatives of the field in an orthonormal basis of the space. Same structure as `field`, and shape `(dim, field.shape)`.
+    
+    second_der : np.array or None
+        Second **covariant** derivatives of the field in an orthonormal basis of the space. Same structure as `field`, and shape `(dim*(dim+1)/2, field.shape)`.
+        The order of the derivatives is diagonal first, e.g. in `dim=3`: `11`, `22`, `33`, `12`, `13`, `23`.
+        
+    mask : np.array
+        Mask where the field if considered. It is a bool array of the same shape that `field`.
+        
+    """   
+    def __init__(self, Q, U, normalise=True, mask=None):
+        self.Q = Q
+        self.U = U
+        self.mask = mask
+        if normalise:
+            # self.Q -= self.Q.mean()
+            # self.U -= self.U.mean()
+            σ2 = self.get_variance()
+            self.Q /= np.sqrt(σ2)
+            self.U /= np.sqrt(σ2)
+        
+        super().__init__(self.Q**2. + self.U**2., normalise=False, mask=mask)
+            
+    def get_variance(self):
+        """Compute the variance of the input Healpix scalar map within the input mask. 
+
+        Returns
+        -------
+        var : float
+            The variance of the input Healpix map within the input mask.
+
+        """    
+        return (np.var(self.Q[self.mask]) + np.var(self.U[self.mask]))/2.
+    
+
+__all__ = ["Healpix, HealpixP2"]
 __docformat__ = "numpy"

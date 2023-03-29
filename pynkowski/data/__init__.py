@@ -1,8 +1,9 @@
-'''This module contains all the classes to compute Minkowski Functionals on data. So far, they are the following:
+'''This module contains all the classes to define data fields in several conventions. So far, they are the following:
 
-- [`scalar`](data/scalar.html): scalar maps on the sphere, in the healpix convention,
+- [`scalar`](data/scalar.html): scalar maps on the sphere, in the healpix convention
+- [`healpix`](data/healpix.html): scalar maps on the sphere in the healpix convention
 
-- There is also a general utilities submodule called [`utils`](data/utils.html).
+- There is also a general utilities submodule called [`utils_da`](data/utils.html).
 '''
 
 
@@ -19,7 +20,7 @@ from .base_da import DataField
 
 try:
     import healpy as hp
-    from .healpix import Healpix
+    from .healpix import Healpix, HealpixP2
     from .scalar import Scalar
 except ImportError:
     hp = None
