@@ -61,7 +61,7 @@ def V0(field, us, edges=False, verbose=True):
     if isinstance(field, TheoryField):
         us = subsample_us(us, dus)
         try:
-            return np.mean(field.V0(us), axis=1)
+            return np.nanmean(field.V0(us), axis=1)
         except AttributeError:
             raise NotImplementedError(f"The theoretical expectation of V0 for {field.name} fields is not implemented. If you know an expression, please get in touch.")
         
@@ -109,7 +109,7 @@ def V1(field, us, edges=False, verbose=True):
     if isinstance(field, TheoryField):
         us = subsample_us(us, dus)
         try:
-            return np.mean(field.V1(us), axis=1)
+            return np.nanmean(field.V1(us), axis=1)
         except AttributeError:
             raise NotImplementedError(f"The theoretical expectation of V1 for {field.name} fields is not implemented. If you know an expression, please get in touch.") from None
         
@@ -215,7 +215,7 @@ def V2(field, us, edges=False, verbose=True):
     if isinstance(field, TheoryField):
         us = subsample_us(us, dus)
         try:
-            return np.mean(field.V2(us), axis=1)
+            return np.nanmean(field.V2(us), axis=1)
         except AttributeError:
             raise NotImplementedError(f"The theoretical expectation of V2 for {field.name} fields is not implemented. If you know an expression, please get in touch.") from None
         
