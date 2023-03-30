@@ -1,6 +1,7 @@
+import numpy as np
+from scipy.special import comb
 from .utils_th import LKC_Chi2, get_σ, get_μ, lkc_ambient_dict
 from .base_th import TheoryField
-from scipy.special import comb
         
 class Chi2(TheoryField):
     """General class for Isotropic Chi² fields, to be used directly or as the base for specific Chi² fields.
