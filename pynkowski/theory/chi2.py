@@ -205,7 +205,7 @@ class SphericalChi2(Chi2):
             self.sigma = np.sqrt(get_σ(cls))
         self.cls = cls
         self.mu = get_μ(cls[0]+cls[1])
-        super().__init__(2, sigma=self.sigma, mu=self.mu, lkc_ambient=lkc_ambient_dict["sphere"])
+        super().__init__(dim=2, dof=2, sigma=self.sigma, mu=self.mu, lkc_ambient=lkc_ambient_dict["sphere"])
         self.name = 'Spherical Isotropic Chi²'        
         
 
