@@ -17,8 +17,6 @@ from .base_th import TheoryField
 from .gaussian import SphericalGaussian, Gaussian
 from .chi2 import SphericalChi2, Chi2
 
-from .temperature import TheoryTemperature
-from .p2 import TheoryP2
 
 
 #__all__ = ["get_μ",

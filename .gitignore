@@ -9,6 +9,7 @@ sphinx/
 dist/
 .ipynb_checkpoints/
 Pynkowski_test.ipynb
+bak/
 
 *.egg-info
 *.kate-swp

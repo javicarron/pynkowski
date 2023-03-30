@@ -44,39 +44,6 @@ def get_μ(cls):
     μ = np.sum(cls * (2.*ℓ+1.) * ℓ*(ℓ+1.) / (8.*np.pi))
     return μ
 
-def define_mu(cls,μ):
-    """Return the first derivative of the covariance function at the origin for a field 
-    computed accordingly to which input variable is given.
-
-    Parameters
-    ----------
-    cls : np.array, optional
-        The angular power spectrum of the field.
-        Default : None
-
-    μ : scalar, optional
-        The first derivative of the covariance function at the origin for the field. If None, μ=1 is assumed.
-        Default : None
-
-    Returns
-    -------
-    μ : scalar
-        The first derivative of the covariance function of the field at the origin.
-
-    Notes
-    -----
-    The derivatives are always computed full-sky regardless of input mask.
-    
-    """
-    if (cls is not None) and (μ is not None):
-        raise ValueError(r"Both cls and $\mu$ cannot be given")
-    if (cls is not None) and (μ is None):
-        return get_μ(cls)
-    if (cls is None) and (μ is not None):
-        return μ
-    if (cls is None) and (μ is None):
-        return 1.
-
 def flag(kj, k):
     """Compute flag coefficients.
 
@@ -272,7 +239,7 @@ lkc_ambient_dict = {"2D":np.array([0., 0., 1.]),
 """Dictionary with the characterization of different spaces through their Lipschitz–Killing Curvatures"""
 
 
-__all__ = ["get_μ", "define_mu", "flag", "omega", "rho", "rho_Chi2", "LKC", "LKC_P2", "lkc_ambient_dict"]
+__all__ = ["get_μ", "flag", "omega", "rho", "rho_Chi2", "LKC", "LKC_P2", "lkc_ambient_dict"]
 
 __docformat__ = "numpy"
 
