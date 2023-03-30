@@ -7,8 +7,8 @@
 '''
 
 from .minkowski import V0, V1, V2
-from .utils_st import subsample_us, define_ubins
+# from .extrema import maxima, minima
+# from .utils_st import subsample_us, define_ubins
 
-        
-#__all__ = ["Scalar"]
+
 __docformat__ = "numpy"

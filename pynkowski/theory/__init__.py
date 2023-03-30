@@ -1,26 +1,16 @@
-'''This module contains all the theoretical predictions for the implemented fields. So far, they are the following:
+'''This module contains the theoretical predictions of the statistics for the implemented fields. So far, they are the following:
 
-- [`temperature`](theory/temperature.html): Gaussian fields such as CMB temperature.
-- [`p2`](theory/p2.html): $\chi^2$ fields, such as the modulus of the CMB polarization.
+- [`base_th`](theory/base_th.html): The base class for theoretical fields, to be used as the base for the other fields.
+- [`gaussian`](theory/gaussian.html): Isotropic Gaussian fields such as CMB temperature or initial density field.
+- [`chi2`](theory/chi2.html): Isotropic $\chi^2$ fields, such as the modulus of the CMB polarization.
 
-- There is also a general utilities submodule called [`utils`](theory/utils.html).
+- There is also a general utilities submodule called [`utils_th`](theory/utils_th.html).
+
+These fields are defined with arbitrary dimensions and on an arbitrary space. Specific versions defined on particular spaces (such as the sphere) also exist for convenience.
 '''
 
-
-# import numpy as np
-# import scipy.stats
-
-# norm = scipy.stats.norm()
-
-# from .utils_th import get_μ, define_mu, subsample_us   #define_us_for_V
 from .base_th import TheoryField
 from .gaussian import SphericalGaussian, Gaussian
 from .chi2 import SphericalChi2, Chi2
-
-
-
-#__all__ = ["get_μ",
-           #"TheoryTemperature",
-           #"TheoryP2"]
 
 __docformat__ = "numpy"
