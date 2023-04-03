@@ -7,7 +7,7 @@
 '''
 
 from .minkowski import V0, V1, V2
-# from .extrema import maxima, minima
+from .extrema import maxima, minima
 # from .utils_st import subsample_us, define_ubins
 
 

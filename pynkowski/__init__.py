@@ -71,7 +71,7 @@ This package has been developed by [Javier Carrón Duque](https://www.javiercarr
 
 '''
 
-from .data import Scalar, Healpix, HealpixP2
+from .data import DataField, Healpix, HealpixP2
 
 from .theory import (TheoryField,
                      Gaussian,
@@ -79,7 +79,7 @@ from .theory import (TheoryField,
                      Chi2,
                      SphericalChi2)
 
-from .stats import (V0, V1, V2)
+from .stats import (V0, V1, V2, maxima, minima)
 
 from .__version import __version__
 

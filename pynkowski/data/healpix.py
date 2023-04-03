@@ -3,6 +3,29 @@ import healpy as hp
 from .base_da import DataField
 from .utils_da import get_theta, healpix_derivatives, healpix_second_derivatives
 
+def _hotspot(healpix_map):
+    """Find the local maxima of the input HEALPix map.
+
+    Returns
+    -------
+    pixels : np.array
+        Indices of the pixels which are local maxima.
+
+    values : np.array
+        Values of input map which are local maxima.
+
+    """
+    nside = hp.npix2nside(healpix_map.shape[0])
+    neigh = hp.get_all_neighbours(nside, np.arange(12*nside**2))
+    
+    extT = np.concatenate([healpix_map, [np.min(healpix_map)-1.]])
+    neigh_matrix = extT[neigh]
+
+    mask = np.all(healpix_map > neigh_matrix, axis=0)
+    pixels = np.argwhere(mask).flatten()
+    values = healpix_map[pixels]
+    return(pixels, values)
+
 
 class Healpix(DataField):
     """Class for spherical scalar fields in HEALPix format.
@@ -105,6 +128,28 @@ class Healpix(DataField):
         self.second_der = np.array([second_partial[0],
                                     second_partial[1]/np.cos(theta)**2. + self.first_der[0]*np.tan(theta),
                                     (second_partial[2]/np.cos(theta) - self.first_der[1] * np.tan(theta))])  #order θθ, ϕϕ, θϕ
+
+    def maxima_list(self):
+        """Compute the values of the local maxima of the HEALPix map.
+
+        Returns
+        -------
+        values : np.array
+            Values of the map which are local maxima.
+
+        """
+        return _hotspot(self.field)[1]
+
+    def minima_list(self):
+        """Compute the values of the local minima of the HEALPix map.
+
+        Returns
+        -------
+        values : np.array
+            Values of the map which are local minima.
+
+        """
+        return -_hotspot(-self.field)[1]
 
 
 class HealpixP2(Healpix):
