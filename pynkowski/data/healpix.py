@@ -138,7 +138,8 @@ class Healpix(DataField):
             Values of the map which are local maxima.
 
         """
-        return _hotspot(self.field)[1]
+        pixels, values = _hotspot(self.field)
+        return values[self.mask[pixels]]
 
     def minima_list(self):
         """Compute the values of the local minima of the HEALPix map.
@@ -149,7 +150,8 @@ class Healpix(DataField):
             Values of the map which are local minima.
 
         """
-        return -_hotspot(-self.field)[1]
+        pixels, values = _hotspot(-self.field)
+        return -values[self.mask[pixels]]
 
 
 class HealpixP2(Healpix):
