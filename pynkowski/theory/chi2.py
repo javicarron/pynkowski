@@ -12,15 +12,19 @@ class Chi2(TheoryField):
         Dimension of the space where the field is defined.
         
     dof : int, optional
-        Number of degrees of freedom $\nu$ of the field: $\Chi^2 = \sum_{i=0}{\nu} N_i^2$.
+        Number of degrees of freedom $dof$ of the field: $\Chi^2 = \sum_{i=0}{dof} N_i^2$.
         Default: 2
     
     sigma : float, optional
-        The standard deviation of the Gaussian fields $N_i$, such that $\Chi^2 = \sum_{i=0}{\nu} N_i^2$.
+        The standard deviation of the constituent Gaussian fields $N_i$, such that $\Chi^2 = \sum_{i=0}{dof} N_i^2$.
         Default: 1.
         
     mu : float, optional
-        The derivative of the covariance function at the origin.
+        The derivative of the covariance function at the origin for the constituent Gaussian fields.
+        Default: 1.
+
+    nu : float, optional
+        The second derivative of the covariance function at the origin for the constituent Gaussian fields.
         Default: 1.
         
     lkc_ambient : np.array or None, optional
@@ -33,7 +37,10 @@ class Chi2(TheoryField):
         Dimension of the space where the field is defined.
     
     name : str
-        Name of the field, `"Isotropic Gaussian"` by default.
+        Name of the field, `"Isotropic Chi²"` by default.
+
+    dof : int, optional
+        Number of degrees of freedom $dof$ of the field: $\Chi^2 = \sum_{i=0}{dof} N_i^2$.
     
     sigma : float
         The standard deviation of the field.
@@ -189,7 +196,10 @@ class SphericalChi2(Chi2):
         Dimension of the space where the field is defined, in this case this is 2.
     
     name : str
-        Name of the field, `"Spherical Isotropic Gaussian"` by default.
+        Name of the field, `"Spherical Isotropic Chi²"` by default.
+
+    dof : int, optional
+        Number of degrees of freedom $dof$ of the field, $2$.
     
     sigma : float
         The standard deviation of the field.
