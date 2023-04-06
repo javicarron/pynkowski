@@ -1,4 +1,5 @@
  
+import warnings
 import numpy as np
 from scipy.special import eval_hermitenorm, gamma, comb, factorial, gammainc
 from scipy.stats import norm, multivariate_normal
@@ -224,7 +225,7 @@ def LKC_Chi2(j, us, mu, dof=2, dim=None, lkc_ambient=None):
 
 def egoe(dim, a, b):
     """Compute the expected value of the Gaussian Orthogonal Ensamble, needed for the maxima distribution of Gaussian Isotropic fields.
-    Details can be found in Cheng and Schwartzman, 2015.
+    Details can be found in Cheng and Schwartzman, 2015. This formula is only proven for `a>0`, although it has been hypothetised to work for `a<0` under some conditions.
     
     Parameters
     ----------
@@ -232,7 +233,7 @@ def egoe(dim, a, b):
         The dimension of the space (1 ≤ dim ≤ 3)
         
     a : float
-        Parameter `a` of the formula. Must be positive.
+        Parameter `a` of the formula. 
 
     b : float
         Parameter `b` of the formula.
@@ -243,13 +244,19 @@ def egoe(dim, a, b):
         The expected value needed for the computation of the maxima distribution.
     """
     assert dim in [1, 2, 3], '`dim` must be between 1 and 3'
-    assert a > 0, '`a` must be positive'
+    make_real = False
+    if a < 0:
+        a = a + 0.j
+        b = b + 0.j
+        make_real = True
+        warnings.warn('This formula is only proven for `a>=0`, although it has been hypothetised to work for `a<0` under some conditions. If the maxima distribution looks wrong, it could be because of this.')
+    # assert a > 0, '`a` must be positive'
     if dim == 1:
         return np.sqrt(4.*a+2.) * np.exp(-a*b**2./(2.*a +1.)) / (4.*a) + b*np.sqrt(np.pi/(2.*a)) * norm.cdf(b * np.sqrt(2.*a / (2.*a + 1)) )
     if dim == 2:
         return ( (1./a + 2.*b**2. - 1.) / np.sqrt(2.*a) * norm.cdf(b * np.sqrt(2.*a / (a + 1.))) +
-            np.sqrt((a + 1.) / 2.*np.pi) * np.exp(-a*b**2./(2.*a +1.)) * b / a +
-            np.sqrt(2./(2.*a+1.)) * np.exp(-a*b**2./(2.*a +1.)) * norm.cdf(a * b * np.sqrt(2. / ((2.*a + 1)*(a + 1))) ) )
+            np.sqrt((a + 1.) / (2.*np.pi)) * np.exp(-a*b**2./(a +1.)) * b / a +
+            np.sqrt(2./(2.*a+1.)) * np.exp(-a*b**2./(2.*a +1.)) * norm.cdf(a * b * np.sqrt(2. / ((2.*a + 1.)*(a + 1.))) ) )
     if dim == 3:
         Sigma1 = np.array([[1.5, -0.5], [-0.5, (1.+a)/(2.*a)]])
         Sigma2 = np.array([[1.5, -1.], [-1., (1.+2.*a)/(2.*a)]])
@@ -257,11 +264,14 @@ def egoe(dim, a, b):
                 (6.*a**2 + 3.*a +2.) / (4.*a**2. * (2.*a+1)) + 3./2.) / np.sqrt(2. * (2.*a +1.)) * 
                 np.exp(-a*b**2./(2.*a +1.)) * norm.cdf(2. * a * b * np.sqrt(2. / ((2.*a + 1.) * (2.*a +3.)) ) ) )
         term2 = (((a+1.) * b**2. / (2.*a) + (1.-a) / (2.*a**2.) - 1.) / np.sqrt(2. * (a +1.)) *
-                np.exp(-a*b**2./(2.*a +1.)) * norm.cdf(a * b * np.sqrt(2. / ((a + 1.) * (2.*a +3.)) ))  )
+                np.exp(-a*b**2./(a +1.)) * norm.cdf(a * b * np.sqrt(2. / ((a + 1.) * (2.*a +3.)) ))  )
         term3 = (6.*a + 1. + (28.*a**2. + 12.*a + 3.) / (2.*a * (2.*a+1)) * 
                 b / (2. * np.sqrt(2.*np.pi) * (2.*a+1.) * np.sqrt(2.*a +3.)) * np.exp(-3.*a*b**2./(2.*a +3.))  )
         term4 = (b**2. + 3. * (1.-a) / (2.*a)) * np.sqrt(np.pi/2.) * b/a * (multivariate_normal.cdf([0,b], cov=Sigma1) + multivariate_normal.cdf([0,b], cov=Sigma2))
-        return term1 + term2 + term3 + term4
+        total = term1 + term2 + term3 + term4
+        if make_real:
+            total = np.real(total)
+        return total
     
 
 lkc_ambient_dict = {"2D":np.array([0., 0., 1.]),
