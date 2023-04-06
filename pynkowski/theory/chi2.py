@@ -67,7 +67,7 @@ class Chi2(TheoryField):
 
         """
         us /= self.sigma
-        return LKC_Chi2(j, us, self.mu, dof=self.dof, dim=self.dim, lkc_ambient=self.lkc_ambient)
+        return LKC_Chi2(j, us, self.mu, dof=self.dof, dim=self.dim, lkc_ambient=self.lkc_ambient)/self.lkc_ambient[-1]
     
     def MF(self, j, us):
         """Compute the expected values of the Minkowski Functionals of the excursion sets at thresholds `us`, $V_j(A_u(f))$.
@@ -87,7 +87,7 @@ class Chi2(TheoryField):
 
         """
         us /= self.sigma
-        return 1./comb(self.dim,j)*LKC_Chi2(self.dim-j, us, self.mu, dof=self.dof, dim=self.dim, lkc_ambient=self.lkc_ambient)
+        return 1./comb(self.dim,j)*LKC_Chi2(self.dim-j, us, self.mu, dof=self.dof, dim=self.dim, lkc_ambient=self.lkc_ambient)/self.lkc_ambient[-1]
     
     def V0(self, us):
         """Compute the expected values of the first Minkowski Functionals of the excursion sets at thresholds `us`, $V_0(A_u(f))$.

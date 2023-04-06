@@ -67,7 +67,7 @@ class Gaussian(TheoryField):
 
         """
         us /= self.sigma
-        return LKC(j, us, self.mu, dim=self.dim, lkc_ambient=self.lkc_ambient)
+        return LKC(j, us, self.mu, dim=self.dim, lkc_ambient=self.lkc_ambient)/self.lkc_ambient[-1]
     
     def MF(self, j, us):
         """Compute the expected values of the Minkowski Functionals of the excursion sets at thresholds `us`, $V_j(A_u(f))$.
@@ -87,7 +87,7 @@ class Gaussian(TheoryField):
 
         """
         us /= self.sigma
-        return 1./comb(self.dim,j)*LKC(self.dim-j, us, self.mu, dim=self.dim, lkc_ambient=self.lkc_ambient)
+        return 1./comb(self.dim,j)*LKC(self.dim-j, us, self.mu, dim=self.dim, lkc_ambient=self.lkc_ambient)/self.lkc_ambient[-1]
     
     def V0(self, us):
         """Compute the expected values of the first Minkowski Functionals of the excursion sets at thresholds `us`, $V_0(A_u(f))$.

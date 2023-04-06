@@ -2,6 +2,7 @@
 import numpy as np
 from scipy.special import eval_hermitenorm, gamma, comb, factorial, gammainc
 from scipy.stats import norm, multivariate_normal
+from .base_th import _prepare_lkc
 
 
 def get_σ(cls):
@@ -132,38 +133,6 @@ def rho_Chi2(k, dof, us):
             for m in np.arange(0,k-1-2*l+1):
                 summ += (dof>= k - m - 2*l) * comb(dof-1, k-1-m-2*l) * (-1)**(k-1+m+l) * factorial(k-1) / (factorial(m) * factorial(l) * 2**l ) * us**(m+l)
         return factor*summ
-
-def __prepare_lkc(dim, lkc_ambient):
-    """Define the Lipschitz–Killing Curvatures of the ambient manifold as the default ones (unit volume and the rest are 0), or verify their consistency. 
-    If no argument is given, it defaults to a default 2D space.
-
-    Parameters
-    ----------
-    dim : int, optional
-        The dimension of the ambient manifold.
-        
-    lkc_ambient : list, optional
-        A list of the Lipschitz–Killing Curvatures of the ambient manifold. Its lenght must be `dim+1` if both arguments are given.
-        
-    Returns
-    ----------
-    dim : int 
-        The dimension of the ambient manifold.
-        
-    lkc_ambient : np.array or None, optional
-        An array of the Lipschitz–Killing Curvatures of the ambient manifold.
-    """
-    if lkc_ambient is None: 
-        if dim is None:
-            dim = 2
-        lkc_ambient = np.zeros(dim+1)
-        lkc_ambient[-1] = 1.
-    else:
-        if dim is None:
-            dim = len(lkc_ambient) -1
-        else:
-            assert len(lkc_ambient) == dim +1, 'If both dim and lkc_ambient are given, len(lkc_ambient) == dim +1'
-    return dim, lkc_ambient
     
 def LKC(j, us, mu, dim=None, lkc_ambient=None):
     """Compute the expected value of the Lipschitz–Killing Curvatures (LKC) of the excursion set for Gaussian Isotropic fields.
@@ -190,7 +159,7 @@ def LKC(j, us, mu, dim=None, lkc_ambient=None):
     LKC : np.array
         The expected value of the Lipschitz–Killing Curvatures at the thresholds.
     """
-    dim, lkc_ambient = __prepare_lkc(dim, lkc_ambient)
+    dim, lkc_ambient = _prepare_lkc(dim, lkc_ambient)
     result = np.zeros_like(us)
     for k in np.arange(0,dim-j+1):
         result += flag(k+j, k) * rho(k, us) * lkc_ambient[k+j] * mu**(k/2.)
@@ -225,7 +194,7 @@ def LKC_Chi2(j, us, mu, dof=2, dim=None, lkc_ambient=None):
     LKC : np.array
         The expected value of the Lipschitz–Killing Curvatures at the thresholds.
     """
-    dim, lkc_ambient = __prepare_lkc(dim, lkc_ambient)
+    dim, lkc_ambient = _prepare_lkc(dim, lkc_ambient)
     result = np.zeros_like(us)
     for k in np.arange(0,dim-j+1):
         result += flag(k+j, k) * rho_Chi2(k, dof, us) * lkc_ambient[k+j] * mu**(k/2.)
@@ -276,8 +245,8 @@ def egoe(dim, a, b):
 
 lkc_ambient_dict = {"2D":np.array([0., 0., 1.]),
                     "3D":np.array([0., 0., 0., 1.]),
-                    "sphere":np.array([0., 0., 4.*np.pi]) / (4.*np.pi),
-                    "SO3":np.array([0., 6.*np.pi, 0., 4.*np.pi**2]) / (4.*np.pi**2)}
+                    "sphere":np.array([0., 0., 4.*np.pi]),  # / (4.*np.pi),
+                    "SO3":np.array([0., 6.*np.pi, 0., 4.*np.pi**2])}  # / (4.*np.pi**2)}
 """Dictionary with the characterization of different spaces through their Lipschitz–Killing Curvatures"""
 
 
