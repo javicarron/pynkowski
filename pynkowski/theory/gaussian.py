@@ -21,7 +21,11 @@ class Gaussian(TheoryField):
         Default : 1.
         
     mu : float, optional
-        The derivative of the covariance function at the origin.
+        The derivative of the covariance function at the origin, times $-2$. Equal to the variance of the first derivatives of the field.
+        Default : 1.
+
+    nu : float, optional
+        The second derivative of the covariance function at the origin.
         Default : 1.
         
     lkc_ambient : np.array or None, optional
@@ -40,14 +44,17 @@ class Gaussian(TheoryField):
         The standard deviation of the field.
         
     mu : float
-        The derivative of the covariance function at the origin.
+        The derivative of the covariance function at the origin, times $-2$. Equal to the variance of the first derivatives of the field.
+
+    nu : float
+        The second derivative of the covariance function at the origin. Equal to $12$ times the variance of the second derivatives of the field ($4$ times for the cross derivative).
         
     lkc_ambient : np.array or None
         The values for the Lipschitz–Killing Curvatures of the ambient space.
         
     """   
-    def __init__(self, dim, sigma=1., mu=1., lkc_ambient=None):
-        super().__init__(dim, name='Isotropic Gaussian', sigma=sigma, mu=mu, lkc_ambient=lkc_ambient)
+    def __init__(self, dim, sigma=1., mu=1., nu=1., lkc_ambient=None):
+        super().__init__(dim, name='Isotropic Gaussian', sigma=sigma, mu=mu, nu=nu, lkc_ambient=lkc_ambient)
         
     def LKC(self, j, us):
         """Compute the expected values of the Lipschitz–Killing Curvatures of the excursion sets at thresholds `us`, $\mathbb{L}_j(A_u(f))$.
@@ -190,9 +197,15 @@ class SphericalGaussian(Gaussian):
     
     sigma : float
         The standard deviation of the field.
-        
+
     mu : float
-        The derivative of the covariance function at the origin.
+        The derivative of the covariance function at the origin, times $-2$. Equal to the variance of the first derivatives of the field.
+
+    nu : float
+        The second derivative of the covariance function at the origin. 
+        
+    C2 : float
+        The second derivative of the angular covariance function at 1. 
         
     lkc_ambient : np.array or None
         The values for the Lipschitz–Killing Curvatures of the ambient space.
@@ -208,6 +221,8 @@ class SphericalGaussian(Gaussian):
         self.mu = get_μ(cls)
         super().__init__(2, sigma=self.sigma, mu=self.mu, lkc_ambient=lkc_ambient_dict["sphere"])
         self.name = 'Spherical Isotropic Gaussian'        
+        self.C2 = get_C2(cls)
+        self.nu = self.C2/4. - self.mu/24.
 
 
 __all__ = ["SphericalGaussian", "Gaussian"]

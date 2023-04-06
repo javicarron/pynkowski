@@ -40,13 +40,16 @@ class Chi2(TheoryField):
         
     mu : float
         The derivative of the covariance function at the origin.
+
+    nu : float, optional
+        The second derivative of the covariance function at the origin for the constituent Gaussian fields.
         
     lkc_ambient : np.array or None
         The values for the Lipschitz–Killing Curvatures of the ambient space.
         
     """   
-    def __init__(self, dim, dof=2, sigma=1., mu=1., lkc_ambient=None):
-        super().__init__(dim, name='Isotropic Chi²', sigma=sigma, mu=mu, lkc_ambient=lkc_ambient)
+    def __init__(self, dim, dof=2, sigma=1., mu=1., nu=1., lkc_ambient=None):
+        super().__init__(dim, name='Isotropic Chi²', sigma=sigma, mu=mu, nu=nu, lkc_ambient=lkc_ambient)
         self.dof = dof
         
     def LKC(self, j, us):
@@ -193,6 +196,9 @@ class SphericalChi2(Chi2):
         
     mu : float
         The derivative of the covariance function at the origin.
+
+    nu : float, optional
+        The second derivative of the covariance function at the origin for the constituent Gaussian fields.
         
     lkc_ambient : np.array or None
         The values for the Lipschitz–Killing Curvatures of the ambient space.

@@ -50,7 +50,11 @@ class TheoryField():
         Default : 1.
         
     mu : float, optional
-        The derivative of the covariance function at the origin.
+        The derivative of the covariance function at the origin, times $-2$.
+        Default : 1.
+        
+    nu : float, optional
+        The second derivative of the covariance function at the origin.
         Default : 1.
         
     lkc_ambient : np.array or None, optional
@@ -69,16 +73,20 @@ class TheoryField():
         The standard deviation of the field.
         
     mu : float
-        The derivative of the covariance function at the origin.
+        The derivative of the covariance function at the origin, times $-2$. Equal to the variance of the first derivatives of the field.
+
+    nu : float
+        The second derivative of the covariance function at the origin.
         
     lkc_ambient : np.array or None
         The values for the Lipschitz–Killing Curvatures of the ambient space.
         
     """   
-    def __init__(self, dim, name='TheoryField', sigma=1., mu=1., lkc_ambient=None):
+    def __init__(self, dim, name='TheoryField', sigma=1., mu=1., nu=1., lkc_ambient=None):
         self.name = name
         self.sigma = sigma
         self.mu = mu
+        self.nu = nu
         self.dim, self.lkc_ambient = _prepare_lkc(dim, lkc_ambient)
         
     def __repr__(self):
