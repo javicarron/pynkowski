@@ -45,6 +45,27 @@ def get_μ(cls):
     μ = np.sum(cls * (2.*ℓ+1.) * ℓ*(ℓ+1.) / (8.*np.pi))
     return μ
 
+def get_C2(cls):
+    """Compute the second derivative of the covariance function at the origin for a Gaussian field 
+    defined on the sphere with angular power spectrum 'cls', which are normalised to unit variance.
+
+    Parameters
+    ----------
+    cls : np.array
+        The angular power spectrum of the Gaussian field.
+    
+    Returns
+    -------
+    C2 : float
+        The second derivative of the covariance function of a field at the origin.
+    
+    """
+    cls = np.array(cls, dtype=float)
+    ℓ = np.arange(cls.shape[0])
+    cls /= np.sum(cls * (2.*ℓ+1.) / (4.*np.pi))
+    C2 = np.sum(cls * (2.*ℓ+1.) * (ℓ-1.)*ℓ*(ℓ+1.)*(ℓ+2.) / (32.*np.pi))
+    return C2
+
 def flag(kj, k):
     """Compute flag coefficients.
 
