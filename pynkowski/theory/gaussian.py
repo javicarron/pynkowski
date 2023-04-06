@@ -244,12 +244,19 @@ class SphericalGaussian(Gaussian):
     normalise : bool, optional
         If `True`, normalise the field to unit variance.
         Default : True
+
+    fsky : float, optional
+        Fraction of the sky covered by the field, `0<fsky<=1`.
+        Default : 1.
     
     Attributes
     ----------
     cls : np.array
         Angular Power Spectrum of the field.
     
+    fsky : float
+        Fraction of the sky covered by the field.
+
     dim : int
         Dimension of the space where the field is defined, in this case this is 2.
     
@@ -272,18 +279,20 @@ class SphericalGaussian(Gaussian):
         The values for the Lipschitz–Killing Curvatures of the ambient space.
         
     """   
-    def __init__(self, cls, normalise=True):
+    def __init__(self, cls, normalise=True, fsky=1.):
         if normalise:
             cls /= get_σ(cls)
             self.sigma = 1.
         else:
             self.sigma = np.sqrt(get_σ(cls))
         self.cls = cls
+        self.fsky = fsky
         self.mu = get_μ(cls)
-        super().__init__(2, sigma=self.sigma, mu=self.mu, lkc_ambient=lkc_ambient_dict["sphere"])
-        self.name = 'Spherical Isotropic Gaussian'        
         self.C2 = get_C2(cls)
         self.nu = self.C2/4. - self.mu/24.
+        super().__init__(2, sigma=self.sigma, mu=self.mu, nu=self.nu, lkc_ambient=lkc_ambient_dict["sphere"]*self.fsky)
+        self.name = 'Spherical Isotropic Gaussian'
+
     def maxima_total(self):
         """Compute the expected values of local maxima of the field.
 
