@@ -1,5 +1,5 @@
 """Submodule with the base class for theoretical fields, `TheoryField`."""
-
+import numpy as np
 
 def _prepare_lkc(dim=None, lkc_ambient=None):
     """Define the Lipschitz–Killing Curvatures of the ambient manifold as the default ones (unit volume and the rest are 0), or verify their consistency. 
