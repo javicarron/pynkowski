@@ -1,11 +1,12 @@
 """This submodule contains the definition for general Isotropic Gaussian fields, as well as several classes of 
 Isotropic Gaussian fields defined on particular spaces.
 """
+import warnings
 import numpy as np
-from .base_th import TheoryField
-from scipy.special import comb
-from .utils_th import get_μ, get_σ, LKC, lkc_ambient_dict, egoe, get_C2
+from scipy.special import comb, gamma
 from scipy.stats import norm
+from .base_th import TheoryField
+from .utils_th import get_μ, get_σ, LKC, lkc_ambient_dict, egoe, get_C2
 
 
 class Gaussian(TheoryField):
@@ -170,6 +171,66 @@ class Gaussian(TheoryField):
     #     assert self.dim>=4, 'V4 is defined only for fields with dim≥4'
     #     us /= self.sigma
     #     return self.MF(4, us)
+
+    def maxima_total(self):
+        """Compute the expected values of local maxima of the field.
+
+        Returns
+        -------
+        number_total : float
+            Expected value of the number of local maxima.
+
+        """
+        warnings.warn('If the ambient space is not euclidean, this function is an approximation. You can use `SphericalGaussian` or `EuclideanGaussian` instead.')
+        rho1 = -0.5*self.mu
+        return (2./np.pi)**((self.dim+1.)/2.) * gamma((self.dim+1.)/2.) * (-self.nu/rho1)**(self.dim/2.) * egoe(self.dim, 1., 0.) * self.lkc_ambient[-1]
+
+    def maxima_dist(self, us):
+        """Compute the expected distribution of local maxima of the field, as a function of threshold.
+
+        Parameters
+        ----------
+        us : np.array
+            The thresholds considered for the computation.
+
+        Returns
+        -------
+        density : np.array
+            Density distribution of the local maxima.
+
+        """
+        rho1 = -0.5*self.mu
+        κ = -rho1 / np.sqrt(self.nu)
+        assert κ <= (self.dim + 2.)/self.dim, '`0.5*mu/sqrt(nu)` must be $≤ (dim+2)/dim$'
+        warnings.warn('If the ambient space is not euclidean, this function is an approximation. You can use `SphericalGaussian` or `EuclideanGaussian` instead.')
+        return np.real(np.sqrt(1./(1.-κ**2.+ 0.j))) * norm.pdf(us) * egoe(self.dim, 1./(1.-κ**2.), κ*us/np.sqrt(2.)) / egoe(self.dim, 1., 0.)
+
+    def minima_total(self):
+        """Compute the expected values of local minima of the field.
+
+        Returns
+        -------
+        number_total : float
+            Expected value of the number of local minima.
+
+        """
+        return self.maxima_total()
+
+    def minima_dist(self, us):
+        """Compute the expected distribution of local minima of the field, as a function of threshold.
+
+        Parameters
+        ----------
+        us : np.array
+            The thresholds considered for the computation.
+
+        Returns
+        -------
+        density : np.array
+            Density distribution of the local minima.
+
+        """
+        return self.maxima_dist(-us)
     
     
 class SphericalGaussian(Gaussian):
@@ -223,6 +284,38 @@ class SphericalGaussian(Gaussian):
         self.name = 'Spherical Isotropic Gaussian'        
         self.C2 = get_C2(cls)
         self.nu = self.C2/4. - self.mu/24.
+    def maxima_total(self):
+        """Compute the expected values of local maxima of the field.
+
+        Returns
+        -------
+        number_total : float
+            Expected value of the number of local maxima.
+
+        """
+        k1 = self.mu/self.C2
+        return np.sqrt(2./(1.+k1)) / np.pi**((self.dim+1.)/2.) * k1**(-self.dim/2) * gamma((self.dim+1.)/2.) * egoe(self.dim,1./(1.+k1),0.) * self.lkc_ambient[-1]
+
+    def maxima_dist(self, us):
+        """Compute the expected distribution of local maxima of the field, as a function of threshold.
+
+        Parameters
+        ----------
+        us : np.array
+            The thresholds considered for the computation.
+
+        Returns
+        -------
+        density : np.array
+            Density distribution of the local maxima.
+
+        """
+        k1 = self.mu/self.C2
+        k2 = self.mu**2./self.C2
+        return np.real(np.sqrt((1.+k1)/(1.+k1-k2) +0.j) * norm.pdf(us) * egoe(self.dim, 1./(1.+k1-k2), np.sqrt(k2/2.)*us) / egoe(self.dim, 1./(1.+k1), 0.))
+
+# class EuclideanGaussian(Gaussian):
+#    Equal to $12$ times the variance of the second derivatives of the field ($4$ times for the cross derivative).
 
 
 __all__ = ["SphericalGaussian", "Gaussian"]
