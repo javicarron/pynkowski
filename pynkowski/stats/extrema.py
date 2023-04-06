@@ -26,14 +26,14 @@ def maxima(field, us, edges=False, verbose=True):
         In the latter case, the effective thresholds are the central value of the given bins.
         
     verbose : bool, optional
-        If True (default), progress bars are shown for the computations on data.
+        If True (default), progress bars are shown for some computations on data.
     
     Returns
     -------
     maxima_dist : np.array()
         The density distribution of the maxima at the given thresholds.
 
-    number_maxima : int
+    number_total : float
         The total number of maxima.
     
     """
@@ -89,7 +89,7 @@ def minima(field, us, edges=False, verbose=True):
     minima_dist : np.array()
         The density distribution of the minima at the given thresholds.
 
-    number_minima : int
+    number_total : float
         The total number of minima.
     
     """
