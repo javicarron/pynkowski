@@ -37,7 +37,8 @@ class Healpix(DataField):
         
     normalise : bool, optional
         If `True`, the map is normalised to have unit variance. Note: the mean of the map is not forced to be 0.
-    
+        Default: `True`.
+
     mask : np.array or None, optional
         Mask where the field if considered. It is a bool array of the same shape that `field`.
         Default: all data is included.
@@ -79,12 +80,12 @@ class Healpix(DataField):
             self.field /= np.sqrt(σ2)
             
     def get_variance(self):
-        """Compute the variance of the input Healpix scalar map within the input mask. 
+        """Compute the variance of the Healpix scalar map within the mask. 
 
         Returns
         -------
         var : float
-            The variance of the input Healpix map within the input mask.
+            The variance of the Healpix map within the mask.
 
         """    
         return (np.var(self.field[self.mask]))
@@ -103,7 +104,6 @@ class Healpix(DataField):
             Default: 3*nside - 1
         """    
         self.first_der = np.array(healpix_derivatives(self.field, gradient=True, lmax=lmax))  # order: θ, ϕ
-        theta = get_theta(self.nside)
             
     def get_second_der(self, lmax=None):
         """Compute the covariant second derivatives of the input Healpix scalar map. 
