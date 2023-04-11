@@ -1,13 +1,38 @@
 import numpy as np
 from .base_da import DataField
 
-def _hotspot3D(field):
+
+def _remove_borders(array, last_axis=None):
+    """Remove the borders of an array in all dimensions up to `last_axis`.
+    
+    Arguments
+    ---------
+    array : np.array
+        Array to remove the borders.
+        
+    last_axis : int, optional
+        Last axis to remove the borders. If `None`, all the axes are considered.
+        
+    Returns
+    -------
+    new_array : np.array
+        Array with the borders removed.
+        
+    """
+    if last_axis is None:
+        last_axis = len(array.shape)
+    new_array = np.delete(array, [0,-1], axis=last_axis)
+    if last_axis>0:
+        new_array = _remove_borders(new_array, last_axis-1)
+    return new_array
+
+def _hotspot_array(field):
     """Find the local maxima of the input field.
 
     Arguments
     ---------
     field : np.array
-        3D array of the pixelized field values.
+        Array of the pixelized field values.
 
     Returns
     -------
@@ -18,22 +43,19 @@ def _hotspot3D(field):
         Values of input map which are local maxima.
 
     """
-    # First we shift the field in each direction by 1 pixel, and check that the original pixel is larger than all the 8 neighbours.
-    max_mask = np.all(field > np.array([np.roll(field, shift, axis=ii) for shift in [-1,1] for ii in range(3)]), axis=0)
+    ndim = len(field.shape)
+    # First we shift the field in each direction by 1 pixel, and check that the original pixel is larger than all the `2**ndim` neighbours.
+    max_mask = np.all(field > np.array([np.roll(field, shift, axis=ii) for shift in [-1,1] for ii in range(ndim)]), axis=0)
 
     # We then remove all the pixels in the border to remove the edge effects.
-    max_mask[0] = False
-    max_mask[-1] = False
-    max_mask[:,0] = False
-    max_mask[:,-1] = False
-    max_mask[:,:,0] = False
-    max_mask[:,:,-1] = False
+    max_mask = _remove_borders(max_mask)
+    max_mask = np.pad(max_mask, pad_width=1, mode='constant', constant_values=False)
 
     pixels = np.argwhere(max_mask)
     values = field[pixels]
     return(pixels, values)
 
-class DataCube(DataField):
+class DataArray(DataField):
     """Class for a pixelized Euclidean data cube.
     
     Parameters
@@ -73,7 +95,8 @@ class DataCube(DataField):
         
     """
     def __init__(self, field, normalise=True, mask=None, spacing=1.):
-        super().__init__(field, dim=3, name='DataCube', mask=mask)
+        dim = len(field.shape)
+        super().__init__(field, dim=dim, name='DataArray', mask=mask)
         if field.ndim != 3:
             raise ValueError('The field must be a 3D array')
         if self.mask.shape != self.field.shape:
@@ -97,7 +120,7 @@ class DataCube(DataField):
 
     def get_first_der(self):
         """Compute the covariant first derivatives of the field. 
-        It stores:
+        It stores the derivatives in order. E.g., in a 3D array:
         
         - first covariant derivative wrt e₁ in self.first_der[0]
         - first covariant derivative wrt e₂ in self.first_der[1]
@@ -108,7 +131,8 @@ class DataCube(DataField):
 
     def get_second_der(self):
         """Compute the covariant second derivatives of the field. 
-        It stores:
+        It stores the second derivatives in the following order: first, all the diagonal derivatives, then the cross derivatives with e₁, then with e₂, and so on.
+        E.g., in a 3D array:
         
         - second covariant derivative wrt e₁e₁ in self.second_der[0]
         - second covariant derivative wrt e₂e₂ in self.second_der[1]
@@ -117,12 +141,14 @@ class DataCube(DataField):
         - second covariant derivative wrt e₁e₃ in self.second_der[4]
         - second covariant derivative wrt e₂e₃ in self.second_der[5]
 
-        
         """
         self.second_der = np.zeros((self.dim*(self.dim+1)//2, *self.field.shape))
-        self.second_der[[0,3,4]] = np.gradient(self.first_der[0], self.spacing, edge_order=2)
-        self.second_der[[1,5]] = np.gradient(self.first_der[1], self.spacing, edge_order=2)[1:]
-        self.second_der[2] = np.gradient(self.first_der[2], self.spacing, edge_order=2)[2]
+        d = self.dim
+        for i in np.arange(self.dim, dtype=int):
+            indeces = [i]
+            for j in np.arange(i+1, self.dim, dtype=int):
+                indeces.append((d*(d-1)/2) - (d-i)*((d-i)-1)/2 + j - i - 1 + d)
+            self.second_der[indeces] = np.gradient(self.first_der[i], self.spacing, edge_order=2)[i:d]
 
     def maxima_list(self):
         """Find the local maxima of the field.
@@ -133,7 +159,7 @@ class DataCube(DataField):
             Values of input map which are local maxima.
 
         """
-        values, pixels = _hotspot3D(self.field)
+        values, pixels = _hotspot_array(self.field)
         return values[self.mask[pixels]]
     
     def minima_list(self):
@@ -145,10 +171,10 @@ class DataCube(DataField):
             Values of input map which are local minima.
 
         """
-        values, pixels = _hotspot3D(-self.field)
+        values, pixels = _hotspot_array(-self.field)
         return -values[self.mask[pixels]]
 
 
 
-__all__ = ["DataCube"]
+__all__ = ["DataArray"]
 __docformat__ = "numpy"
