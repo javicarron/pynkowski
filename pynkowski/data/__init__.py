@@ -7,6 +7,7 @@
 '''
 
 from .base_da import DataField
+from .array import DataCube
 
 try:
     import healpy as hp
