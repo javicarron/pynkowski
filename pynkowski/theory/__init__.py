@@ -10,7 +10,7 @@ These fields are defined with arbitrary dimensions and on an arbitrary space. Sp
 '''
 
 from .base_th import TheoryField
-from .gaussian import SphericalGaussian, Gaussian
+from .gaussian import SphericalGaussian, EuclideanGaussian, Gaussian
 from .chi2 import SphericalChi2, Chi2
 
 __docformat__ = "numpy"
