@@ -56,6 +56,7 @@ class Gaussian(TheoryField):
     """   
     def __init__(self, dim, sigma=1., mu=1., nu=1., lkc_ambient=None):
         super().__init__(dim, name='Isotropic Gaussian', sigma=sigma, mu=mu, nu=nu, lkc_ambient=lkc_ambient)
+        self._warn_non_euclidean = True
         
     def LKC(self, j, us):
         """Compute the expected values of the Lipschitz–Killing Curvatures of the excursion sets at thresholds `us`, $\mathbb{L}_j(A_u(f))$.
@@ -181,7 +182,8 @@ class Gaussian(TheoryField):
             Expected value of the number of local maxima.
 
         """
-        warnings.warn('If the ambient space is not euclidean, this function is an approximation. You can use `SphericalGaussian` or `EuclideanGaussian` instead.')
+        if self._warn_non_euclidean:
+            warnings.warn('If the ambient space is not euclidean, this function is an approximation. You can use `SphericalGaussian` or `EuclideanGaussian` instead.')
         rho1 = -0.5*self.mu
         return (2./np.pi)**((self.dim+1.)/2.) * gamma((self.dim+1.)/2.) * (-self.nu/rho1)**(self.dim/2.) * egoe(self.dim, 1., 0.) * self.lkc_ambient[-1]
 
@@ -202,8 +204,9 @@ class Gaussian(TheoryField):
         rho1 = -0.5*self.mu
         κ = -rho1 / np.sqrt(self.nu)
         assert κ <= (self.dim + 2.)/self.dim, '`0.5*mu/sqrt(nu)` must be $≤ (dim+2)/dim$'
-        warnings.warn('If the ambient space is not euclidean, this function is an approximation. You can use `SphericalGaussian` or `EuclideanGaussian` instead.')
-        return np.real(np.sqrt(1./(1.-κ**2.+ 0.j)) * norm.pdf(us) * egoe(self.dim, 1./(1.-κ**2.), κ*us/np.sqrt(2.)) / egoe(self.dim, 1., 0.))
+        if self._warn_non_euclidean:
+            warnings.warn('If the ambient space is not euclidean, this function is an approximation. You can use `SphericalGaussian` or `EuclideanGaussian` instead.')
+        return np.real(np.sqrt(1./(1.-κ**2.+ 0.j))) * norm.pdf(us) * egoe(self.dim, 1./(1.-κ**2.), κ*us/np.sqrt(2.)) / egoe(self.dim, 1., 0.)
 
     def minima_total(self):
         """Compute the expected values of local minima of the field.
@@ -234,7 +237,7 @@ class Gaussian(TheoryField):
     
     
 class SphericalGaussian(Gaussian):
-    """Class for Spherical Isotropic Gaussian fields, to be used directly or as the base for specific Gaussian fields.
+    """Class for Spherical Isotropic Gaussian fields.
 
     Parameters
     ----------
