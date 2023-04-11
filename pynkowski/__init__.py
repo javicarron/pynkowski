@@ -73,7 +73,10 @@ This package has been developed by [Javier Carrón Duque](https://www.javiercarr
 
 '''
 
-from .data import DataField, Healpix, HealpixP2
+from .data import (DataField, 
+                   Healpix,
+                   HealpixP2,
+                   DataCube)
 
 from .theory import (TheoryField,
                      Gaussian,
