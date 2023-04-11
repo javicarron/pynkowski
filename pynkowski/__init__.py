@@ -81,10 +81,11 @@ from .data import (DataField,
 from .theory import (TheoryField,
                      Gaussian,
                      SphericalGaussian,
+                     EuclideanGaussian,
                      Chi2,
                      SphericalChi2)
 
-from .stats import (V0, V1, V2, maxima, minima)
+from .stats import (V0, V1, V2, V3, maxima, minima)
 
 from .__version import __version__
 
