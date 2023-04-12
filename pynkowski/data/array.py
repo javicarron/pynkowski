@@ -97,8 +97,6 @@ class DataArray(DataField):
     def __init__(self, field, normalise=True, mask=None, spacing=1.):
         dim = len(field.shape)
         super().__init__(field, dim=dim, name='DataArray', mask=mask)
-        if field.ndim != 3:
-            raise ValueError('The field must be a 3D array')
         if self.mask.shape != self.field.shape:
             raise ValueError('The map and the mask have different shapes')
         if normalise:
@@ -142,12 +140,15 @@ class DataArray(DataField):
         - second covariant derivative wrt e₂e₃ in self.second_der[5]
 
         """
+        if self.first_der is None:
+            self.get_first_der()
         self.second_der = np.zeros((self.dim*(self.dim+1)//2, *self.field.shape))
         d = self.dim
         for i in np.arange(self.dim, dtype=int):
             indeces = [i]
             for j in np.arange(i+1, self.dim, dtype=int):
                 indeces.append((d*(d-1)/2) - (d-i)*((d-i)-1)/2 + j - i - 1 + d)
+            indeces = np.array(indeces, dtype=int)
             self.second_der[indeces] = np.gradient(self.first_der[i], self.spacing, edge_order=2)[i:d]
 
     def maxima_list(self):
