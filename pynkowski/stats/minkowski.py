@@ -169,10 +169,26 @@ def general_curvature(field, order):
             den = field.first_der[0]**2. + field.first_der[1]**2.
             return num / den
             
-#     if field.dim == 3:
-#         if order == 1: # Mean curvature (times 2), 2H = κ_1 + κ_2   (times |∇f|)
+    if field.dim == 3:
+        if order == 1: # Mean curvature (times 2), 2H = κ_1 + κ_2   (times |∇f|)
+            mod_grad = np.sqrt(np.sum(field.first_der**2., axis=0))
+            hessian = np.array([[field.second_der[0], field.second_der[3], field.second_der[4]],
+                                [field.second_der[3], field.second_der[1], field.second_der[5]],
+                                [field.second_der[4], field.second_der[5], field.second_der[2]]])
+            norm_grad = (field.first_der / mod_grad)
+            mean_curvature = np.einsum('j...,jk...,k...->...', norm_grad, hessian, norm_grad) - np.trace(hessian, axis1=0, axis2=1)
+            return mean_curvature
             
-#         if order == 2: # Gaussian curvature, K = κ_1 · κ_2   (times |∇f|)
+        if order == 2: # Gaussian curvature, K = κ_1 · κ_2   (times |∇f|)
+            mod_grad = np.sqrt(np.sum(field.first_der**2., axis=0))
+            norm_grad = (field.first_der / mod_grad)
+            norm_second_der = (field.second_der / mod_grad)
+            extended_hessian_det = np.linalg.det(np.array([[norm_second_der[0], norm_second_der[3], norm_second_der[4], norm_grad[0]],
+                                                           [norm_second_der[3], norm_second_der[1], norm_second_der[5], norm_grad[1]],
+                                                           [norm_second_der[4], norm_second_der[5], norm_second_der[2], norm_grad[2]],
+                                                           [norm_grad[0], norm_grad[1], norm_grad[2], np.zeros_like(norm_grad[0])]]).T).T
+            return -extended_hessian_det*mod_grad
+
         
     if field.dim > 3:
         raise NotImplementedError("The computation of principal curvatures in not implemented for spaces with 4 or more dimensions. If you need this, please get in touch.")
