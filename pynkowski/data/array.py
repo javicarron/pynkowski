@@ -2,30 +2,6 @@ import numpy as np
 from .base_da import DataField
 
 
-def _remove_borders(array, last_axis=None):
-    """Remove the borders of an array in all dimensions up to `last_axis`.
-    
-    Arguments
-    ---------
-    array : np.array
-        Array to remove the borders.
-        
-    last_axis : int, optional
-        Last axis to remove the borders. If `None`, all the axes are considered.
-        
-    Returns
-    -------
-    new_array : np.array
-        Array with the borders removed.
-        
-    """
-    if last_axis is None:
-        last_axis = len(array.shape)
-    new_array = np.delete(array, [0,-1], axis=last_axis)
-    if last_axis>0:
-        new_array = _remove_borders(new_array, last_axis-1)
-    return new_array
-
 def _hotspot_array(field):
     """Find the local maxima of the input field.
 
@@ -48,7 +24,13 @@ def _hotspot_array(field):
     max_mask = np.all(field > np.array([np.roll(field, shift, axis=ii) for shift in [-1,1] for ii in range(ndim)]), axis=0)
 
     # We then remove all the pixels in the border to remove the edge effects.
-    max_mask = _remove_borders(max_mask)
+    for dim in range(max_mask.ndim):
+        # Make current dimension the first dimension
+        array_moved = np.moveaxis(max_mask, dim, 0)
+        # Set border values to `False` in the current dimension
+        array_moved[0] = False
+        array_moved[-1] = False
+        # No need to reorder the dimensions as moveaxis returns a view
     max_mask = np.pad(max_mask, pad_width=1, mode='constant', constant_values=False)
 
     pixels = np.argwhere(max_mask)
