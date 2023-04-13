@@ -51,6 +51,7 @@ This package is divided into three modules: `stats`, `data`, and `theory`. Each 
 
 - [`data`](https://javicarron.github.io/pynkowski/pynkowski/data.html)
     - [`base_da`](https://javicarron.github.io/pynkowski/pynkowski/data/base_da.html)
+    - [`array`](https://javicarron.github.io/pynkowski/pynkowski/data/array.html)
     - [`healpix`](https://javicarron.github.io/pynkowski/pynkowski/data/healpix.html)
     - [`utils_da`](https://javicarron.github.io/pynkowski/pynkowski/data/utils_da.html)
   
