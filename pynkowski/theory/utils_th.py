@@ -244,11 +244,9 @@ def egoe(dim, a, b):
         The expected value needed for the computation of the maxima distribution.
     """
     assert dim in [1, 2, 3], '`dim` must be between 1 and 3'
-    make_real = False
     if a < 0:
         a = a + 0.j
         b = b + 0.j
-        make_real = True
         warnings.warn('This formula is only proven for `a>=0`, although it has been hypothetised to work for `a<0` under some conditions. If the maxima distribution looks wrong, it could be because of this.')
     # assert a > 0, '`a` must be positive'
     if dim == 1:
@@ -269,8 +267,6 @@ def egoe(dim, a, b):
                 b / (2. * np.sqrt(2.*np.pi) * (2.*a+1.) * np.sqrt(2.*a +3.)) * np.exp(-3.*a*b**2./(2.*a +3.))  )
         term4 = (b**2. + 3. * (1.-a) / (2.*a)) * np.sqrt(np.pi/2.) * b/a * (multivariate_normal.cdf([0,b], cov=Sigma1) + multivariate_normal.cdf([0,b], cov=Sigma2))
         total = term1 + term2 + term3 + term4
-        if make_real:
-            total = np.real(total)
         return total
     
 
