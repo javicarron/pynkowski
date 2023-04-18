@@ -11,7 +11,7 @@ except:
     tqdm = lambda x: x
     print('tqdm not loaded')
 
-def __MF_prefactor(d,j):
+def _MF_prefactor(d,j):
     """Compute the prefactor in the definition of Minkowski Functionals. This factor multiplies the integral of the curvatures.
 
     Parameters
@@ -68,7 +68,7 @@ def V0(field, us, edges=False, verbose=True):
         
     if isinstance(field, DataField):
         try:
-            return field.V0(us, dus)
+            return field._V0(us, dus, verbose=verbose)
         except AttributeError:                
             stat = np.zeros_like(us)
             for ii in tqdm(np.arange(us.shape[0]), disable=not verbose):
@@ -116,7 +116,7 @@ def V1(field, us, edges=False, verbose=True):
         
     elif isinstance(field, DataField):
         try:
-            return field.V1(us, dus)
+            return field._V1(us, dus, verbose=verbose)
         except AttributeError:
             if field.first_der is None:
                 field.get_first_der()
@@ -126,7 +126,7 @@ def V1(field, us, edges=False, verbose=True):
             for ii in tqdm(np.arange(us.shape[0]), disable=not verbose):
                 this_mask = (us[ii] + dus[ii]/2. > field.field) & (us[ii] - dus[ii]/2. <= field.field)
                 stat[ii] = np.mean((grad_modulus*this_mask/dus[ii])[field.mask])
-            return __MF_prefactor(field.dim, 1) * stat
+            return _MF_prefactor(field.dim, 1) * stat
         
     else:
         raise TypeError(f"The field must be either TheoryField or DataField (or a subclass).")
@@ -237,7 +237,7 @@ def V2(field, us, edges=False, verbose=True):
         
     elif isinstance(field, DataField):
         try:
-            return field.V2(us, dus)
+            return field._V2(us, dus, verbose=verbose)
         except AttributeError:
             if field.first_der is None:
                 field.get_first_der()
@@ -249,7 +249,7 @@ def V2(field, us, edges=False, verbose=True):
             for ii in tqdm(np.arange(us.shape[0]), disable=not verbose):
                 this_mask = (us[ii] + dus[ii]/2. > field.field) & (us[ii] - dus[ii]/2. <= field.field)
                 stat[ii] = np.mean((curv*this_mask/dus[ii])[field.mask])
-            return __MF_prefactor(field.dim, 2) * stat
+            return _MF_prefactor(field.dim, 2) * stat
         
     else:
         raise TypeError(f"The field must be either TheoryField or DataField (or a subclass).")
@@ -295,7 +295,7 @@ def V3(field, us, edges=False, verbose=True):
         
     elif isinstance(field, DataField):
         try:
-            return field.V3(us, dus)
+            return field._V3(us, dus, verbose=verbose)
         except AttributeError:
             if field.first_der is None:
                 field.get_first_der()
@@ -307,7 +307,7 @@ def V3(field, us, edges=False, verbose=True):
             for ii in tqdm(np.arange(us.shape[0]), disable=not verbose):
                 this_mask = (us[ii] + dus[ii]/2. > field.field) & (us[ii] - dus[ii]/2. <= field.field)
                 stat[ii] = np.mean((curv*this_mask/dus[ii])[field.mask])
-            return __MF_prefactor(field.dim, 3) * stat
+            return _MF_prefactor(field.dim, 3) * stat
         
     else:
         raise TypeError(f"The field must be either TheoryField or DataField (or a subclass).")

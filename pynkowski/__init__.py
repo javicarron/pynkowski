@@ -77,7 +77,8 @@ This package has been developed by [Javier Carrón Duque](https://www.javiercarr
 from .data import (DataField, 
                    Healpix,
                    HealpixP2,
-                   DataArray)
+                   DataArray,
+                   SO3Healpix)
 
 from .theory import (TheoryField,
                      Gaussian,
