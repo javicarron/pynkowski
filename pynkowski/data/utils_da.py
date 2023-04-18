@@ -106,4 +106,87 @@ def healpix_second_derivatives(d_theta, d_phi, lmax=None, **kwargs):
     return (d_thetatheta, d_phiphi, d_phitheta)
 
 
+
+# This function is meant to be used as a callable class
+# The class is initialized with two arrays, Q and U.
+# The function __call__ returns the value of f at a given
+# position psi.
+class QUarray(np.ndarray):
+    '''Array to store Q and U maps in the SO(3) formalism.
+
+    Parameters
+    ----------
+    Q : np.array
+        Values of the Q field. It can be an array of arrays to represent several maps.
+        
+    U : np.array
+        Values of the U field. Must have the same shape as `Q`.
+        
+    Notes
+    -----
+    The class is a subclass of `np.ndarray`, so it can be used as a numpy array.
+    CAREFUL: the multiplication of two SO3arrays is not the same as the multiplication of the $f$ that they represent. 
+    In order to multiply two SO3arrays, you have to use the __call__ method, i.e. multiply the two SO3arrays after evaluating them at a given positions psi.
+    however, you can multiply a SO3array with a scalar, or add or substract SO3arrays, and the result will be the correct SO3array
+    '''
+    def __new__(cls, Q, U):
+        obj = np.asarray([Q,U]).view(cls)
+        return obj
+
+    def __array_finalize__(self, obj):
+        if obj is None: return
+
+    def __call__(self, psi):
+        '''Return the value of f at a given position psi.
+        
+        Parameters
+        ----------
+        psi : float or np.array
+            The position at which to evaluate f. It must be broadcastable with the shape of `Q` and `U`.
+            
+        Returns
+        -------
+        f : np.array
+            The value of f at the given position psi.
+        '''
+        return self[0]*np.cos(2.*psi) - self[1]*np.sin(2.*psi)
+    
+    def derpsi(self):
+        '''Return the derivative of f with respect to psi, which can be exactly computed in the SO(3) formalism.
+
+        Returns
+        -------
+        df : np.array
+            The derivative of f with respect to psi.
+        '''
+        return QUarray(-2.*self[1], 2.*self[0])
+    
+    def modulus(self):
+        '''Return the modulus of f.
+
+        Returns
+        -------
+        fmod : np.array
+            The modulus of f.
+        '''
+        return np.sqrt(self[0]**2 + self[1]**2)
+    
+    def pol_angle(self):
+        '''Return the polarization angle of f.
+
+        Returns
+        -------
+        pol_angle : np.array
+            The polarization angle of f.
+        '''
+        angle = np.arctan2(-self[1], self[0])/2
+        angle = angle + np.pi/2*(1-np.sign(self(angle)))/2  # I don't remember why we did this, but it seems to work
+        angle[angle<0] = angle[angle<0] + np.pi
+        return angle
+
+
+
+
+__all__ = ['get_theta', 'healpix_derivatives', 'healpix_second_derivatives', 'QUarray']
+
 __docformat__ = "numpy"
