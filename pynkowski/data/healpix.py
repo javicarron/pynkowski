@@ -40,7 +40,7 @@ class Healpix(DataField):
         Default: `True`.
 
     mask : np.array or None, optional
-        Mask where the field if considered. It is a bool array of the same shape that `field`.
+        Mask where the field is considered. It is a bool array of the same shape that `field`.
         Default: all data is included.
         
     Attributes
@@ -65,7 +65,7 @@ class Healpix(DataField):
         The order of the derivatives is diagonal first, e.g. in `dim=3`: `11`, `22`, `33`, `12`, `13`, `23`.
         
     mask : np.array
-        Mask where the field if considered. It is a bool array of the same shape that `field`.
+        Mask where the field is considered. It is a bool array of the same shape that `field`.
         
     """   
     def __init__(self, field, normalise=True, mask=None):

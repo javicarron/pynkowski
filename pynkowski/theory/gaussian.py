@@ -208,7 +208,7 @@ class Gaussian(TheoryField):
         assert κ <= (self.dim + 2.)/self.dim, '`0.5*mu/sqrt(nu)` must be $≤ (dim+2)/dim$'
         if self._warn_non_euclidean:
             warnings.warn('If the ambient space is not euclidean, this function is an approximation. You can use `SphericalGaussian` or `EuclideanGaussian` instead.')
-        return np.real(np.sqrt(1./(1.-κ**2.+ 0.j))) * norm.pdf(us) * egoe(self.dim, 1./(1.-κ**2.), κ*us/np.sqrt(2.)) / egoe(self.dim, 1., 0.)
+        return np.real(np.sqrt(1./(1.-κ**2.+ 0.j)) * norm.pdf(us) * egoe(self.dim, 1./(1.-κ**2.), κ*us/np.sqrt(2.)) / egoe(self.dim, 1., 0.))
 
     def minima_total(self):
         """Compute the expected values of local minima of the field.
