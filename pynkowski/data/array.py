@@ -2,6 +2,10 @@ import numpy as np
 from .base_da import DataField
 
 
+
+def _eval_field(field, pix):
+    return field[tuple(pix[:,ii] for ii in np.arange(field.ndim))]
+
 def _hotspot_array(field):
     """Find the local maxima of the input field.
 
@@ -34,7 +38,7 @@ def _hotspot_array(field):
     max_mask = np.pad(max_mask, pad_width=1, mode='constant', constant_values=False)
 
     pixels = np.argwhere(max_mask)
-    values = field[pixels]
+    values = _eval_field(field, pixels)
     return(pixels, values)
 
 class DataArray(DataField):
@@ -142,8 +146,8 @@ class DataArray(DataField):
             Values of input map which are local maxima.
 
         """
-        values, pixels = _hotspot_array(self.field)
-        return values[self.mask[pixels]]
+        pixels, values = _hotspot_array(self.field)
+        return values[_eval_field(self.mask, pixels)]
     
     def minima_list(self):
         """Find the local minima of the field.
@@ -154,8 +158,8 @@ class DataArray(DataField):
             Values of input map which are local minima.
 
         """
-        values, pixels = _hotspot_array(-self.field)
-        return -values[self.mask[pixels]]
+        pixels, values = _hotspot_array(-self.field)
+        return -values[_eval_field(self.mask, pixels)]
 
 
 
