@@ -336,10 +336,10 @@ class EuclideanGaussian(Gaussian):
     dim : int
         Dimension of the space where the field is defined.
 
-    Pk : np.array or function
+    Pk : np.array or function, optional
         Power spectrum of the field. It can be an array with the values of the power spectrum at wavenumbers `k`, or a function Pk(k) which returns the power spectrum at wavenumbers `k`. The latter is more accurate.
 
-    k : np.array
+    k : np.array, optional
         If `Pk` is an array, wavenumbers corresponding to the power spectrum. If `Pk` is a function, `k` is the array `[kmin, kmax]`.
     
     normalise : bool, optional
@@ -377,33 +377,42 @@ class EuclideanGaussian(Gaussian):
         The values for the Lipschitz–Killing Curvatures of the ambient space.
         
     """   
-    def __init__(self, dim, Pk, k, normalise=True, volume=1.):
-        if type(Pk) is np.ndarray:
-            self.Pk = interp1d(k, Pk)
-            self.klim = np.array([k.min(), k.max()])
+    def __init__(self, dim, Pk=None, k=None, normalise=True, volume=1.):
+        if Pk is None:
+            self.Pk = None
+            self.klim = None
+            self.sigma = 1.
+            self.mu = 1.
+            self.nu = 1.
+            warnings.warn('The power spectrum is not given. The field to have unit variance, `mu=1.`, and `nu=1.`.')
         else:
-            assert callable(Pk), 'The power spectrum must be a function or an array'
-            assert k.shape == (2,), 'The power spectrum must be an array with two elements: `kmin, kmax`'
-            self.klim = k
-            self.Pk = Pk
+            if type(Pk) is np.ndarray:
+                self.Pk = interp1d(k, Pk)
+                self.klim = np.array([k.min(), k.max()])
+            else:
+                assert callable(Pk), 'The power spectrum, if given, must be a function or an array'
+                assert k.shape == (2,), 'The power spectrum must be an numpy array with two elements: `kmin, kmax`'
+                self.klim = k
+                self.Pk = Pk
         
-        if dim != 3:
-            warnings.warn('The formulae for the computation of sigma, mu, and nu are valid for `dim=3`. Please verify and possibly redefine these quantities manually.')
-            # Are these formulae valid also for other dimensions?
-        k2Pk = lambda k: self.Pk(k)*k**2.
-        sigma = np.sqrt(quad(k2Pk, self.klim[0], self.klim[1])[0] / (2.*np.pi**2.)) #* volume
+            if dim != 3:
+                warnings.warn('The formulae for the computation of sigma, mu, and nu are valid for `dim=3`. Please verify and possibly redefine these quantities manually.')
+                # Are these formulae valid also for other dimensions?
+        
+            k2Pk = lambda k: self.Pk(k)*k**2.
+            sigma = np.sqrt(quad(k2Pk, self.klim[0], self.klim[1])[0] / (2.*np.pi**2.)) #* volume
 
-        k4Pk = lambda k: self.Pk(k)*k**4.
-        mu = quad(k4Pk, self.klim[0], self.klim[1])[0] / (6.*np.pi**2.) #* volume
+            k4Pk = lambda k: self.Pk(k)*k**4.
+            mu = quad(k4Pk, self.klim[0], self.klim[1])[0] / (6.*np.pi**2.) #* volume
 
-        k6Pk = lambda k: self.Pk(k)*k**6.
-        nu = quad(k6Pk, self.klim[0], self.klim[1])[0] / (120.*np.pi**2.) #* volume
+            k6Pk = lambda k: self.Pk(k)*k**6.
+            nu = quad(k6Pk, self.klim[0], self.klim[1])[0] / (120.*np.pi**2.) #* volume
 
-        if normalise:
-            mu = mu/sigma**2.
-            nu = nu/sigma**2.
-            self.Pk = lambda k: self.Pk(k)/sigma**2.
-            sigma = 1.
+            if normalise:
+                mu = mu/sigma**2.
+                nu = nu/sigma**2.
+                self.Pk = lambda k: self.Pk(k)/sigma**2.
+                sigma = 1.
         
         lkc_ambient = np.zeros(dim+1)
         lkc_ambient[-1] = volume
