@@ -89,7 +89,284 @@ class QUarray(np.ndarray):
         return angle
 
 
-class SO3Healpix(DataField):
+class SO3DataField(DataField):
+    """Class for spherical spin fields in the SO(3) formalism, with Q and U in HEALPix format.
+
+    Parameters
+    ----------
+    Q : np.array
+        Values of the Q field.
+    
+    U : np.array
+        Values of the U field. Must have the same shape as `Q`.
+        
+    name : str, optional
+        Name of the field.
+        Defaul : `'SO(3) DataField'`
+    
+    first_der : np.array or None, optional
+        First **covariant** derivatives of the field in an orthonormal basis of the space. Same structure as `field`, and shape `(3, field.shape)`.
+    
+    second_der : np.array or None, optional
+        Second **covariant** derivatives of the field in an orthonormal basis of the space. Same structure as `field`, and shape `(6, field.shape)`.
+        The order of the derivatives is diagonal first, e.g. in `dim=3`: `11`, `22`, `33`, `12`, `13`, `23`.
+        
+    mask : np.array or None, optional
+        Mask where the field is considered. It is a bool array of the same shape that `Q` and `U`.
+        Default: all data is included.
+        
+    Attributes
+    ----------
+    field : np.array
+        Array of shape `(2, Q.shape)` containing the Q and U values. It can be called as `field(psi)` to obtain the value of $f$ for the given `psi`.
+        
+    dim : int
+        Dimension of the space where the field is defined. In this case, the space is SO(3) and this is 3.
+        
+    name : str
+        Name of the field.
+    
+    first_der : list or None
+        First **covariant** derivatives of the field in an orthonormal basis of the space. It a list of size `3`, each entry has the same structure as `field`.
+    
+    second_der : list or None
+        Second **covariant** derivatives of the field in an orthonormal basis of the space. It a list of size `6`, each entry has the same structure as `field`.
+        The order of the derivatives is diagonal first, i.e., `11`, `22`, `33`, `12`, `13`, `23`.
+        
+    mask : np.array
+        Sky mask where the field is considered. It is a bool array of the same shape that `Q` and `U`.
+
+    """   
+    def __init__(self, Q, U, name="SO(3) DataField", first_der=None, second_der=None, mask=None):
+        assert Q.shape == U.shape, "`Q` and `U` must have the same shape"
+        field = QUarray(Q, U)
+        if mask is None:
+            mask = np.ones(Q.shape, dtype=bool)
+        else:
+            assert mask.shape == Q.shape, "`mask` must have the same shape as `Q` and `U`"
+        super().__init__(field, 3, name=name, mask=mask, first_der=first_der, second_der=second_der)
+        
+    def get_first_der(self):
+        raise NotImplementedError("First derivatives are not implemented for arbitrary SO(3) DataFields, please use `SO3Healpix` or `SO3Patch`.")
+    
+    def get_second_der(self):
+        raise NotImplementedError("Second derivatives are not implemented for arbitrary SO(3) DataFields, please use `SO3Healpix` or `SO3Patch`.")
+        
+    def _V0(self, us, dus, verbose=True):
+        """Compute the first Minkowski Functional, $V_0$, normalized by the volume of the space. Internal interface for `pynkowski.V0`.
+
+        Parameters
+        ----------
+        us : np.array
+            The thresholds where $V_0$ is computed.
+
+        dus : np.array
+            The bin sizes of `us`. Ignored.
+
+        verbose : bool, optional
+            If True (default), progress bars are shown for the computations on data.
+        
+        Returns
+        -------
+        V0 : np.array()
+            The values of the first Minkowski Functional at the given thresholds.
+        
+        """
+        stat = np.zeros_like(us)
+        modulus = self.field.modulus()
+
+        for ii in tqdm(np.arange(us.shape[0]), disable=not verbose):
+            lenghts = np.zeros_like(modulus)
+            lenghts[us[ii]<=-modulus] = np.pi
+            mask = (us[ii]>-modulus) & (us[ii]<modulus)
+            lenghts[mask] = np.arccos(us[ii]/modulus[mask])
+            stat[ii] = np.mean(lenghts[self.mask])/np.pi
+        return stat
+    
+    def _V1(self, us, dus, verbose=True):
+        """Compute the second Minkowski Functional, $V_1$, normalized by the volume of the space. Internal interface for `pynkowski.V1`.
+
+        Parameters
+        ----------
+        us : np.array
+            The thresholds where $V_1$ is computed.
+            
+        dus : np.array
+            The bin sizes of `us`. Ignored.
+            
+        verbose : bool, optional
+            If True (default), progress bars are shown for the computations on data.
+        
+        Returns
+        -------
+        V1 : np.array()
+            The values of the second Minkowski Functional at the given thresholds.
+        
+        """
+        if self.first_der is None:
+            self.get_first_der()
+        modulus = self.field.modulus()
+        pol_angle = self.field.pol_angle()
+        # theta = get_theta(self.nside)
+        stat = np.zeros_like(us)
+        
+        for ii in tqdm(np.arange(us.shape[0]), disable=not verbose):
+            integrand_1 = np.zeros_like(modulus)
+            integrand_2 = np.zeros_like(modulus)
+            # thetamask = ~(np.isclose(np.cos(theta),0, atol=1.e-2))
+            mask = (us[ii]>-modulus) & (us[ii]<modulus)   # & thetamask
+            if np.sum(mask) == 0:
+                continue
+            first_der_t = QUarray(*zip(*self.first_der))[:,:,mask]
+
+            psi_1 = pol_angle[mask] + np.arccos(us[ii]/modulus[mask])/2.
+            psi_2 = pol_angle[mask] - np.arccos(us[ii]/modulus[mask])/2.
+            
+            integrand_1[mask] = np.sqrt(np.sum(first_der_t(psi_1)**2., axis=0))
+            integrand_2[mask] = np.sqrt(np.sum(first_der_t(psi_2)**2., axis=0))
+            
+            total_integrand = (integrand_1 + integrand_2)   # /np.mean(thetamask)
+            stat[ii] = np.mean(total_integrand[self.mask])/np.pi
+
+        return _MF_prefactor(self.dim, 1) * stat
+    
+    
+    def _V2(self, us, dus, verbose=True):
+        """Compute the second Minkowski Functional, $V_2$, normalized by the volume of the space. Internal interface for `pynkowski.V2`.
+
+        Parameters
+        ----------
+        us : np.array
+            The thresholds where $V_2$ is computed.
+            
+        dus : np.array
+            The bin sizes of `us`. Ignored.
+            
+        verbose : bool, optional
+            If True (default), progress bars are shown for the computations on data.
+        
+        Returns
+        -------
+        V2 : np.array()
+            The values of the second Minkowski Functional at the given thresholds.
+        
+        """
+        if self.first_der is None:
+            self.get_first_der()
+        if self.second_der is None:
+            self.get_second_der()
+            
+        modulus = self.field.modulus()
+        pol_angle = self.field.pol_angle()
+        # theta = get_theta(self.nside)
+        stat = np.zeros_like(us)
+
+        for ii in tqdm(np.arange(us.shape[0]), disable=not verbose):
+            integrand_1 = np.zeros_like(modulus)
+            integrand_2 = np.zeros_like(modulus)
+            
+            # thetamask = ~(np.isclose(np.cos(theta),0, atol=1.e-2))
+            mask = (us[ii]>-modulus) & (us[ii]<modulus)  #& thetamask
+            if np.sum(mask) == 0:
+                continue
+            # pixs = np.arange(12*self.nside**2)[mask]
+            first_der_t = QUarray(*zip(*self.first_der))[:,:,mask]       # This just "transposes" the array without losing QUarray functionality, so that the first index is the Q/U component, the second is the derivative direction, and the third is the pixel
+            second_der_t = QUarray(*zip(*self.second_der))[:,:,mask]
+            
+            psi_1 = pol_angle[mask] + np.arccos(us[ii]/modulus[mask])/2.
+            psi_2 = pol_angle[mask] - np.arccos(us[ii]/modulus[mask])/2.
+
+            integrand_1[mask] = self._H(first_der_t, second_der_t, psi_1)
+            integrand_2[mask] = self._H(first_der_t, second_der_t, psi_2)
+        
+            total_integrand = (integrand_1 + integrand_2)  #/np.mean(thetamask)
+        
+            stat[ii] = np.mean(total_integrand[self.mask])/np.pi
+
+        return _MF_prefactor(self.dim, 2) * stat
+    
+    def _V3(self, us, dus, verbose=True):
+        """Compute the second Minkowski Functional, $V_3$, normalized by the volume of the space. Internal interface for `pynkowski.V3`.
+
+        Parameters
+        ----------
+        us : np.array
+            The thresholds where $V_3$ is computed.
+            
+        dus : np.array
+            The bin sizes of `us`. Ignored.
+            
+        verbose : bool, optional
+            If True (default), progress bars are shown for the computations on data.
+        
+        Returns
+        -------
+        V3 : np.array()
+            The values of the second Minkowski Functional at the given thresholds.
+        
+        """
+        if self.first_der is None:
+            self.get_first_der()
+        if self.second_der is None:
+            self.get_second_der()
+            
+        modulus = self.field.modulus()
+        pol_angle = self.field.pol_angle()
+        # theta = get_theta(self.nside)
+        stat = np.zeros_like(us)
+
+        for ii in tqdm(np.arange(us.shape[0]), disable=not verbose):
+            integrand_1 = np.zeros_like(modulus)
+            integrand_2 = np.zeros_like(modulus)
+            
+            # thetamask = ~(np.isclose(np.cos(theta),0, atol=1.e-2))
+            mask = (us[ii]>-modulus) & (us[ii]<modulus)  #& thetamask
+            if np.sum(mask) == 0:
+                continue
+            # pixs = np.arange(12*self.nside**2)[mask]
+            first_der_t = QUarray(*zip(*self.first_der))[:,:,mask]
+            second_der_t = QUarray(*zip(*self.second_der))[:,:,mask]
+            
+            psi_1 = pol_angle[mask] + np.arccos(us[ii]/modulus[mask])/2.
+            psi_2 = pol_angle[mask] - np.arccos(us[ii]/modulus[mask])/2.
+
+            integrand_1[mask] = self._K(first_der_t, second_der_t, psi_1)
+            integrand_2[mask] = self._K(first_der_t, second_der_t, psi_2)
+        
+            total_integrand = (integrand_1 + integrand_2)  #/np.mean(thetamask)
+        
+            stat[ii] = np.mean(total_integrand[self.mask])/np.pi
+
+        return _MF_prefactor(self.dim, 3) * stat
+
+    @staticmethod
+    def _H(first_der_t, second_der_t, psi):
+        """Compute the mean curvature of the field at a given angle.
+        """
+        first_der_t = first_der_t(psi)
+        second_der_t = second_der_t(psi)
+        hess = np.array([[second_der_t[0], second_der_t[3], second_der_t[4]],
+                        [second_der_t[3], second_der_t[1], second_der_t[5]],
+                        [second_der_t[4], second_der_t[5], second_der_t[2]]])
+        norm_grad = first_der_t / np.sqrt(np.sum(first_der_t**2., axis=0))
+        return np.einsum('j...,jk...,k... -> ...', norm_grad, hess, norm_grad) - np.trace(hess, axis1=0, axis2=1)
+    
+    @staticmethod
+    def _K(first_der_t, second_der_t, psi):
+        """Compute the Gaussian curvature of the field at a given angle.
+        """
+        first_der_t = first_der_t(psi)
+        mod_grad = np.sqrt(np.sum(first_der_t**2., axis=0))
+        second_der_t = second_der_t(psi) / mod_grad
+        norm_grad = first_der_t / mod_grad
+        extended_hessian_det = np.linalg.det(np.array([[second_der_t[0], second_der_t[3], second_der_t[4], norm_grad[0]],
+                                                        [second_der_t[3], second_der_t[1], second_der_t[5], norm_grad[1]],
+                                                        [second_der_t[4], second_der_t[5], second_der_t[2], norm_grad[2]],
+                                                        [norm_grad[0], norm_grad[1], norm_grad[2], np.zeros_like(norm_grad[0])]]).T).T
+        return -extended_hessian_det*mod_grad
+
+
+class SO3Healpix(SO3DataField):
     """Class for spherical spin fields in the SO(3) formalism, with Q and U in HEALPix format.
 
     Parameters
@@ -134,11 +411,7 @@ class SO3Healpix(DataField):
 
     """   
     def __init__(self, Q, U, normalise=True, mask=None):
-        assert Q.shape == U.shape, "Q and U must have the same shape"
-        field = QUarray(Q, U)
-        if mask is None:
-            mask = np.ones(Q.shape, dtype=bool)
-        super().__init__(field, 3, name="SO(3) HEALPix map", mask=mask)
+        super().__init__(Q, U, name="SO(3) HEALPix map", mask=mask)
         self.nside = hp.get_nside(self.field[0])
         if hp.get_nside(self.mask) != self.nside:
             raise ValueError('The map and the mask have different nside')
@@ -146,7 +419,7 @@ class SO3Healpix(DataField):
         if normalise:
             σ2 = self.get_variance()
             self.field /= np.sqrt(σ2)
-            
+           
     def get_variance(self):
         """Compute the variance of the SO(3) Healpix map within the sky mask. 
 
@@ -273,216 +546,9 @@ class SO3Healpix(DataField):
         # self.der_phi_psi = Polmap( (-np.sin(theta) * Q_der_der[1]  + np.sin(theta) * 4. * self.Q  - 4.*U_der[1] + np.cos(theta)*Q_der[0] ) / (4.*np.cos(theta)**2.),
         #                            (-np.sin(theta) * U_der_der[1]  + np.sin(theta) * 4. * self.U  + 4.*Q_der[1] + np.cos(theta)*U_der[0] ) / (4.*np.cos(theta)**2.), normalise=False)
 
-    def _V0(self, us, dus, verbose=True):
-        """Compute the first Minkowski Functional, $V_0$, normalized by the volume of the space. Internal interface for `pynkowski.V0`.
-
-        Parameters
-        ----------
-        us : np.array
-            The thresholds where $V_0$ is computed.
-
-        dus : np.array
-            The bin sizes of `us`. Ignored.
-
-        verbose : bool, optional
-            If True (default), progress bars are shown for the computations on data.
-        
-        Returns
-        -------
-        V0 : np.array()
-            The values of the first Minkowski Functional at the given thresholds.
-        
-        """
-        stat = np.zeros_like(us)
-        modulus = self.field.modulus()
-
-        for ii in tqdm(np.arange(us.shape[0]), disable=not verbose):
-            lenghts = np.zeros_like(modulus)
-            lenghts[us[ii]<=-modulus] = np.pi
-            mask = (us[ii]>-modulus) & (us[ii]<modulus)
-            lenghts[mask] = np.arccos(us[ii]/modulus[mask])
-            stat[ii] = np.mean(lenghts[self.mask])/np.pi
-        return stat
     
-    def _V1(self, us, dus, verbose=True):
-        """Compute the second Minkowski Functional, $V_1$, normalized by the volume of the space. Internal interface for `pynkowski.V1`.
-
-        Parameters
-        ----------
-        us : np.array
-            The thresholds where $V_1$ is computed.
-            
-        dus : np.array
-            The bin sizes of `us`. Ignored.
-            
-        verbose : bool, optional
-            If True (default), progress bars are shown for the computations on data.
-        
-        Returns
-        -------
-        V1 : np.array()
-            The values of the second Minkowski Functional at the given thresholds.
-        
-        """
-        if self.first_der is None:
-            self.get_first_der()
-        modulus = self.field.modulus()
-        pol_angle = self.field.pol_angle()
-        # theta = get_theta(self.nside)
-        stat = np.zeros_like(us)
-        
-        for ii in tqdm(np.arange(us.shape[0]), disable=not verbose):
-            integrand_1 = np.zeros_like(modulus)
-            integrand_2 = np.zeros_like(modulus)
-            # thetamask = ~(np.isclose(np.cos(theta),0, atol=1.e-2))
-            mask = (us[ii]>-modulus) & (us[ii]<modulus)   # & thetamask
-            first_der_t = QUarray(*zip(*self.first_der))[:,:,mask]
-
-            psi_1 = pol_angle[mask] + np.arccos(us[ii]/modulus[mask])/2.
-            psi_2 = pol_angle[mask] - np.arccos(us[ii]/modulus[mask])/2.
-            
-            integrand_1[mask] = np.sqrt(np.sum(first_der_t(psi_1)**2., axis=0))
-            integrand_2[mask] = np.sqrt(np.sum(first_der_t(psi_2)**2., axis=0))
-            
-            total_integrand = (integrand_1 + integrand_2)   # /np.mean(thetamask)
-            stat[ii] = np.mean(total_integrand[self.mask])/np.pi
-
-        return _MF_prefactor(self.dim, 1) * stat
-    
-    
-    def _V2(self, us, dus, verbose=True):
-        """Compute the second Minkowski Functional, $V_2$, normalized by the volume of the space. Internal interface for `pynkowski.V2`.
-
-        Parameters
-        ----------
-        us : np.array
-            The thresholds where $V_2$ is computed.
-            
-        dus : np.array
-            The bin sizes of `us`. Ignored.
-            
-        verbose : bool, optional
-            If True (default), progress bars are shown for the computations on data.
-        
-        Returns
-        -------
-        V2 : np.array()
-            The values of the second Minkowski Functional at the given thresholds.
-        
-        """
-        if self.first_der is None:
-            self.get_first_der()
-        if self.second_der is None:
-            self.get_second_der()
-            
-        modulus = self.field.modulus()
-        pol_angle = self.field.pol_angle()
-        # theta = get_theta(self.nside)
-        stat = np.zeros_like(us)
-
-        for ii in tqdm(np.arange(us.shape[0]), disable=not verbose):
-            integrand_1 = np.zeros_like(modulus)
-            integrand_2 = np.zeros_like(modulus)
-            
-            # thetamask = ~(np.isclose(np.cos(theta),0, atol=1.e-2))
-            mask = (us[ii]>-modulus) & (us[ii]<modulus)  #& thetamask
-            # pixs = np.arange(12*self.nside**2)[mask]
-            first_der_t = QUarray(*zip(*self.first_der))[:,:,mask]       # This just "transposes" the array without losing QUarray functionality, so that the first index is the Q/U component, the second is the derivative direction, and the third is the pixel
-            second_der_t = QUarray(*zip(*self.second_der))[:,:,mask]
-            
-            psi_1 = pol_angle[mask] + np.arccos(us[ii]/modulus[mask])/2.
-            psi_2 = pol_angle[mask] - np.arccos(us[ii]/modulus[mask])/2.
-
-            integrand_1[mask] = self._H(first_der_t, second_der_t, psi_1)
-            integrand_2[mask] = self._H(first_der_t, second_der_t, psi_2)
-        
-            total_integrand = (integrand_1 + integrand_2)  #/np.mean(thetamask)
-        
-            stat[ii] = np.mean(total_integrand[self.mask])/np.pi
-
-        return _MF_prefactor(self.dim, 2) * stat
-    
-    def _V3(self, us, dus, verbose=True):
-        """Compute the second Minkowski Functional, $V_3$, normalized by the volume of the space. Internal interface for `pynkowski.V3`.
-
-        Parameters
-        ----------
-        us : np.array
-            The thresholds where $V_3$ is computed.
-            
-        dus : np.array
-            The bin sizes of `us`. Ignored.
-            
-        verbose : bool, optional
-            If True (default), progress bars are shown for the computations on data.
-        
-        Returns
-        -------
-        V3 : np.array()
-            The values of the second Minkowski Functional at the given thresholds.
-        
-        """
-        if self.first_der is None:
-            self.get_first_der()
-        if self.second_der is None:
-            self.get_second_der()
-            
-        modulus = self.field.modulus()
-        pol_angle = self.field.pol_angle()
-        # theta = get_theta(self.nside)
-        stat = np.zeros_like(us)
-
-        for ii in tqdm(np.arange(us.shape[0]), disable=not verbose):
-            integrand_1 = np.zeros_like(modulus)
-            integrand_2 = np.zeros_like(modulus)
-            
-            # thetamask = ~(np.isclose(np.cos(theta),0, atol=1.e-2))
-            mask = (us[ii]>-modulus) & (us[ii]<modulus)  #& thetamask
-            # pixs = np.arange(12*self.nside**2)[mask]
-            first_der_t = QUarray(*zip(*self.first_der))[:,:,mask]
-            second_der_t = QUarray(*zip(*self.second_der))[:,:,mask]
-            
-            psi_1 = pol_angle[mask] + np.arccos(us[ii]/modulus[mask])/2.
-            psi_2 = pol_angle[mask] - np.arccos(us[ii]/modulus[mask])/2.
-
-            integrand_1[mask] = self._K(first_der_t, second_der_t, psi_1)
-            integrand_2[mask] = self._K(first_der_t, second_der_t, psi_2)
-        
-            total_integrand = (integrand_1 + integrand_2)  #/np.mean(thetamask)
-        
-            stat[ii] = np.mean(total_integrand[self.mask])/np.pi
-
-        return _MF_prefactor(self.dim, 3) * stat
-
-    @staticmethod
-    def _H(first_der_t, second_der_t, psi):
-        """Compute the mean curvature of the field at a given angle.
-        """
-        first_der_t = first_der_t(psi)
-        second_der_t = second_der_t(psi)
-        hess = np.array([[second_der_t[0], second_der_t[3], second_der_t[4]],
-                        [second_der_t[3], second_der_t[1], second_der_t[5]],
-                        [second_der_t[4], second_der_t[5], second_der_t[2]]])
-        norm_grad = first_der_t / np.sqrt(np.sum(first_der_t**2., axis=0))
-        return np.einsum('j...,jk...,k... -> ...', norm_grad, hess, norm_grad) - np.trace(hess, axis1=0, axis2=1)
-    
-    @staticmethod
-    def _K(first_der_t, second_der_t, psi):
-        """Compute the Gaussian curvature of the field at a given angle.
-        """
-        first_der_t = first_der_t(psi)
-        mod_grad = np.sqrt(np.sum(first_der_t**2., axis=0))
-        second_der_t = second_der_t(psi) / mod_grad
-        norm_grad = first_der_t / mod_grad
-        extended_hessian_det = np.linalg.det(np.array([[second_der_t[0], second_der_t[3], second_der_t[4], norm_grad[0]],
-                                                        [second_der_t[3], second_der_t[1], second_der_t[5], norm_grad[1]],
-                                                        [second_der_t[4], second_der_t[5], second_der_t[2], norm_grad[2]],
-                                                        [norm_grad[0], norm_grad[1], norm_grad[2], np.zeros_like(norm_grad[0])]]).T).T
-        return -extended_hessian_det*mod_grad
-
-
         
 
-__all__ = ["SO3Healpix", "QUarray"]
+__all__ = ["SO3Healpix", "QUarray", "SO3DataField"]
 
 __docformat__ = "numpy"
