@@ -1,13 +1,14 @@
 import numpy as np
 import healpy as hp
 from .base_da import DataField
-from .utils_da import get_theta, healpix_derivatives, healpix_second_derivatives, QUarray
+from .utils_da import get_theta, healpix_derivatives, healpix_second_derivatives
 from ..stats.minkowski import _MF_prefactor
 try:
     from tqdm.auto import tqdm
 except:
     tqdm = lambda x: x
     print('tqdm not loaded')
+
 
 
 class SO3Healpix(DataField):
@@ -404,6 +405,6 @@ class SO3Healpix(DataField):
 
         
 
-__all__ = ["SO3Healpix"]
+__all__ = ["SO3Healpix", "QUarray"]
 
 __docformat__ = "numpy"

@@ -13,7 +13,7 @@ from .array import DataArray
 try:
     import healpy as hp
     from .healpix import Healpix, HealpixP2
-    from .so3healpix import SO3Healpix
+    from .so3data import SO3Healpix
 except ImportError:
     hp = None
     print("healpy was not loaded, some functionality will be unavailable")
