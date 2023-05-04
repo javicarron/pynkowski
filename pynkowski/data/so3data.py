@@ -483,9 +483,12 @@ class SO3Healpix(SO3DataField):
         """Compute the covariant second derivatives of the input Healpix scalar map. 
         It stores:
         
-        - second covariant derivative wrt θθ in self.second_der[0]
-        - second covariant derivative wrt ϕϕ in self.second_der[1]
-        - second covariant derivative wrt θϕ in self.second_der[2]
+        - second covariant derivative wrt e₁e₁ in self.second_der[0]
+        - second covariant derivative wrt e₂e₂ in self.second_der[1]
+        - second covariant derivative wrt e₃e₃ in self.second_der[2]
+        - second covariant derivative wrt e₁e₂ in self.second_der[3]
+        - second covariant derivative wrt e₁e₃ in self.second_der[4]
+        - second covariant derivative wrt e₂e₃ in self.second_der[5]
 
         Parameters
         ----------

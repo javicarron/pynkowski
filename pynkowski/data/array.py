@@ -78,6 +78,10 @@ class DataArray(DataField):
         
     second_der : np.array or None
         Second **covariant** derivatives of the field in an orthonormal basis of the space. Same structure as `field`, and shape `(dim*(dim+1)/2, field.shape)`.
+
+    spacing : float or np.array
+        Spacing between pixels (centres) in each dimension. If a float, the spacing is the same in all dimensions.
+        If an array, it must have the same length as the number of dimensions of the field.
         
     """
     def __init__(self, field, normalise=True, mask=None, spacing=1.):
