@@ -162,7 +162,7 @@ class HealpixP2(Healpix):
     Q : np.array
         Values of the Q component in HEALPix format in RING scheme.
         
-    Q : np.array
+    U : np.array
         Values of the U component in HEALPix format in RING scheme.
         
     normalise : bool, optional
