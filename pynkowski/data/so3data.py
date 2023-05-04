@@ -140,11 +140,11 @@ class SO3DataField(DataField):
     def __init__(self, Q, U, name="SO(3) DataField", first_der=None, second_der=None, mask=None):
         assert Q.shape == U.shape, "`Q` and `U` must have the same shape"
         field = QUarray(Q, U)
+        super().__init__(field, 3, name=name, mask=mask, first_der=first_der, second_der=second_der)
         if mask is None:
-            mask = np.ones(Q.shape, dtype=bool)
+            self.mask = np.ones(Q.shape, dtype=bool)
         else:
             assert mask.shape == Q.shape, "`mask` must have the same shape as `Q` and `U`"
-        super().__init__(field, 3, name=name, mask=mask, first_der=first_der, second_der=second_der)
         
     def get_first_der(self):
         raise NotImplementedError("First derivatives are not implemented for arbitrary SO(3) DataFields, please use `SO3Healpix` or `SO3Patch`.")
