@@ -549,9 +549,137 @@ class SO3Healpix(SO3DataField):
         # self.der_phi_psi = Polmap( (-np.sin(theta) * Q_der_der[1]  + np.sin(theta) * 4. * self.Q  - 4.*U_der[1] + np.cos(theta)*Q_der[0] ) / (4.*np.cos(theta)**2.),
         #                            (-np.sin(theta) * U_der_der[1]  + np.sin(theta) * 4. * self.U  + 4.*Q_der[1] + np.cos(theta)*U_der[0] ) / (4.*np.cos(theta)**2.), normalise=False)
 
-    
-        
 
-__all__ = ["SO3Healpix", "QUarray", "SO3DataField"]
+class SO3Array(SO3DataField):
+    """Class for spin fields in the SO(3) formalism, with Q and U as 2D `np.array` patches. This assumes a flat sky approximation on the patch.
+
+    Parameters
+    ----------
+    Q : np.array
+        Values of the Q field as a 2D array. The x, y dimensions correspond to the ϕ, θ coordinates.
+    
+    U : np.array
+        Values of the U field as a 2D array. Must have the same shape as `Q`.
+        
+    normalise : bool, optional
+        If `True`, the map is normalised to have unit variance.
+        Default: `True`.
+
+    mask : np.array or None, optional
+        Mask where the field is considered. It is a bool array of the same shape that `Q` and `U`.
+        Default: all data is included.
+
+    spacing : float or np.array, optional
+        Spacing between pixels (centres) in each dimension, in radians. If a float, the spacing is the same in all dimensions. 
+        If an array, it must have the same length as the number of dimensions of the field (2).
+        
+    Attributes
+    ----------
+    field : np.array
+        Array of shape `(2, Q.shape)` containing the Q and U values. It can be called as `field(psi)` to obtain the value of $f$ for the given `psi`.
+            
+    dim : int
+        Dimension of the space where the field is defined. In this case, the space is SO(3) and this is 3.
+        
+    name : str
+        Name of the field. In this case, it is `"SO(3) patch"`.
+    
+    first_der : list or None
+        First **covariant** derivatives of the field in an orthonormal basis of the space. It a list of size `3`, each entry has the same structure as `field`.
+    
+    second_der : list or None
+        Second **covariant** derivatives of the field in an orthonormal basis of the space. It a list of size `6`, each entry has the same structure as `field`.
+        The order of the derivatives is diagonal first, i.e., `11`, `22`, `33`, `12`, `13`, `23`.
+        
+    mask : np.array
+        Mask where the field is considered. It is a bool array of the same shape that `Q` and `U`.
+
+    spacing : float or np.array
+        Spacing between pixels (centres) in each dimension. If a float, the spacing is the same in all dimensions.
+        If an array, it must have the same length as the number of dimensions of the field (2).
+
+    """   
+    def __init__(self, Q, U, normalise=True, mask=None, spacing=np.deg2rad(1./60.)):
+        super().__init__(Q, U, name="SO(3) HEALPix map", mask=mask)
+        if self.mask.shape != Q.shape:
+            raise ValueError('The map and the mask have different shapes')
+        
+        if normalise:
+            σ2 = self.get_variance()
+            self.field /= np.sqrt(σ2)
+        self.spacing = spacing
+           
+    def get_variance(self):
+        """Compute the variance of the SO(3) Healpix map within the sky mask. 
+
+        Returns
+        -------
+        var : float
+            The variance of the map within the mask.
+
+        """    
+        return (np.mean(self.field[:,self.mask]**2.))
+    
+    def get_first_der(self):
+        """Compute the covariant first derivatives of the SO(3) Healpix map. Flat sky is assumed.
+        It stores:
+        
+        - first covariant derivative wrt ϕ in self.first_der[0]
+        - first covariant derivative wrt θ in self.first_der[1]
+        - first covariant derivative wrt ψ in self.first_der[2]
+        
+        """    
+        Q_grad = np.gradient(self.field[0], self.spacing, edge_order=2)[::-1]  # order θ,ϕ
+        U_grad = np.gradient(self.field[1], self.spacing, edge_order=2)[::-1]
+
+        fphi = QUarray(Q_grad[1], U_grad[1])
+        ftheta = QUarray(Q_grad[0], U_grad[0])
+        fpsi = self.field.derpsi()
+
+        self.first_der = [ fphi / np.sqrt(2.),                  # ∂e₁  (ϕ)
+                           ftheta / np.sqrt(2.),                # ∂e₂  (θ)
+                           fpsi / np.sqrt(2.)]                  # ∂e₃  (ψ)
+
+        
+            
+    def get_second_der(self):
+        """Compute the covariant second derivatives of the input Healpix scalar map. 
+        It stores:
+        
+        - second covariant derivative wrt ϕϕ in self.second_der[0]
+        - second covariant derivative wrt θθ in self.second_der[1]
+        - second covariant derivative wrt ψψ in self.second_der[2]
+        - second covariant derivative wrt ϕθ in self.second_der[3]
+        - second covariant derivative wrt ϕψ in self.second_der[4]
+        - second covariant derivative wrt θψ in self.second_der[5]
+
+        """    
+        if self.first_der is None:
+            self.get_first_der()
+
+        fphi = self.first_der[0] * np.sqrt(2.)
+        ftheta = self.first_der[1] * np.sqrt(2.)
+        fpsi = self.field.derpsi()
+
+        Q_phi_der = np.gradient(fphi[0], self.spacing, edge_order=2)[::-1]  # order θ,ϕ
+        U_phi_der = np.gradient(fphi[1], self.spacing, edge_order=2)[::-1]  # order θ,ϕ
+        Q_the_der = np.gradient(ftheta[0], self.spacing, edge_order=2)[::-1]
+        U_the_der = np.gradient(ftheta[1], self.spacing, edge_order=2)[::-1]
+
+        fthetatheta = QUarray(Q_the_der[0], U_the_der[0])
+        fthetaphi = QUarray(Q_the_der[1], U_the_der[1])
+        fphiphi = QUarray(Q_phi_der[1], U_phi_der[1])
+        del Q_the_der, U_the_der, Q_phi_der, U_phi_der
+
+        # order 11, 22, 33, 12, 13, 23
+        self.second_der = [ fphiphi / 2.,
+                            fthetatheta / 2.,
+                            fpsi.derpsi() / 2.,
+                            fthetaphi / 2.,
+                            fphi.derpsi() / 2.,
+                            ftheta.derpsi() / 2. ]
+
+
+__all__ = ["SO3Healpix", "SO3Array", "QUarray", "SO3DataField"]
 
 __docformat__ = "numpy"
