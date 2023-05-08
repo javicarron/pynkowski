@@ -83,6 +83,7 @@ from .theory import (TheoryField,
                      Gaussian,
                      SphericalGaussian,
                      EuclideanGaussian,
+                     SpinGaussian,
                      Chi2,
                      SphericalChi2)
 

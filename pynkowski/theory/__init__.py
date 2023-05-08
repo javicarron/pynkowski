@@ -11,6 +11,7 @@ These fields are defined with arbitrary dimensions and on an arbitrary space. Sp
 
 from .base_th import TheoryField
 from .gaussian import SphericalGaussian, EuclideanGaussian, Gaussian
+from .spingaussian import SpinGaussian
 from .chi2 import SphericalChi2, Chi2
 
 __docformat__ = "numpy"
