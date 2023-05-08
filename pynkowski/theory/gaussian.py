@@ -97,8 +97,7 @@ class Gaussian(TheoryField):
             Expected value of MFs evaluated at the thresholds.
 
         """
-        us /= self.sigma
-        return 1./comb(self.dim,j)*LKC(self.dim-j, us, self.mu, dim=self.dim, lkc_ambient=self.lkc_ambient)/self.lkc_ambient[-1]
+        return 1./comb(self.dim,j)*self.LKC(self.dim-j, us)
     
     def V0(self, us):
         """Compute the expected values of the first Minkowski Functionals of the excursion sets at thresholds `us`, $V_0(A_u(f))$.
@@ -443,6 +442,7 @@ class EuclideanGaussian(Gaussian):
         return np.real(np.sqrt(1./(1.-κ**2.+ 0.j))) * norm.pdf(us) * egoe(self.dim, 1./(1.-κ**2.), κ*us/np.sqrt(2.)) / egoe(self.dim, 1., 0.)
 
 
+    
 
 __all__ = ["SphericalGaussian", "EuclideanGaussian", "Gaussian"]
 
