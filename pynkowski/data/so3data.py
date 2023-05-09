@@ -349,7 +349,7 @@ class SO3DataField(DataField):
                         [second_der_t[3], second_der_t[1], second_der_t[5]],
                         [second_der_t[4], second_der_t[5], second_der_t[2]]])
         norm_grad = first_der_t / np.sqrt(np.sum(first_der_t**2., axis=0))
-        return 2.* (np.einsum('j...,jk...,k... -> ...', norm_grad, hess, norm_grad) - np.trace(hess, axis1=0, axis2=1))
+        return np.einsum('j...,jk...,k... -> ...', norm_grad, hess, norm_grad) - np.trace(hess, axis1=0, axis2=1)
     
     @staticmethod
     def _K(first_der_t, second_der_t, psi):
