@@ -109,7 +109,7 @@ class SpinGaussian(Gaussian):
         Whether to use only the leading order in μ for the computation of the MFs or the exact expression (with two terms).
 
     """   
-    def __init__(self, cls, normalise=True, fsky=1., Ks=[1., 0.31912, 0.7088, 1.], leading_order=False):
+    def __init__(self, cls, normalise=True, fsky=1., Ks=[1., 0.31912, 0.7088, 1.], leading_order=True):
         if normalise:
             cls /= get_σ(cls)
             self.sigma = 1.
