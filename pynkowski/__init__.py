@@ -77,7 +77,7 @@ from .data import (DataField,
                    HealpixP2,
                    DataArray,
                    SO3Healpix,
-                   SO3Array)
+                   SO3Patch)
 
 from .theory import (TheoryField,
                      Gaussian,

@@ -550,7 +550,7 @@ class SO3Healpix(SO3DataField):
         #                            (-np.sin(theta) * U_der_der[1]  + np.sin(theta) * 4. * self.U  + 4.*Q_der[1] + np.cos(theta)*U_der[0] ) / (4.*np.cos(theta)**2.), normalise=False)
 
 
-class SO3Array(SO3DataField):
+class SO3Patch(SO3DataField):
     """Class for spin fields in the SO(3) formalism, with Q and U as 2D `np.array` patches. This assumes a flat sky approximation on the patch.
 
     Parameters
@@ -680,6 +680,6 @@ class SO3Array(SO3DataField):
                             ftheta.derpsi() / 2. ]
 
 
-__all__ = ["SO3Healpix", "SO3Array", "QUarray", "SO3DataField"]
+__all__ = ["SO3Healpix", "SO3Patch", "QUarray", "SO3DataField"]
 
 __docformat__ = "numpy"
