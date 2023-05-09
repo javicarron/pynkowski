@@ -46,14 +46,14 @@ class QUarray(np.ndarray):
         Parameters
         ----------
         psi : float or np.array
-            The position at which to evaluate f. It must be broadcastable with the shape of `Q` and `U`.
+            The position at which to evaluate f, in radians. It must be broadcastable with the shape of `Q` and `U`.
             
         Returns
         -------
         f : np.array
             The value of f at the given position psi.
         '''
-        return self[0]*np.cos(2.*psi) - self[1]*np.sin(2.*psi)
+        return np.asarray(self[0]*np.cos(2.*psi) - self[1]*np.sin(2.*psi))
     
     def derpsi(self):
         '''Return the derivative of f with respect to psi, which can be exactly computed in the SO(3) formalism.
