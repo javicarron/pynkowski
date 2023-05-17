@@ -49,7 +49,7 @@ class DataField():
     """   
     
     def __init__(self, field, dim, name="DataField", first_der=None, second_der=None, mask=None):
-        self.field = field
+        self.field = field.copy()
         self.dim = dim
         self.name = name
         if mask is None:
