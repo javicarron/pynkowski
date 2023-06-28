@@ -1,3 +1,4 @@
+'''This submodule contains some utilities for data fields.'''
 import numpy as np
 import healpy as hp
 

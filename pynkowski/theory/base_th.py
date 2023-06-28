@@ -1,4 +1,4 @@
-"""Submodule with the base class for theoretical fields, `TheoryField`."""
+"""This submodule contains the base abstract class for theoretical fields, `TheoryField`."""
 import numpy as np
 
 def _prepare_lkc(dim=None, lkc_ambient=None):

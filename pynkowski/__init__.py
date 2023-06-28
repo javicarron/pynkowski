@@ -11,6 +11,7 @@ The formats currently supported for **input data** are the following:
 
 - Scalar HEALPix maps, as the ones used by [healpy](https://healpy.readthedocs.io/), such as $T, \kappa, P^2$ (see [paper 1](https://arxiv.org/abs/2211.07562)).
 - Polarisation HEALPix maps in the $SO(3)$ formalism (coming  soon, see [paper 2](https://arxiv.org/abs/2301.13191)).
+- 2D and 3D numpy arrays (coming soon).
 
 The theoretical expectation of some statistics is currently supported for the following **theoretical fields**:
 

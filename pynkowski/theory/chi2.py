@@ -1,3 +1,4 @@
+'''This submodule contains the classes for the theoretical $\chi^2$ fields.'''
 import numpy as np
 from scipy.special import comb
 from .utils_th import LKC_Chi2, get_σ, get_μ, lkc_ambient_dict

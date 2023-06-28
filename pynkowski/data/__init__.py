@@ -1,6 +1,6 @@
 '''This module contains all the classes to work with data in several conventions. Currently, the implemented formats are the following:
 
-- [`base_da`](data/base_da.html): The base class for data fields, to be used as the base for the other fields.
+- [`base_da`](data/base_da.html): the abstract class for general data fields, to be used as the base for the other fields.
 - [`healpix`](data/healpix.html): scalar maps on the sphere in the healpix convention. An optional interface for $P^2$ is included.
 
 - There is also a general utilities submodule called [`utils_da`](data/utils.html).

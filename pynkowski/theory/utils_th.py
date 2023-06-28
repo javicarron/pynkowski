@@ -1,4 +1,4 @@
- 
+'''This submodule contains utilities for the theory module.'''
 import warnings
 import numpy as np
 from scipy.special import eval_hermitenorm, gamma, comb, factorial, gammainc

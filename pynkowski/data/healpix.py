@@ -1,3 +1,4 @@
+'''This submodule contains the class for scalar fields in HEALPix format and an easy interface for $P^2$ maps in this format.'''
 import numpy as np
 import healpy as hp
 from .base_da import DataField
@@ -162,7 +163,7 @@ class HealpixP2(Healpix):
     Q : np.array
         Values of the Q component in HEALPix format in RING scheme.
         
-    Q : np.array
+    U : np.array
         Values of the U component in HEALPix format in RING scheme.
         
     normalise : bool, optional

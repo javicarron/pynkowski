@@ -1,3 +1,4 @@
+'''This submodule contains the functions to compute the Minkowski Functionals of a field.'''
 import numpy as np
 from scipy.special import comb, gamma
 from .utils_st import subsample_us, define_ubins

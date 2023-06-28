@@ -1,3 +1,4 @@
+'''This submodule contains the base abstract class for data fields.'''
 import numpy as np
 
 class DataField():

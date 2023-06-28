@@ -1,3 +1,4 @@
+'''This submodule contains utility functions that are useful for different statistics.'''
 import numpy as np
 
 def subsample_us(us, dus, iters=1_000):

@@ -1,3 +1,4 @@
+'''This submodule contains the functions to compute the density distribution (and total number) of local maxima and minima of a field.'''
 import numpy as np
 from .utils_st import subsample_us, define_ubins
 from ..data.base_da import DataField
