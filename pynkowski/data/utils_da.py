@@ -1,8 +1,8 @@
+'''This submodule contains some utilities for data fields.'''
 import numpy as np
 import healpy as hp
 
 
- 
 def get_theta(nside):
     """Define a HEALPix map with the value of θ in each pixel at the input `nside`
     
@@ -20,7 +20,7 @@ def get_theta(nside):
     theta, _ = hp.pix2ang(nside, np.arange(12 * nside ** 2))
     return np.pi/2. - theta
 
-def derivatives(mapp, lmax=None, gradient=False, **kwargs):
+def healpix_derivatives(mapp, lmax=None, gradient=False, **kwargs):
     """Find the derivatives d_theta, d_phi of a Healpix map. It uses the healpy alm2map_der1 function.
 
     Parameters
@@ -64,8 +64,8 @@ def derivatives(mapp, lmax=None, gradient=False, **kwargs):
 
 
 
-def second_derivatives(d_theta, d_phi, lmax=None, **kwargs):
-    """Find the Second derivatives for every pixel of a Healpix map given the first partial derivatives.
+def healpix_second_derivatives(d_theta, d_phi, lmax=None, **kwargs):
+    """Find the second partial derivatives for every pixel of a Healpix map given the first partial derivatives.
 
     Parameters
     ----------
@@ -97,7 +97,7 @@ def second_derivatives(d_theta, d_phi, lmax=None, **kwargs):
     if lmax is None:
         lmax = 3 * nside - 1
 
-    d_phitheta, d_phiphi = derivatives(d_phi, lmax=lmax, **kwargs)
+    d_phitheta, d_phiphi = healpix_derivatives(d_phi, lmax=lmax, **kwargs)
 
     alm_theta = hp.map2alm(d_theta, lmax=lmax, **kwargs)
     [_, d_thetatheta, _] = hp.alm2map_der1(alm_theta, nside, lmax=lmax)

@@ -1,23 +1,19 @@
-'''This module contains all the classes to compute Minkowski Functionals on data. So far, they are the following:
+'''This module contains all the classes to work with data in several conventions. Currently, the implemented formats are the following:
 
-- [`scalar`](data/scalar.html): scalar maps on the sphere, in the healpix convention,
+- [`base_da`](data/base_da.html): the abstract class for general data fields, to be used as the base for the other fields.
+- [`healpix`](data/healpix.html): scalar maps on the sphere in the healpix convention. An optional interface for $P^2$ is included.
 
-- There is also a general utilities submodule called [`utils`](data/utils.html).
+- There is also a general utilities submodule called [`utils_da`](data/utils.html).
 '''
 
-
-import numpy as np
-import healpy as hp
+from .base_da import DataField
 
 try:
-    from tqdm.auto import tqdm
-except:
-    tqdm = lambda x: x
-    print('tqdm not loaded')
-    
-from .scalar import Scalar
- 
+    import healpy as hp
+    from .healpix import Healpix, HealpixP2
+except ImportError:
+    hp = None
+    print("healpy was not loaded, some functionality will be unavailable")
 
-        
-#__all__ = ["Scalar"]
+# __all__ = ["Healpix", "HealpixP2"]
 __docformat__ = "numpy"

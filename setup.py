@@ -11,7 +11,7 @@ setup(
     license_files=['LICENSE'],
     author="Carrón Duque, Javier and Carones, Alessando",
     author_email='javier.carron@roma2.infn.it',
-    packages=['pynkowski','pynkowski.data','pynkowski.theory'],
+    packages=['pynkowski','pynkowski.data','pynkowski.theory','pynkowski.stats'],
     package_dir={"pynkowski": "pynkowski"},
     url='https://github.com/javicarron/pynkowski',
     keywords='minkowski-functionals,non-gaussian,spherical,anisotropy,healpy,polarization,minkowski,cmb,healpix,curvature,cosmology,gaussian,maps,topology',
