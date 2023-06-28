@@ -52,9 +52,10 @@
 
         <h2>Submodules</h2>
         <ul>
-                <li><a href="theory/p2.html">p2</a></li>
-                <li><a href="theory/temperature.html">temperature</a></li>
-                <li><a href="theory/utils.html">utils</a></li>
+                <li><a href="theory/base_th.html">base_th</a></li>
+                <li><a href="theory/chi2.html">chi2</a></li>
+                <li><a href="theory/gaussian.html">gaussian</a></li>
+                <li><a href="theory/utils_th.html">utils_th</a></li>
         </ul>
 
         <h2>API Documentation</h2>
@@ -75,43 +76,38 @@
                     <h1 class="modulename">
 <a href="./../pynkowski.html">pynkowski</a><wbr>.theory    </h1>
 
-                        <div class="docstring"><p>This module contains all the theoretical predictions for the implemented fields. So far, they are the following:</p>
+                        <div class="docstring"><p>This module contains the theoretical predictions of the statistics for the implemented fields. So far, they are the following:</p>
 
 <ul>
-<li><a href="theory/temperature.html"><code>temperature</code></a>: Gaussian fields such as CMB temperature.</li>
-<li><p><a href="theory/p2.html"><code>p2</code></a>: $\chi^2$ fields, such as the modulus of the CMB polarization.</p></li>
-<li><p>There is also a general utilities submodule called <a href="theory/utils.html"><code>utils</code></a>.</p></li>
+<li><a href="theory/base_th.html"><code>base_th</code></a>: The base class for theoretical fields, to be used as the base for the other fields.</li>
+<li><a href="theory/gaussian.html"><code>gaussian</code></a>: Isotropic Gaussian fields such as CMB temperature or initial density field.</li>
+<li><p><a href="theory/chi2.html"><code>chi2</code></a>: Isotropic $\chi^2$ fields, such as the modulus of the CMB polarization.</p></li>
+<li><p>There is also a general utilities submodule called <a href="theory/utils_th.html"><code>utils_th</code></a>.</p></li>
 </ul>
+
+<p>These fields are defined with arbitrary dimensions and on an arbitrary space. Specific versions defined on particular spaces (such as the sphere) also exist for convenience.</p>
 </div>
 
                         <input id="mod-theory-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 
                         <label class="view-source-button" for="mod-theory-view-source"><span>View Source</span></label>
 
-                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="sd">&#39;&#39;&#39;This module contains all the theoretical predictions for the implemented fields. So far, they are the following:</span>
+                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="sd">&#39;&#39;&#39;This module contains the theoretical predictions of the statistics for the implemented fields. So far, they are the following:</span>
 </span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a>
-</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="sd">- [`temperature`](theory/temperature.html): Gaussian fields such as CMB temperature.</span>
-</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a><span class="sd">- [`p2`](theory/p2.html): $\chi^2$ fields, such as the modulus of the CMB polarization.</span>
-</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a>
-</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="sd">- There is also a general utilities submodule called [`utils`](theory/utils.html).</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="sd">&#39;&#39;&#39;</span>
+</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="sd">- [`base_th`](theory/base_th.html): The base class for theoretical fields, to be used as the base for the other fields.</span>
+</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a><span class="sd">- [`gaussian`](theory/gaussian.html): Isotropic Gaussian fields such as CMB temperature or initial density field.</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="sd">- [`chi2`](theory/chi2.html): Isotropic $\chi^2$ fields, such as the modulus of the CMB polarization.</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="sd">- There is also a general utilities submodule called [`utils_th`](theory/utils_th.html).</span>
 </span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="kn">import</span> <span class="nn">scipy.stats</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="n">norm</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a><span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">get_μ</span><span class="p">,</span> <span class="n">define_mu</span><span class="p">,</span> <span class="n">define_us_for_V</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="kn">from</span> <span class="nn">.temperature</span> <span class="kn">import</span> <span class="n">TheoryTemperature</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a><span class="kn">from</span> <span class="nn">.p2</span> <span class="kn">import</span> <span class="n">TheoryP2</span>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a><span class="c1">#__all__ = [&quot;get_μ&quot;,</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>           <span class="c1">#&quot;TheoryTemperature&quot;,</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>           <span class="c1">#&quot;TheoryP2&quot;]</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>
-</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a><span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;numpy&quot;</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="sd">These fields are defined with arbitrary dimensions and on an arbitrary space. Specific versions defined on particular spaces (such as the sphere) also exist for convenience.</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="sd">&#39;&#39;&#39;</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="kn">from</span> <span class="nn">.base_th</span> <span class="kn">import</span> <span class="n">TheoryField</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="kn">from</span> <span class="nn">.gaussian</span> <span class="kn">import</span> <span class="n">SphericalGaussian</span><span class="p">,</span> <span class="n">Gaussian</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="kn">from</span> <span class="nn">.chi2</span> <span class="kn">import</span> <span class="n">SphericalChi2</span><span class="p">,</span> <span class="n">Chi2</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;numpy&quot;</span>
 </span></pre></div>
 
 
