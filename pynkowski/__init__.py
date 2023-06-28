@@ -60,6 +60,7 @@ This package is divided into three modules: `stats`, `data`, and `theory`. Each 
     - [`chi2`](https://javicarron.github.io/pynkowski/pynkowski/theory/chi2.html)
     - [`utils_th`](https://javicarron.github.io/pynkowski/pynkowski/theory/utils_th.html)
 
+The documentation for each submodule can be found by clicking on the links above or navigating the menu on the left.
 
 # Example notebooks
 
