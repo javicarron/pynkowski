@@ -106,5 +106,5 @@ def healpix_second_derivatives(d_theta, d_phi, lmax=None, **kwargs):
     
     return (d_thetatheta, d_phiphi, d_phitheta)
 
-
+__all__ = ["get_theta", "healpix_derivatives", "healpix_second_derivatives"]
 __docformat__ = "numpy"

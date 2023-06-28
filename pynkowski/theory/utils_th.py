@@ -277,7 +277,7 @@ lkc_ambient_dict = {"2D":np.array([0., 0., 1.]),
 """Dictionary with the characterization of different spaces through their Lipschitz–Killing Curvatures"""
 
 
-__all__ = ["get_μ", "flag", "omega", "rho", "rho_Chi2", "LKC", "LKC_P2", "lkc_ambient_dict"]
+__all__ = ["get_μ", "flag", "omega", "rho", "rho_Chi2", "LKC", "LKC_Chi2", "lkc_ambient_dict"]
 
 __docformat__ = "numpy"
 

@@ -229,5 +229,5 @@ class HealpixP2(Healpix):
         return (np.var(self.Q[self.mask]) + np.var(self.U[self.mask]))/2.
     
 
-__all__ = ["Healpix, HealpixP2"]
+__all__ = ["Healpix", "HealpixP2"]
 __docformat__ = "numpy"

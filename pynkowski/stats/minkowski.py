@@ -52,7 +52,7 @@ def V0(field, us, edges=False, verbose=True):
     
     Returns
     -------
-    V0 : np.array()
+    V0 : np.array
         The values of the first Minkowski Functional at the given thresholds.
     
     """
@@ -100,7 +100,7 @@ def V1(field, us, edges=False, verbose=True):
     
     Returns
     -------
-    V1 : np.array()
+    V1 : np.array
         The values of the second Minkowski Functional at the given thresholds.
     
     """
@@ -146,14 +146,13 @@ def general_curvature(field, order):
     
     Returns
     -------
-    curvature : np.array()
+    curvature : np.array
         The value of the polynomial at each pixel. 
         
-    Examples
-    --------
-        `field.dim = 2`, `order=1` : geodesic curvature κ
-        `field.dim = 3`, `order=1` : mean curvature (H = (κ_1 + κ_2)/2 )
-        `field.dim = 3`, `order=2` : Gaussian curvature (K = κ_1 · κ_2)
+        For example:
+        `field.dim = 2`, `order=1` : geodesic curvature $\kappa$
+        `field.dim = 3`, `order=1` : mean curvature (H = ($\kappa_1$ + $\kappa_2$)/2 )
+        `field.dim = 3`, `order=2` : Gaussian curvature (K = $\kappa_1 \cdot \kappa_2$)
     
     """
     assert isinstance(field, DataField), "The field must be a DataField (or subclass)"
@@ -203,7 +202,7 @@ def V2(field, us, edges=False, verbose=True):
     
     Returns
     -------
-    V2 : np.array()
+    V2 : np.array
         The values of the second Minkowski Functional at the given thresholds.
     
     """
@@ -241,7 +240,7 @@ def V2(field, us, edges=False, verbose=True):
         
 
 
-__all__ = ["V0", "V1", "V2", "general_curvature"]
+__all__ = ["V0", "V1", "general_curvature", "V2"]
 
 __docformat__ = "numpy"
 

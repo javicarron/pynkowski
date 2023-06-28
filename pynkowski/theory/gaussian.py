@@ -323,9 +323,6 @@ class SphericalGaussian(Gaussian):
         k2 = self.mu**2./self.C2
         return np.real(np.sqrt((1.+k1)/(1.+k1-k2) +0.j) * norm.pdf(us) * egoe(self.dim, 1./(1.+k1-k2), np.sqrt(k2/2.)*us) / egoe(self.dim, 1./(1.+k1), 0.))
 
-# class EuclideanGaussian(Gaussian):
-#    Equal to $12$ times the variance of the second derivatives of the field ($4$ times for the cross derivative).
-
 
 __all__ = ["SphericalGaussian", "Gaussian"]
 

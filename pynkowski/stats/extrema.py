@@ -122,3 +122,9 @@ def minima(field, us, edges=False, verbose=True):
     else:
         raise TypeError(f"The field must be either TheoryField or DataField (or a subclass).")
     
+
+
+__all__ = ["maxima", "minima"]
+
+__docformat__ = "numpy"
+

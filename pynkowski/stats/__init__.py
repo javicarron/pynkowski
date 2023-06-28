@@ -3,7 +3,7 @@
 - [`minkowski`](stats/minkowski.html): Minkowski Functionals
 - [`extrema`](stats/extrema.html): extrema distributions (maxima, minima),
 
-- There is also a general utilities submodule called [`utils`](stats/utils.html).
+- There is also a general utilities submodule called [`utils_st`](stats/utils_st.html).
 '''
 
 from .minkowski import V0, V1, V2
