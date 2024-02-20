@@ -194,4 +194,7 @@ __all__ = ['get_theta', 'healpix_derivatives', 'healpix_second_derivatives', 'QU
 
 __all__ = ['get_theta', 'healpix_derivatives', 'healpix_second_derivatives']
 
+
+__all__ = ['get_theta', 'healpix_derivatives', 'healpix_second_derivatives']
+
 __docformat__ = "numpy"
