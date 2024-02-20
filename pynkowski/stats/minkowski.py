@@ -11,7 +11,7 @@ except:
     tqdm = lambda x: x
     print('tqdm not loaded')
 
-def __MF_prefactor(d,j):
+def _MF_prefactor(d,j):
     """Compute the prefactor in the definition of Minkowski Functionals. This factor multiplies the integral of the curvatures.
 
     Parameters
@@ -68,7 +68,7 @@ def V0(field, us, edges=False, verbose=True):
         
     if isinstance(field, DataField):
         try:
-            return field.V0(us, dus)
+            return field._V0(us, dus, verbose=verbose)
         except AttributeError:                
             stat = np.zeros_like(us)
             for ii in tqdm(np.arange(us.shape[0]), disable=not verbose):
@@ -116,7 +116,7 @@ def V1(field, us, edges=False, verbose=True):
         
     elif isinstance(field, DataField):
         try:
-            return field.V1(us, dus)
+            return field._V1(us, dus, verbose=verbose)
         except AttributeError:
             if field.first_der is None:
                 field.get_first_der()
@@ -126,7 +126,7 @@ def V1(field, us, edges=False, verbose=True):
             for ii in tqdm(np.arange(us.shape[0]), disable=not verbose):
                 this_mask = (us[ii] + dus[ii]/2. > field.field) & (us[ii] - dus[ii]/2. <= field.field)
                 stat[ii] = np.mean((grad_modulus*this_mask/dus[ii])[field.mask])
-            return __MF_prefactor(field.dim, 1) * stat
+            return _MF_prefactor(field.dim, 1) * stat
         
     else:
         raise TypeError(f"The field must be either TheoryField or DataField (or a subclass).")
@@ -169,10 +169,26 @@ def general_curvature(field, order):
             den = field.first_der[0]**2. + field.first_der[1]**2.
             return num / den
             
-#     if field.dim == 3:
-#         if order == 1: # Mean curvature (times 2), 2H = κ_1 + κ_2   (times |∇f|)
+    if field.dim == 3:
+        if order == 1: # Mean curvature (times 2), 2H = κ_1 + κ_2   (times |∇f|)
+            mod_grad = np.sqrt(np.sum(field.first_der**2., axis=0))
+            hessian = np.array([[field.second_der[0], field.second_der[3], field.second_der[4]],
+                                [field.second_der[3], field.second_der[1], field.second_der[5]],
+                                [field.second_der[4], field.second_der[5], field.second_der[2]]])
+            norm_grad = (field.first_der / mod_grad)
+            mean_curvature = np.einsum('j...,jk...,k...->...', norm_grad, hessian, norm_grad) - np.trace(hessian, axis1=0, axis2=1)
+            return mean_curvature
             
-#         if order == 2: # Gaussian curvature, K = κ_1 · κ_2   (times |∇f|)
+        if order == 2: # Gaussian curvature, K = κ_1 · κ_2   (times |∇f|)
+            mod_grad = np.sqrt(np.sum(field.first_der**2., axis=0))
+            norm_grad = (field.first_der / mod_grad)
+            norm_second_der = (field.second_der / mod_grad)
+            extended_hessian_det = np.linalg.det(np.array([[norm_second_der[0], norm_second_der[3], norm_second_der[4], norm_grad[0]],
+                                                           [norm_second_der[3], norm_second_der[1], norm_second_der[5], norm_grad[1]],
+                                                           [norm_second_der[4], norm_second_der[5], norm_second_der[2], norm_grad[2]],
+                                                           [norm_grad[0], norm_grad[1], norm_grad[2], np.zeros_like(norm_grad[0])]]).T).T
+            return -extended_hessian_det*mod_grad
+
         
     if field.dim > 3:
         raise NotImplementedError("The computation of principal curvatures in not implemented for spaces with 4 or more dimensions. If you need this, please get in touch.")
@@ -221,7 +237,7 @@ def V2(field, us, edges=False, verbose=True):
         
     elif isinstance(field, DataField):
         try:
-            return field.V2(us, dus)
+            return field._V2(us, dus, verbose=verbose)
         except AttributeError:
             if field.first_der is None:
                 field.get_first_der()
@@ -233,14 +249,71 @@ def V2(field, us, edges=False, verbose=True):
             for ii in tqdm(np.arange(us.shape[0]), disable=not verbose):
                 this_mask = (us[ii] + dus[ii]/2. > field.field) & (us[ii] - dus[ii]/2. <= field.field)
                 stat[ii] = np.mean((curv*this_mask/dus[ii])[field.mask])
-            return __MF_prefactor(field.dim, 2) * stat
+            return _MF_prefactor(field.dim, 2) * stat
         
     else:
         raise TypeError(f"The field must be either TheoryField or DataField (or a subclass).")
         
 
+def V3(field, us, edges=False, verbose=True):
+    """Compute the third Minkowski Functional, $V_3$, normalized by the volume of the space.
 
-__all__ = ["V0", "V1", "general_curvature", "V2"]
+    Parameters
+    ----------
+    field : DataField or TheoryField
+        Field on which to compute $V_3$, which can be a theoretical field or a data field. Its dimension must be at least 3.
+        
+    us : np.array
+        The thresholds where $V_3$ is computed.
+        
+    edges : bool, optional
+        If False (default), the given `us` is assumed to be an array of uniformly distributed thresholds, which are taken as the central values of the bins.
+        If True, input `us` is assumed to be a monotonically increasing array of bin edges, including the rightmost edge, allowing for non-uniform distributions of thresholds. 
+        In the latter case, the effective thresholds are the central value of the given bins.
+        
+    verbose : bool, optional
+        If True (default), progress bars are shown for the computations on data.
+    
+    Returns
+    -------
+    V3 : np.array()
+        The values of the second Minkowski Functional at the given thresholds.
+    
+    """
+    if field.dim<3:
+        raise ValueError(f"V3 is defined for fields with at least 3 dimensions, but this field is {field.dim}D.")
+        
+    us = np.atleast_1d(us)
+    us, dus = define_ubins(us, edges)
+    
+    if isinstance(field, TheoryField):
+        us = subsample_us(us, dus)
+        try:
+            return np.nanmean(field.V3(us), axis=1)
+        except AttributeError:
+            raise NotImplementedError(f"The theoretical expectation of V3 for {field.name} fields is not implemented. If you know an expression, please get in touch.") from None
+        
+    elif isinstance(field, DataField):
+        try:
+            return field._V3(us, dus, verbose=verbose)
+        except AttributeError:
+            if field.first_der is None:
+                field.get_first_der()
+            if field.second_der is None:
+                field.get_second_der()
+                
+            stat = np.zeros_like(us)
+            curv = general_curvature(field, 2)
+            for ii in tqdm(np.arange(us.shape[0]), disable=not verbose):
+                this_mask = (us[ii] + dus[ii]/2. > field.field) & (us[ii] - dus[ii]/2. <= field.field)
+                stat[ii] = np.mean((curv*this_mask/dus[ii])[field.mask])
+            return _MF_prefactor(field.dim, 3) * stat
+        
+    else:
+        raise TypeError(f"The field must be either TheoryField or DataField (or a subclass).")
+
+
+__all__ = ["V0", "V1", "V2", "V3", "general_curvature"]
 
 __docformat__ = "numpy"
 

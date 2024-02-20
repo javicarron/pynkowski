@@ -44,7 +44,7 @@
   <path fill-rule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
 </svg>                &nbsp;pynkowski</a>
 
-            <img src="https://raw.githubusercontent.com/javicarron/pynkowski/main/logo.png" class="logo" alt="project logo"/>
+            <img src="https://raw.githubusercontent.com/javicarron/pynkowski/development-so3/logo.png" class="logo" alt="project logo"/>
 
             <input type="search" placeholder="Search..." role="searchbox" aria-label="search"
                    pattern=".+" required>
@@ -55,6 +55,7 @@
                 <li><a href="theory/base_th.html">base_th</a></li>
                 <li><a href="theory/chi2.html">chi2</a></li>
                 <li><a href="theory/gaussian.html">gaussian</a></li>
+                <li><a href="theory/spingaussian.html">spingaussian</a></li>
                 <li><a href="theory/utils_th.html">utils_th</a></li>
         </ul>
 
@@ -81,6 +82,7 @@
 <ul>
 <li><a href="theory/base_th.html"><code>base_th</code></a>: The base class for theoretical fields, to be used as the base for the other fields.</li>
 <li><a href="theory/gaussian.html"><code>gaussian</code></a>: Isotropic Gaussian fields such as CMB temperature or initial density field.</li>
+<li><a href="theory/spingaussian.html"><code>spingaussian</code></a>: Isotropic Gaussian fields in the SO(3) formalism, such as the CMB polarization.</li>
 <li><p><a href="theory/chi2.html"><code>chi2</code></a>: Isotropic $\chi^2$ fields, such as the modulus of the CMB polarization.</p></li>
 <li><p>There is also a general utilities submodule called <a href="theory/utils_th.html"><code>utils_th</code></a>.</p></li>
 </ul>
@@ -96,18 +98,20 @@
 </span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a>
 </span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="sd">- [`base_th`](theory/base_th.html): The base class for theoretical fields, to be used as the base for the other fields.</span>
 </span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a><span class="sd">- [`gaussian`](theory/gaussian.html): Isotropic Gaussian fields such as CMB temperature or initial density field.</span>
-</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="sd">- [`chi2`](theory/chi2.html): Isotropic $\chi^2$ fields, such as the modulus of the CMB polarization.</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a>
-</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="sd">- There is also a general utilities submodule called [`utils_th`](theory/utils_th.html).</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="sd">These fields are defined with arbitrary dimensions and on an arbitrary space. Specific versions defined on particular spaces (such as the sphere) also exist for convenience.</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="sd">&#39;&#39;&#39;</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="kn">from</span> <span class="nn">.base_th</span> <span class="kn">import</span> <span class="n">TheoryField</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="kn">from</span> <span class="nn">.gaussian</span> <span class="kn">import</span> <span class="n">SphericalGaussian</span><span class="p">,</span> <span class="n">Gaussian</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="kn">from</span> <span class="nn">.chi2</span> <span class="kn">import</span> <span class="n">SphericalChi2</span><span class="p">,</span> <span class="n">Chi2</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;numpy&quot;</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="sd">- [`spingaussian`](theory/spingaussian.html): Isotropic Gaussian fields in the SO(3) formalism, such as the CMB polarization.</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="sd">- [`chi2`](theory/chi2.html): Isotropic $\chi^2$ fields, such as the modulus of the CMB polarization.</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a>
+</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="sd">- There is also a general utilities submodule called [`utils_th`](theory/utils_th.html).</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="sd">These fields are defined with arbitrary dimensions and on an arbitrary space. Specific versions defined on particular spaces (such as the sphere) also exist for convenience.</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="sd">&#39;&#39;&#39;</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="kn">from</span> <span class="nn">.base_th</span> <span class="kn">import</span> <span class="n">TheoryField</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="kn">from</span> <span class="nn">.gaussian</span> <span class="kn">import</span> <span class="n">SphericalGaussian</span><span class="p">,</span> <span class="n">Gaussian</span> <span class="c1">#, EuclideanGaussian</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a><span class="kn">from</span> <span class="nn">.spingaussian</span> <span class="kn">import</span> <span class="n">SpinGaussian</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="kn">from</span> <span class="nn">.chi2</span> <span class="kn">import</span> <span class="n">SphericalChi2</span><span class="p">,</span> <span class="n">Chi2</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a><span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;numpy&quot;</span>
 </span></pre></div>
 
 
