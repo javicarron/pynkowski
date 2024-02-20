@@ -44,7 +44,7 @@
   <path fill-rule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
 </svg>                &nbsp;pynkowski</a>
 
-            <img src="https://raw.githubusercontent.com/javicarron/pynkowski/main/logo.png" class="logo" alt="project logo"/>
+            <img src="https://raw.githubusercontent.com/javicarron/pynkowski/development-so3/logo.png" class="logo" alt="project logo"/>
 
             <input type="search" placeholder="Search..." role="searchbox" aria-label="search"
                    pattern=".+" required>
@@ -52,8 +52,10 @@
 
         <h2>Submodules</h2>
         <ul>
+                <li><a href="data/array.html">array</a></li>
                 <li><a href="data/base_da.html">base_da</a></li>
                 <li><a href="data/healpix.html">healpix</a></li>
+                <li><a href="data/so3data.html">so3data</a></li>
                 <li><a href="data/utils_da.html">utils_da</a></li>
         </ul>
 
@@ -78,7 +80,8 @@
                         <div class="docstring"><p>This module contains all the classes to work with data in several conventions. Currently, the implemented formats are the following:</p>
 
 <ul>
-<li><a href="data/base_da.html"><code>base_da</code></a>: the abstract class for general data fields, to be used as the base for the other fields.</li>
+<li><a href="data/base_da.html"><code>base_da</code></a>: the base class for data fields, to be used as the base for the other fields.</li>
+<li><a href="data/array.html"><code>array</code></a>: fields in the form of numpy arrays of arbitrary dimension, typically used for 2D or 3D maps.</li>
 <li><p><a href="data/healpix.html"><code>healpix</code></a>: scalar maps on the sphere in the healpix convention. An optional interface for $P^2$ is included.</p></li>
 <li><p>There is also a general utilities submodule called <a href="data/utils_da.html"><code>utils_da</code></a>.</p></li>
 </ul>
@@ -90,23 +93,26 @@
 
                         <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="sd">&#39;&#39;&#39;This module contains all the classes to work with data in several conventions. Currently, the implemented formats are the following:</span>
 </span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a>
-</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="sd">- [`base_da`](data/base_da.html): the abstract class for general data fields, to be used as the base for the other fields.</span>
-</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a><span class="sd">- [`healpix`](data/healpix.html): scalar maps on the sphere in the healpix convention. An optional interface for $P^2$ is included.</span>
-</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a>
-</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="sd">- There is also a general utilities submodule called [`utils_da`](data/utils_da.html).</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="sd">&#39;&#39;&#39;</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="kn">from</span> <span class="nn">.base_da</span> <span class="kn">import</span> <span class="n">DataField</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="k">try</span><span class="p">:</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>    <span class="kn">import</span> <span class="nn">healpy</span> <span class="k">as</span> <span class="nn">hp</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>    <span class="kn">from</span> <span class="nn">.healpix</span> <span class="kn">import</span> <span class="n">Healpix</span><span class="p">,</span> <span class="n">HealpixP2</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>    <span class="n">hp</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;healpy was not loaded, some functionality will be unavailable&quot;</span><span class="p">)</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a><span class="c1"># __all__ = [&quot;Healpix&quot;, &quot;HealpixP2&quot;]</span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;numpy&quot;</span>
+</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="sd">- [`base_da`](data/base_da.html): the base class for data fields, to be used as the base for the other fields.</span>
+</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a><span class="sd">- [`array`](data/array.html): fields in the form of numpy arrays of arbitrary dimension, typically used for 2D or 3D maps.</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="sd">- [`healpix`](data/healpix.html): scalar maps on the sphere in the healpix convention. An optional interface for $P^2$ is included.</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="sd">- There is also a general utilities submodule called [`utils_da`](data/utils_da.html).</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="sd">&#39;&#39;&#39;</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="kn">from</span> <span class="nn">.base_da</span> <span class="kn">import</span> <span class="n">DataField</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="kn">from</span> <span class="nn">.array</span> <span class="kn">import</span> <span class="n">DataArray</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="k">try</span><span class="p">:</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>    <span class="kn">import</span> <span class="nn">healpy</span> <span class="k">as</span> <span class="nn">hp</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>    <span class="kn">from</span> <span class="nn">.healpix</span> <span class="kn">import</span> <span class="n">Healpix</span><span class="p">,</span> <span class="n">HealpixP2</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>    <span class="kn">from</span> <span class="nn">.so3data</span> <span class="kn">import</span> <span class="n">SO3Healpix</span><span class="p">,</span> <span class="n">SO3Patch</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>    <span class="n">hp</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;healpy was not loaded, some functionality will be unavailable&quot;</span><span class="p">)</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a><span class="c1"># __all__ = [&quot;Healpix&quot;, &quot;HealpixP2&quot;]</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a><span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;numpy&quot;</span>
 </span></pre></div>
 
 
