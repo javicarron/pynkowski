@@ -2,7 +2,7 @@
 
 A Python package to compute Minkowski Functionals and other higher order statistics of input fields, as well as their expected values for different kinds of fields.
 
-The statistics currently supported by this package are:
+The **statistics** currently supported by this package are:
 
 - Minkowski functionals.
 - Maxima and minima distributions.
