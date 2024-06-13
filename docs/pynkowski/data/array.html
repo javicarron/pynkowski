@@ -142,12 +142,12 @@
 </span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a>    <span class="k">return</span><span class="p">(</span><span class="n">pixels</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
 </span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a>
 </span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a><span class="k">class</span> <span class="nc">DataArray</span><span class="p">(</span><span class="n">DataField</span><span class="p">):</span>
-</span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a>    <span class="sd">&quot;&quot;&quot;Class for a pixelized Euclidean data cube.</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a>    <span class="sd">&quot;&quot;&quot;Class for a pixelized Euclidean data array.</span>
 </span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a><span class="sd">    </span>
 </span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a><span class="sd">    Parameters</span>
 </span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a><span class="sd">    ----------</span>
 </span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a><span class="sd">    field : np.array</span>
-</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a><span class="sd">        Pixelized field as a 3D array. All pixels (or voxels) are expected to be the same size. The pixel shape is not necessarily a cube (see `spacing`).</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a><span class="sd">        Pixelized field as an array of arbitrary dimension. All pixels (or voxels) are expected to be the same size. The pixel shape is not necessarily a cube (see `spacing`).</span>
 </span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a><span class="sd">        The field can have different sizes in each dimension.</span>
 </span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a><span class="sd">        </span>
 </span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a><span class="sd">    normalise : bool, optional</span>
@@ -165,13 +165,13 @@
 </span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a><span class="sd">    Attributes</span>
 </span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a><span class="sd">    ----------</span>
 </span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a><span class="sd">    field : np.array</span>
-</span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a><span class="sd">        Data of the field as a 3D array.</span>
+</span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a><span class="sd">        Data of the field as an array.</span>
 </span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a><span class="sd">        </span>
 </span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a><span class="sd">    dim : int</span>
-</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a><span class="sd">        Dimension of the space where the field is defined. In this case, the space is the 3D space and this is 3.</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a><span class="sd">        Dimension of the space where the field is defined. For example, 2 for an image and 3 for a data cube..</span>
 </span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a><span class="sd">        </span>
 </span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a><span class="sd">    name : str</span>
-</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a><span class="sd">        Name of the field. In this case, &quot;data cube&quot;</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a><span class="sd">        Name of the field. In this case, &quot;DataArray&quot;</span>
 </span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a><span class="sd">        </span>
 </span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a><span class="sd">    first_der : np.array or None</span>
 </span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a><span class="sd">        First **covariant** derivatives of the field in an orthonormal basis of the space. Same structure as `field`, and shape `(dim, field.shape)`.</span>
@@ -285,12 +285,12 @@
     </div>
     <a class="headerlink" href="#DataArray"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="DataArray-45"><a href="#DataArray-45"><span class="linenos"> 45</span></a><span class="k">class</span> <span class="nc">DataArray</span><span class="p">(</span><span class="n">DataField</span><span class="p">):</span>
-</span><span id="DataArray-46"><a href="#DataArray-46"><span class="linenos"> 46</span></a>    <span class="sd">&quot;&quot;&quot;Class for a pixelized Euclidean data cube.</span>
+</span><span id="DataArray-46"><a href="#DataArray-46"><span class="linenos"> 46</span></a>    <span class="sd">&quot;&quot;&quot;Class for a pixelized Euclidean data array.</span>
 </span><span id="DataArray-47"><a href="#DataArray-47"><span class="linenos"> 47</span></a><span class="sd">    </span>
 </span><span id="DataArray-48"><a href="#DataArray-48"><span class="linenos"> 48</span></a><span class="sd">    Parameters</span>
 </span><span id="DataArray-49"><a href="#DataArray-49"><span class="linenos"> 49</span></a><span class="sd">    ----------</span>
 </span><span id="DataArray-50"><a href="#DataArray-50"><span class="linenos"> 50</span></a><span class="sd">    field : np.array</span>
-</span><span id="DataArray-51"><a href="#DataArray-51"><span class="linenos"> 51</span></a><span class="sd">        Pixelized field as a 3D array. All pixels (or voxels) are expected to be the same size. The pixel shape is not necessarily a cube (see `spacing`).</span>
+</span><span id="DataArray-51"><a href="#DataArray-51"><span class="linenos"> 51</span></a><span class="sd">        Pixelized field as an array of arbitrary dimension. All pixels (or voxels) are expected to be the same size. The pixel shape is not necessarily a cube (see `spacing`).</span>
 </span><span id="DataArray-52"><a href="#DataArray-52"><span class="linenos"> 52</span></a><span class="sd">        The field can have different sizes in each dimension.</span>
 </span><span id="DataArray-53"><a href="#DataArray-53"><span class="linenos"> 53</span></a><span class="sd">        </span>
 </span><span id="DataArray-54"><a href="#DataArray-54"><span class="linenos"> 54</span></a><span class="sd">    normalise : bool, optional</span>
@@ -308,13 +308,13 @@
 </span><span id="DataArray-66"><a href="#DataArray-66"><span class="linenos"> 66</span></a><span class="sd">    Attributes</span>
 </span><span id="DataArray-67"><a href="#DataArray-67"><span class="linenos"> 67</span></a><span class="sd">    ----------</span>
 </span><span id="DataArray-68"><a href="#DataArray-68"><span class="linenos"> 68</span></a><span class="sd">    field : np.array</span>
-</span><span id="DataArray-69"><a href="#DataArray-69"><span class="linenos"> 69</span></a><span class="sd">        Data of the field as a 3D array.</span>
+</span><span id="DataArray-69"><a href="#DataArray-69"><span class="linenos"> 69</span></a><span class="sd">        Data of the field as an array.</span>
 </span><span id="DataArray-70"><a href="#DataArray-70"><span class="linenos"> 70</span></a><span class="sd">        </span>
 </span><span id="DataArray-71"><a href="#DataArray-71"><span class="linenos"> 71</span></a><span class="sd">    dim : int</span>
-</span><span id="DataArray-72"><a href="#DataArray-72"><span class="linenos"> 72</span></a><span class="sd">        Dimension of the space where the field is defined. In this case, the space is the 3D space and this is 3.</span>
+</span><span id="DataArray-72"><a href="#DataArray-72"><span class="linenos"> 72</span></a><span class="sd">        Dimension of the space where the field is defined. For example, 2 for an image and 3 for a data cube..</span>
 </span><span id="DataArray-73"><a href="#DataArray-73"><span class="linenos"> 73</span></a><span class="sd">        </span>
 </span><span id="DataArray-74"><a href="#DataArray-74"><span class="linenos"> 74</span></a><span class="sd">    name : str</span>
-</span><span id="DataArray-75"><a href="#DataArray-75"><span class="linenos"> 75</span></a><span class="sd">        Name of the field. In this case, &quot;data cube&quot;</span>
+</span><span id="DataArray-75"><a href="#DataArray-75"><span class="linenos"> 75</span></a><span class="sd">        Name of the field. In this case, &quot;DataArray&quot;</span>
 </span><span id="DataArray-76"><a href="#DataArray-76"><span class="linenos"> 76</span></a><span class="sd">        </span>
 </span><span id="DataArray-77"><a href="#DataArray-77"><span class="linenos"> 77</span></a><span class="sd">    first_der : np.array or None</span>
 </span><span id="DataArray-78"><a href="#DataArray-78"><span class="linenos"> 78</span></a><span class="sd">        First **covariant** derivatives of the field in an orthonormal basis of the space. Same structure as `field`, and shape `(dim, field.shape)`.</span>
@@ -410,13 +410,13 @@
 </span></pre></div>
 
 
-            <div class="docstring"><p>Class for a pixelized Euclidean data cube.</p>
+            <div class="docstring"><p>Class for a pixelized Euclidean data array.</p>
 
 <h6 id="parameters">Parameters</h6>
 
 <ul>
 <li><strong>field</strong> (np.array):
-Pixelized field as a 3D array. All pixels (or voxels) are expected to be the same size. The pixel shape is not necessarily a cube (see <code>spacing</code>).
+Pixelized field as an array of arbitrary dimension. All pixels (or voxels) are expected to be the same size. The pixel shape is not necessarily a cube (see <code>spacing</code>).
 The field can have different sizes in each dimension.</li>
 <li><strong>normalise</strong> (bool, optional):
 If <code>True</code>, the map is normalised to have unit variance. Note: the mean of the map is not forced to be 0.
@@ -433,11 +433,11 @@ If an array, it must have the same length as the number of dimensions of the fie
 
 <ul>
 <li><strong>field</strong> (np.array):
-Data of the field as a 3D array.</li>
+Data of the field as an array.</li>
 <li><strong>dim</strong> (int):
-Dimension of the space where the field is defined. In this case, the space is the 3D space and this is 3.</li>
+Dimension of the space where the field is defined. For example, 2 for an image and 3 for a data cube..</li>
 <li><strong>name</strong> (str):
-Name of the field. In this case, "data cube"</li>
+Name of the field. In this case, "DataArray"</li>
 <li><strong>first_der</strong> (np.array or None):
 First <strong>covariant</strong> derivatives of the field in an orthonormal basis of the space. Same structure as <code>field</code>, and shape <code>(dim, field.shape)</code>.</li>
 <li><strong>second_der</strong> (np.array or None):
