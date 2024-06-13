@@ -42,12 +42,12 @@ def _hotspot_array(field):
     return(pixels, values)
 
 class DataArray(DataField):
-    """Class for a pixelized Euclidean data cube.
+    """Class for a pixelized Euclidean data array.
     
     Parameters
     ----------
     field : np.array
-        Pixelized field as a 3D array. All pixels (or voxels) are expected to be the same size. The pixel shape is not necessarily a cube (see `spacing`).
+        Pixelized field as an array of arbitrary dimension. All pixels (or voxels) are expected to be the same size. The pixel shape is not necessarily a cube (see `spacing`).
         The field can have different sizes in each dimension.
         
     normalise : bool, optional
@@ -65,13 +65,13 @@ class DataArray(DataField):
     Attributes
     ----------
     field : np.array
-        Data of the field as a 3D array.
+        Data of the field as an array.
         
     dim : int
-        Dimension of the space where the field is defined. In this case, the space is the 3D space and this is 3.
+        Dimension of the space where the field is defined. For example, 2 for an image and 3 for a data cube..
         
     name : str
-        Name of the field. In this case, "data cube"
+        Name of the field. In this case, "DataArray"
         
     first_der : np.array or None
         First **covariant** derivatives of the field in an orthonormal basis of the space. Same structure as `field`, and shape `(dim, field.shape)`.
