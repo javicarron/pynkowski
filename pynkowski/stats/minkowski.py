@@ -248,7 +248,7 @@ def V2(field, us, edges=False, verbose=True):
             curv = general_curvature(field, 1)
             for ii in tqdm(np.arange(us.shape[0]), disable=not verbose):
                 this_mask = (us[ii] + dus[ii]/2. > field.field) & (us[ii] - dus[ii]/2. <= field.field)
-                stat[ii] = np.mean((curv*this_mask/dus[ii])[field.mask])
+                stat[ii] = np.nanmean((curv*this_mask/dus[ii])[field.mask])
             return _MF_prefactor(field.dim, 2) * stat
         
     else:
@@ -306,7 +306,7 @@ def V3(field, us, edges=False, verbose=True):
             curv = general_curvature(field, 2)
             for ii in tqdm(np.arange(us.shape[0]), disable=not verbose):
                 this_mask = (us[ii] + dus[ii]/2. > field.field) & (us[ii] - dus[ii]/2. <= field.field)
-                stat[ii] = np.mean((curv*this_mask/dus[ii])[field.mask])
+                stat[ii] = np.nanmean((curv*this_mask/dus[ii])[field.mask])
             return _MF_prefactor(field.dim, 3) * stat
         
     else:
