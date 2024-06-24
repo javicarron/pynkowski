@@ -6,7 +6,7 @@ from ..stats.minkowski import _MF_prefactor
 try:
     from tqdm.auto import tqdm
 except:
-    tqdm = lambda x: x
+    tqdm = lambda x, disable: x
     print('tqdm not loaded')
 
 

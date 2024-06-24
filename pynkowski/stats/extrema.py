@@ -7,7 +7,7 @@ from ..theory.base_th import TheoryField
 try:
     from tqdm.auto import tqdm
 except:
-    tqdm = lambda x: x
+    tqdm = lambda x, disable: x
     print('tqdm not loaded')
 
 def maxima(field, us, edges=False, verbose=True):

@@ -8,7 +8,7 @@ from ..theory.base_th import TheoryField
 try:
     from tqdm.auto import tqdm
 except:
-    tqdm = lambda x: x
+    tqdm = lambda x, disable: x
     print('tqdm not loaded')
 
 def _MF_prefactor(d,j):
