@@ -2,6 +2,7 @@
 import numpy as np
 import healpy as hp
 from .base_da import DataField
+from .fast_mf import _FastMFMixin
 from .utils_da import get_theta, healpix_derivatives, healpix_second_derivatives
 
 def _hotspot(healpix_map):
@@ -28,13 +29,13 @@ def _hotspot(healpix_map):
     return(pixels, values)
 
 
-class Healpix(DataField):
+class Healpix(_FastMFMixin, DataField):
     """Class for spherical scalar fields in HEALPix format.
 
     Parameters
     ----------
     field : np.array
-        Values of the scalar field in HEALPix format in RING scheme.
+        Values of the scalar field in HEALPix format in RING scheme. The field must be finite: the pixels outside of the region of interest can be set to any finite value and excluded with `mask`.
         
     normalise : bool, optional
         If `True`, the map is normalised to have unit variance. Note: the mean of the map is not forced to be 0.
@@ -44,6 +45,24 @@ class Healpix(DataField):
         Mask where the field is considered. It is a bool array of the same shape that `field`.
         Default: all data is included.
         
+    first_der : np.array or None, optional
+        First **covariant** derivatives of the field in an orthonormal basis of the space. Same structure as `field`, and shape `(dim, field.shape)`, in the order of `get_first_der` (θ, ϕ).
+        If given, they are used instead of computing them from the map. They must be given together with `second_der`, and they are normalised together with the field if `normalise=True`.
+        Default: computed when needed.
+
+    second_der : np.array or None, optional
+        Second **covariant** derivatives of the field in an orthonormal basis of the space. Same structure as `field`, and shape `(dim*(dim+1)/2, field.shape)`, in the order of `get_second_der` (θθ, ϕϕ, θϕ).
+        They must be given together with `first_der`.
+        Default: computed when needed.
+
+    threads : int, optional
+        Number of threads used in the computation of the Minkowski Functionals.
+        Default: 8.
+
+    chunk_voxels : int, optional
+        Number of pixels processed at once by each thread in the computation of the Minkowski Functionals. Lower values reduce the memory usage.
+        Default: 2**22.
+
     Attributes
     ----------
     field : np.array
@@ -68,17 +87,20 @@ class Healpix(DataField):
     mask : np.array
         Mask where the field is considered. It is a bool array of the same shape that `field`.
         
+    threads : int
+        Number of threads used in the computation of the Minkowski Functionals.
+
+    chunk_voxels : int
+        Number of pixels processed at once by each thread in the computation of the Minkowski Functionals.
+
     """   
-    def __init__(self, field, normalise=True, mask=None):
+    def __init__(self, field, normalise=True, mask=None, first_der=None, second_der=None, threads=8, chunk_voxels=1 << 22):
         super().__init__(field, 2, name="HEALPix map", mask=mask)
         self.nside = hp.get_nside(self.field)
         if hp.get_nside(self.mask) != self.nside:
             raise ValueError('The map and the mask have different nside')
         
-        if normalise:
-            # self.field -= self.field.mean()
-            σ2 = self.get_variance()
-            self.field /= np.sqrt(σ2)
+        self._init_fast(normalise, first_der, second_der, threads, chunk_voxels)
             
     def get_variance(self):
         """Compute the variance of the Healpix scalar map within the mask. 
@@ -156,7 +178,7 @@ class Healpix(DataField):
 
 
 class HealpixP2(Healpix):
-    """Class for spherical scalar fields in HEALPix format.
+    """Class for spherical $P^2 = Q^2 + U^2$ fields in HEALPix format, from the $Q$ and $U$ maps.
 
     Parameters
     ----------
@@ -173,6 +195,24 @@ class HealpixP2(Healpix):
         Mask where the field if considered. It is a bool array of the same shape that `field`.
         Default: all data is included.
         
+    first_der : np.array or None, optional
+        First **covariant** derivatives of $P^2$, computed from the input `Q` and `U` (before the normalisation). Same structure as `field`, and shape `(dim, field.shape)`, in the order of `get_first_der` (θ, ϕ).
+        They must be given together with `second_der`. If `normalise=True`, they are normalised together with $P^2$, i.e., divided by the average of the variances of `Q` and `U`.
+        Default: computed when needed.
+
+    second_der : np.array or None, optional
+        Second **covariant** derivatives of $P^2$, computed from the input `Q` and `U` (before the normalisation). Same structure as `field`, and shape `(dim*(dim+1)/2, field.shape)`, in the order of `get_second_der` (θθ, ϕϕ, θϕ).
+        They must be given together with `first_der`.
+        Default: computed when needed.
+
+    threads : int, optional
+        Number of threads used in the computation of the Minkowski Functionals.
+        Default: 8.
+
+    chunk_voxels : int, optional
+        Number of pixels processed at once by each thread in the computation of the Minkowski Functionals. Lower values reduce the memory usage.
+        Default: 2**22.
+
     Attributes
     ----------
     Q : np.array
@@ -203,19 +243,31 @@ class HealpixP2(Healpix):
     mask : np.array
         Mask where the field if considered. It is a bool array of the same shape that `field`.
         
+    threads : int
+        Number of threads used in the computation of the Minkowski Functionals.
+
+    chunk_voxels : int
+        Number of pixels processed at once by each thread in the computation of the Minkowski Functionals.
+
     """   
-    def __init__(self, Q, U, normalise=True, mask=None):
+    def __init__(self, Q, U, normalise=True, mask=None, first_der=None, second_der=None, threads=8, chunk_voxels=1 << 22):
         self.Q = Q
         self.U = U
         self.mask = mask
+        σ2 = 1.
         if normalise:
             # self.Q -= self.Q.mean()
             # self.U -= self.U.mean()
             σ2 = self.get_variance()
-            self.Q /= np.sqrt(σ2)
-            self.U /= np.sqrt(σ2)
+            self.Q = self.Q / np.sqrt(σ2)   # Not in place, so that the input maps are not modified
+            self.U = self.U / np.sqrt(σ2)
+        # P² scales as σ² (not σ), so the given derivatives are normalised here instead of in `Healpix`
+        if first_der is not None:
+            first_der = np.asarray(first_der) / σ2
+        if second_der is not None:
+            second_der = np.asarray(second_der) / σ2
         
-        super().__init__(self.Q**2. + self.U**2., normalise=False, mask=mask)
+        super().__init__(self.Q**2. + self.U**2., normalise=False, mask=mask, first_der=first_der, second_der=second_der, threads=threads, chunk_voxels=chunk_voxels)
             
     def get_variance(self):
         """Compute the variance of the input Healpix scalar map within the input mask. 
