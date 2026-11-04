@@ -1,6 +1,5 @@
 import numpy as np
-from .base_da import DataField
-from .fast_mf import _FastMFMixin
+from .base_da import DataField, _masked_variance
 
 
 
@@ -42,7 +41,7 @@ def _hotspot_array(field):
     values = _eval_field(field, pixels)
     return(pixels, values)
 
-class DataArray(_FastMFMixin, DataField):
+class DataArray(DataField):
     """Class for a pixelized Euclidean data array.
     
     Parameters
@@ -74,13 +73,10 @@ class DataArray(_FastMFMixin, DataField):
         The order of the derivatives is the same as in `get_second_der`. They must be given together with `first_der`.
         Default: computed with finite differences when needed.
 
-    threads : int, optional
-        Number of threads used in the computation of the Minkowski Functionals.
-        Default: 8.
-
-    chunk_voxels : int, optional
-        Number of pixels processed at once by each thread in the computation of the Minkowski Functionals. Lower values reduce the memory usage.
-        Default: 2**22.
+    pixel_weights : np.array or None, optional
+        Relative weight of each pixel in the averages over the mask (e.g., the volume of the pixels for a grid with non-uniform spacing).
+        It is an array of finite and non-negative values of the same shape that `field`. It is used by the Minkowski Functionals and by the normalisation of the field (weighted variance).
+        Default: all pixels have the same weight.
         
     Attributes
     ----------
@@ -103,23 +99,25 @@ class DataArray(_FastMFMixin, DataField):
         Spacing between pixels (centres) in each dimension. If a float, the spacing is the same in all dimensions.
         If an array, it must have the same length as the number of dimensions of the field.
         
-    threads : int
-        Number of threads used in the computation of the Minkowski Functionals.
-
-    chunk_voxels : int
-        Number of pixels processed at once by each thread in the computation of the Minkowski Functionals.
+    pixel_weights : np.array or None
+        Relative weight of each pixel in the averages over the mask, or `None` if all pixels have the same weight.
 
     """
-    def __init__(self, field, normalise=True, mask=None, spacing=1., first_der=None, second_der=None, threads=8, chunk_voxels=1 << 22):
+    def __init__(self, field, normalise=True, mask=None, spacing=1., first_der=None, second_der=None, pixel_weights=None):
         dim = len(field.shape)
-        super().__init__(field, dim=dim, name='DataArray', mask=mask)
+        super().__init__(field, dim=dim, name='DataArray', mask=mask, pixel_weights=pixel_weights)
         if self.mask.shape != self.field.shape:
             raise ValueError('The map and the mask have different shapes')
+        self._check_finite()
+        sigma = 1.
+        if normalise:
+            sigma = np.sqrt(self.get_variance())
+            self.field /= sigma
+        self._set_derivatives(first_der, second_der, scale=sigma)
         self.spacing = spacing
-        self._init_fast(normalise, first_der, second_der, threads, chunk_voxels)
             
     def get_variance(self):
-        """Compute the variance of the field within the mask. 
+        """Compute the variance of the field within the mask, weighted by `pixel_weights` if given.
 
         Returns
         -------
@@ -127,7 +125,7 @@ class DataArray(_FastMFMixin, DataField):
             The variance of the input field within the mask.
 
         """    
-        return (np.var(self.field[self.mask]))
+        return _masked_variance(self.field, self.mask, self.pixel_weights)
 
     def get_first_der(self):
         """Compute the covariant first derivatives of the field. 

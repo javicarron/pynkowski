@@ -1,8 +1,7 @@
 '''This submodule contains the class for scalar fields in HEALPix format and an easy interface for $P^2$ maps in this format.'''
 import numpy as np
 import healpy as hp
-from .base_da import DataField
-from .fast_mf import _FastMFMixin
+from .base_da import DataField, _masked_variance, _prepare_pixel_weights
 from .utils_da import get_theta, healpix_derivatives, healpix_second_derivatives
 
 def _hotspot(healpix_map):
@@ -29,7 +28,7 @@ def _hotspot(healpix_map):
     return(pixels, values)
 
 
-class Healpix(_FastMFMixin, DataField):
+class Healpix(DataField):
     """Class for spherical scalar fields in HEALPix format.
 
     Parameters
@@ -55,13 +54,10 @@ class Healpix(_FastMFMixin, DataField):
         They must be given together with `first_der`.
         Default: computed when needed.
 
-    threads : int, optional
-        Number of threads used in the computation of the Minkowski Functionals.
-        Default: 8.
-
-    chunk_voxels : int, optional
-        Number of pixels processed at once by each thread in the computation of the Minkowski Functionals. Lower values reduce the memory usage.
-        Default: 2**22.
+    pixel_weights : np.array or None, optional
+        Relative weight of each pixel in the averages over the mask. HEALPix pixels have equal areas, so this is only needed to weight the pixels differently.
+        It is an array of finite and non-negative values of the same shape that `field`. It is used by the Minkowski Functionals and by the normalisation of the field (weighted variance).
+        Default: all pixels have the same weight.
 
     Attributes
     ----------
@@ -87,23 +83,25 @@ class Healpix(_FastMFMixin, DataField):
     mask : np.array
         Mask where the field is considered. It is a bool array of the same shape that `field`.
         
-    threads : int
-        Number of threads used in the computation of the Minkowski Functionals.
-
-    chunk_voxels : int
-        Number of pixels processed at once by each thread in the computation of the Minkowski Functionals.
+    pixel_weights : np.array or None
+        Relative weight of each pixel in the averages over the mask, or `None` if all pixels have the same weight.
 
     """   
-    def __init__(self, field, normalise=True, mask=None, first_der=None, second_der=None, threads=8, chunk_voxels=1 << 22):
-        super().__init__(field, 2, name="HEALPix map", mask=mask)
+    def __init__(self, field, normalise=True, mask=None, first_der=None, second_der=None, pixel_weights=None):
+        super().__init__(field, 2, name="HEALPix map", mask=mask, pixel_weights=pixel_weights)
         self.nside = hp.get_nside(self.field)
         if hp.get_nside(self.mask) != self.nside:
             raise ValueError('The map and the mask have different nside')
-        
-        self._init_fast(normalise, first_der, second_der, threads, chunk_voxels)
+        self._check_finite()
+        sigma = 1.
+        if normalise:
+            # self.field -= self.field.mean()
+            sigma = np.sqrt(self.get_variance())
+            self.field /= sigma
+        self._set_derivatives(first_der, second_der, scale=sigma)
             
     def get_variance(self):
-        """Compute the variance of the Healpix scalar map within the mask. 
+        """Compute the variance of the Healpix scalar map within the mask, weighted by `pixel_weights` if given.
 
         Returns
         -------
@@ -111,7 +109,7 @@ class Healpix(_FastMFMixin, DataField):
             The variance of the Healpix map within the mask.
 
         """    
-        return (np.var(self.field[self.mask]))
+        return _masked_variance(self.field, self.mask, self.pixel_weights)
     
     def get_first_der(self, lmax=None):
         """Compute the covariant first derivatives of the input Healpix scalar map. 
@@ -205,13 +203,10 @@ class HealpixP2(Healpix):
         They must be given together with `first_der`.
         Default: computed when needed.
 
-    threads : int, optional
-        Number of threads used in the computation of the Minkowski Functionals.
-        Default: 8.
-
-    chunk_voxels : int, optional
-        Number of pixels processed at once by each thread in the computation of the Minkowski Functionals. Lower values reduce the memory usage.
-        Default: 2**22.
+    pixel_weights : np.array or None, optional
+        Relative weight of each pixel in the averages over the mask. HEALPix pixels have equal areas, so this is only needed to weight the pixels differently.
+        It is an array of finite and non-negative values of the same shape that `field`. It is used by the Minkowski Functionals and by the normalisation of the field (weighted variance).
+        Default: all pixels have the same weight.
 
     Attributes
     ----------
@@ -243,17 +238,15 @@ class HealpixP2(Healpix):
     mask : np.array
         Mask where the field if considered. It is a bool array of the same shape that `field`.
         
-    threads : int
-        Number of threads used in the computation of the Minkowski Functionals.
-
-    chunk_voxels : int
-        Number of pixels processed at once by each thread in the computation of the Minkowski Functionals.
+    pixel_weights : np.array or None
+        Relative weight of each pixel in the averages over the mask, or `None` if all pixels have the same weight.
 
     """   
-    def __init__(self, Q, U, normalise=True, mask=None, first_der=None, second_der=None, threads=8, chunk_voxels=1 << 22):
+    def __init__(self, Q, U, normalise=True, mask=None, first_der=None, second_der=None, pixel_weights=None):
         self.Q = Q
         self.U = U
         self.mask = mask
+        self.pixel_weights = _prepare_pixel_weights(pixel_weights, np.shape(Q))
         σ2 = 1.
         if normalise:
             # self.Q -= self.Q.mean()
@@ -267,18 +260,18 @@ class HealpixP2(Healpix):
         if second_der is not None:
             second_der = np.asarray(second_der) / σ2
         
-        super().__init__(self.Q**2. + self.U**2., normalise=False, mask=mask, first_der=first_der, second_der=second_der, threads=threads, chunk_voxels=chunk_voxels)
+        super().__init__(self.Q**2. + self.U**2., normalise=False, mask=mask, first_der=first_der, second_der=second_der, pixel_weights=pixel_weights)
             
     def get_variance(self):
-        """Compute the variance of the input Healpix scalar map within the input mask. 
+        """Compute the variance of the input $Q$ and $U$ maps within the input mask (as the average of both), weighted by `pixel_weights` if given.
 
         Returns
         -------
         var : float
-            The variance of the input Healpix map within the input mask.
+            The variance of the input $Q$ and $U$ maps within the input mask.
 
         """    
-        return (np.var(self.Q[self.mask]) + np.var(self.U[self.mask]))/2.
+        return (_masked_variance(self.Q, self.mask, self.pixel_weights) + _masked_variance(self.U, self.mask, self.pixel_weights))/2.
     
 
 __all__ = ["Healpix", "HealpixP2"]
