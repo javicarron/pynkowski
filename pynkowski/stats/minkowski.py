@@ -2,7 +2,7 @@
 
 For data fields, the Minkowski Functionals are computed with a single pass over the field: each pixel is assigned to its threshold bin,
 and its contribution is accumulated with `np.bincount`. In this way, the computational cost does not grow with the number of thresholds.
-The pixels can be processed in chunks of `chunk_voxels` pixels, in parallel with `threads` threads (by default, one per available CPU).
+The pixels can be processed in chunks of `chunk_voxels` pixels, in parallel with `threads` threads (by default, one per available CPU, limited by `OMP_NUM_THREADS` if it is set).
 
 The data fields only need to provide the field, the mask, the covariant derivatives (or the methods `get_first_der` and `get_second_der`
 to compute them), and optionally the weights of the pixels (`pixel_weights`). A data field can also define its own methods `_V0`, `_V1`,
@@ -112,21 +112,32 @@ def general_curvature(field, order):
     return _curvature(order, list(field.first_der), None if order == 0 else list(field.second_der))
 
 
+def _env_thread_limit(name):
+    """Return the number of threads set by the environment variable `name`, or `None` if it is not set or not valid.
+    For `OMP_NUM_THREADS`, a comma-separated list (one value per nesting level) is accepted, and its first value is used."""
+    value = os.environ.get(name, '').split(',')[0].strip()
+    if value.isdigit() and int(value) > 0:
+        return int(value)
+    return None
+
+
 def _available_cpus():
-    """Return the number of CPUs available to this process, which is the default number of threads."""
+    """Return the default number of threads: the number of CPUs available to this process, limited by
+    `OMP_NUM_THREADS` and `SLURM_CPUS_PER_TASK` if they are set."""
     try:
         n = len(os.sched_getaffinity(0))    # Linux
     except AttributeError:
         n = os.cpu_count() or 1             # macOS and Windows
-    slurm_cpus = os.environ.get('SLURM_CPUS_PER_TASK', '')
-    if slurm_cpus.isdigit():
-        n = min(n, int(slurm_cpus))
+    for name in ('OMP_NUM_THREADS', 'SLURM_CPUS_PER_TASK'):
+        limit = _env_thread_limit(name)
+        if limit is not None:
+            n = min(n, limit)
     return max(n, 1)
 
 
 def _map_chunks(fn, n, threads, chunk_voxels):
     """Apply `fn` to consecutive slices of `chunk_voxels` pixels (out of `n`), in parallel if `threads > 1`, and return the list of results.
-    If `threads` is None, one thread per available CPU is used."""
+    If `threads` is None, the number of threads is given by `_available_cpus`."""
     if threads is None:
         threads = _available_cpus()
     if not (isinstance(threads, numbers.Integral) and threads >= 1):
@@ -247,7 +258,7 @@ def V0(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 17)
 
     threads : int or None, optional
         Number of threads used for the computation on data fields. Only used by the general computation (i.e., not by fields with their own method, such as the $SO(3)$ fields).
-        Default: None, i.e., one thread per CPU available to the process (at most `SLURM_CPUS_PER_TASK` inside a SLURM job).
+        Default: None, i.e., one thread per CPU available to the process, limited by the environment variables `OMP_NUM_THREADS` and `SLURM_CPUS_PER_TASK` if they are set.
 
     chunk_voxels : int, optional
         Number of pixels processed at once by each thread in the computation on data fields. Lower values reduce the memory usage.
@@ -300,7 +311,7 @@ def V1(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 17)
 
     threads : int or None, optional
         Number of threads used for the computation on data fields. Only used by the general computation (i.e., not by fields with their own method, such as the $SO(3)$ fields).
-        Default: None, i.e., one thread per CPU available to the process (at most `SLURM_CPUS_PER_TASK` inside a SLURM job).
+        Default: None, i.e., one thread per CPU available to the process, limited by the environment variables `OMP_NUM_THREADS` and `SLURM_CPUS_PER_TASK` if they are set.
 
     chunk_voxels : int, optional
         Number of pixels processed at once by each thread in the computation on data fields. Lower values reduce the memory usage.
@@ -353,7 +364,7 @@ def V2(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 17)
 
     threads : int or None, optional
         Number of threads used for the computation on data fields. Only used by the general computation (i.e., not by fields with their own method, such as the $SO(3)$ fields).
-        Default: None, i.e., one thread per CPU available to the process (at most `SLURM_CPUS_PER_TASK` inside a SLURM job).
+        Default: None, i.e., one thread per CPU available to the process, limited by the environment variables `OMP_NUM_THREADS` and `SLURM_CPUS_PER_TASK` if they are set.
 
     chunk_voxels : int, optional
         Number of pixels processed at once by each thread in the computation on data fields. Lower values reduce the memory usage.
@@ -409,7 +420,7 @@ def V3(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 17)
 
     threads : int or None, optional
         Number of threads used for the computation on data fields. Only used by the general computation (i.e., not by fields with their own method, such as the $SO(3)$ fields).
-        Default: None, i.e., one thread per CPU available to the process (at most `SLURM_CPUS_PER_TASK` inside a SLURM job).
+        Default: None, i.e., one thread per CPU available to the process, limited by the environment variables `OMP_NUM_THREADS` and `SLURM_CPUS_PER_TASK` if they are set.
 
     chunk_voxels : int, optional
         Number of pixels processed at once by each thread in the computation on data fields. Lower values reduce the memory usage.
