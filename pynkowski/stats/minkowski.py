@@ -2,13 +2,14 @@
 
 For data fields, the Minkowski Functionals are computed with a single pass over the field: each pixel is assigned to its threshold bin,
 and its contribution is accumulated with `np.bincount`. In this way, the computational cost does not grow with the number of thresholds.
-The pixels can be processed in chunks of `chunk_voxels` pixels, in parallel with `threads` threads.
+The pixels can be processed in chunks of `chunk_voxels` pixels, in parallel with `threads` threads (by default, one per available CPU).
 
 The data fields only need to provide the field, the mask, the covariant derivatives (or the methods `get_first_der` and `get_second_der`
 to compute them), and optionally the weights of the pixels (`pixel_weights`). A data field can also define its own methods `_V0`, `_V1`,
 `_V2` and `_V3` (e.g., the fields in the $SO(3)$ formalism, see `pynkowski.data.so3data`), which are then used instead of the general computation.
 '''
 import numbers
+import os
 from concurrent.futures import ThreadPoolExecutor
 import numpy as np
 from scipy.special import comb, gamma
@@ -111,10 +112,25 @@ def general_curvature(field, order):
     return _curvature(order, list(field.first_der), None if order == 0 else list(field.second_der))
 
 
+def _available_cpus():
+    """Return the number of CPUs available to this process, which is the default number of threads."""
+    try:
+        n = len(os.sched_getaffinity(0))    # Linux
+    except AttributeError:
+        n = os.cpu_count() or 1             # macOS and Windows
+    slurm_cpus = os.environ.get('SLURM_CPUS_PER_TASK', '')
+    if slurm_cpus.isdigit():
+        n = min(n, int(slurm_cpus))
+    return max(n, 1)
+
+
 def _map_chunks(fn, n, threads, chunk_voxels):
-    """Apply `fn` to consecutive slices of `chunk_voxels` pixels (out of `n`), in parallel if `threads > 1`, and return the list of results."""
+    """Apply `fn` to consecutive slices of `chunk_voxels` pixels (out of `n`), in parallel if `threads > 1`, and return the list of results.
+    If `threads` is None, one thread per available CPU is used."""
+    if threads is None:
+        threads = _available_cpus()
     if not (isinstance(threads, numbers.Integral) and threads >= 1):
-        raise ValueError(f"`threads` must be a positive integer, not {threads}.")
+        raise ValueError(f"`threads` must be a positive integer or None, not {threads}.")
     if not (isinstance(chunk_voxels, numbers.Integral) and chunk_voxels >= 1):
         raise ValueError(f"`chunk_voxels` must be a positive integer, not {chunk_voxels}.")
     slices = [slice(i, min(i + chunk_voxels, n)) for i in range(0, n, chunk_voxels)]
@@ -210,7 +226,7 @@ def _Vj_data(field, j, us, dus, threads, chunk_voxels):
     return _MF_prefactor(field.dim, j) * tot / (dus * denom)
 
 
-def V0(field, us, edges=False, verbose=True, threads=1, chunk_voxels=1 << 22):
+def V0(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 22):
     """Compute the first Minkowski Functional, $V_0$, normalized by the volume of the space.
 
     Parameters
@@ -229,9 +245,9 @@ def V0(field, us, edges=False, verbose=True, threads=1, chunk_voxels=1 << 22):
     verbose : bool, optional
         If True (default), progress bars are shown for the computations on data fields that support them (currently, the $SO(3)$ fields).
 
-    threads : int, optional
+    threads : int or None, optional
         Number of threads used for the computation on data fields. Only used by the general computation (i.e., not by fields with their own method, such as the $SO(3)$ fields).
-        Default: 1.
+        Default: None, i.e., one thread per CPU available to the process (at most `SLURM_CPUS_PER_TASK` inside a SLURM job).
 
     chunk_voxels : int, optional
         Number of pixels processed at once by each thread in the computation on data fields. Lower values reduce the memory usage.
@@ -263,7 +279,7 @@ def V0(field, us, edges=False, verbose=True, threads=1, chunk_voxels=1 << 22):
         raise TypeError(f"The field must be either TheoryField or DataField (or a subclass).")
     
 
-def V1(field, us, edges=False, verbose=True, threads=1, chunk_voxels=1 << 22):
+def V1(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 22):
     """Compute the second Minkowski Functional, $V_1$, normalized by the volume of the space.
 
     Parameters
@@ -282,9 +298,9 @@ def V1(field, us, edges=False, verbose=True, threads=1, chunk_voxels=1 << 22):
     verbose : bool, optional
         If True (default), progress bars are shown for the computations on data fields that support them (currently, the $SO(3)$ fields).
 
-    threads : int, optional
+    threads : int or None, optional
         Number of threads used for the computation on data fields. Only used by the general computation (i.e., not by fields with their own method, such as the $SO(3)$ fields).
-        Default: 1.
+        Default: None, i.e., one thread per CPU available to the process (at most `SLURM_CPUS_PER_TASK` inside a SLURM job).
 
     chunk_voxels : int, optional
         Number of pixels processed at once by each thread in the computation on data fields. Lower values reduce the memory usage.
@@ -316,7 +332,7 @@ def V1(field, us, edges=False, verbose=True, threads=1, chunk_voxels=1 << 22):
         raise TypeError(f"The field must be either TheoryField or DataField (or a subclass).")
         
 
-def V2(field, us, edges=False, verbose=True, threads=1, chunk_voxels=1 << 22):
+def V2(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 22):
     """Compute the third Minkowski Functional, $V_2$, normalized by the volume of the space.
 
     Parameters
@@ -335,9 +351,9 @@ def V2(field, us, edges=False, verbose=True, threads=1, chunk_voxels=1 << 22):
     verbose : bool, optional
         If True (default), progress bars are shown for the computations on data fields that support them (currently, the $SO(3)$ fields).
 
-    threads : int, optional
+    threads : int or None, optional
         Number of threads used for the computation on data fields. Only used by the general computation (i.e., not by fields with their own method, such as the $SO(3)$ fields).
-        Default: 1.
+        Default: None, i.e., one thread per CPU available to the process (at most `SLURM_CPUS_PER_TASK` inside a SLURM job).
 
     chunk_voxels : int, optional
         Number of pixels processed at once by each thread in the computation on data fields. Lower values reduce the memory usage.
@@ -372,7 +388,7 @@ def V2(field, us, edges=False, verbose=True, threads=1, chunk_voxels=1 << 22):
         raise TypeError(f"The field must be either TheoryField or DataField (or a subclass).")
         
 
-def V3(field, us, edges=False, verbose=True, threads=1, chunk_voxels=1 << 22):
+def V3(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 22):
     """Compute the fourth Minkowski Functional, $V_3$, normalized by the volume of the space.
 
     Parameters
@@ -391,9 +407,9 @@ def V3(field, us, edges=False, verbose=True, threads=1, chunk_voxels=1 << 22):
     verbose : bool, optional
         If True (default), progress bars are shown for the computations on data fields that support them (currently, the $SO(3)$ fields).
 
-    threads : int, optional
+    threads : int or None, optional
         Number of threads used for the computation on data fields. Only used by the general computation (i.e., not by fields with their own method, such as the $SO(3)$ fields).
-        Default: 1.
+        Default: None, i.e., one thread per CPU available to the process (at most `SLURM_CPUS_PER_TASK` inside a SLURM job).
 
     chunk_voxels : int, optional
         Number of pixels processed at once by each thread in the computation on data fields. Lower values reduce the memory usage.
