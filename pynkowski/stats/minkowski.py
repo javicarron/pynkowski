@@ -226,7 +226,7 @@ def _Vj_data(field, j, us, dus, threads, chunk_voxels):
     return _MF_prefactor(field.dim, j) * tot / (dus * denom)
 
 
-def V0(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 22):
+def V0(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 17):
     """Compute the first Minkowski Functional, $V_0$, normalized by the volume of the space.
 
     Parameters
@@ -252,7 +252,7 @@ def V0(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 22)
     chunk_voxels : int, optional
         Number of pixels processed at once by each thread in the computation on data fields. Lower values reduce the memory usage.
         The peak memory grows as `threads*chunk_voxels`. Only used by the general computation.
-        Default: 2**22.
+        Default: 2**17.
 
     Returns
     -------
@@ -279,7 +279,7 @@ def V0(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 22)
         raise TypeError(f"The field must be either TheoryField or DataField (or a subclass).")
     
 
-def V1(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 22):
+def V1(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 17):
     """Compute the second Minkowski Functional, $V_1$, normalized by the volume of the space.
 
     Parameters
@@ -305,7 +305,7 @@ def V1(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 22)
     chunk_voxels : int, optional
         Number of pixels processed at once by each thread in the computation on data fields. Lower values reduce the memory usage.
         The peak memory grows as `threads*chunk_voxels`. Only used by the general computation.
-        Default: 2**22.
+        Default: 2**17.
 
     Returns
     -------
@@ -332,7 +332,7 @@ def V1(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 22)
         raise TypeError(f"The field must be either TheoryField or DataField (or a subclass).")
         
 
-def V2(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 22):
+def V2(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 17):
     """Compute the third Minkowski Functional, $V_2$, normalized by the volume of the space.
 
     Parameters
@@ -358,7 +358,7 @@ def V2(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 22)
     chunk_voxels : int, optional
         Number of pixels processed at once by each thread in the computation on data fields. Lower values reduce the memory usage.
         The peak memory grows as `threads*chunk_voxels`. Only used by the general computation.
-        Default: 2**22.
+        Default: 2**17.
 
     Returns
     -------
@@ -388,7 +388,7 @@ def V2(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 22)
         raise TypeError(f"The field must be either TheoryField or DataField (or a subclass).")
         
 
-def V3(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 22):
+def V3(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 17):
     """Compute the fourth Minkowski Functional, $V_3$, normalized by the volume of the space.
 
     Parameters
@@ -414,7 +414,7 @@ def V3(field, us, edges=False, verbose=True, threads=None, chunk_voxels=1 << 22)
     chunk_voxels : int, optional
         Number of pixels processed at once by each thread in the computation on data fields. Lower values reduce the memory usage.
         The peak memory grows as `threads*chunk_voxels`. Only used by the general computation.
-        Default: 2**22.
+        Default: 2**17.
 
     Returns
     -------
