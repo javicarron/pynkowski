@@ -1,7 +1,7 @@
 '''This submodule contains the class for scalar fields in HEALPix format and an easy interface for $P^2$ maps in this format.'''
 import numpy as np
 import healpy as hp
-from .base_da import DataField
+from .base_da import DataField, _masked_variance, _prepare_pixel_weights
 from .utils_da import get_theta, healpix_derivatives, healpix_second_derivatives
 
 def _hotspot(healpix_map):
@@ -34,7 +34,7 @@ class Healpix(DataField):
     Parameters
     ----------
     field : np.array
-        Values of the scalar field in HEALPix format in RING scheme.
+        Values of the scalar field in HEALPix format in RING scheme. The field must be finite: the pixels outside of the region of interest can be set to any finite value and excluded with `mask`.
         
     normalise : bool, optional
         If `True`, the map is normalised to have unit variance. Note: the mean of the map is not forced to be 0.
@@ -44,6 +44,21 @@ class Healpix(DataField):
         Mask where the field is considered. It is a bool array of the same shape that `field`.
         Default: all data is included.
         
+    first_der : np.array or None, optional
+        First **covariant** derivatives of the field in an orthonormal basis of the space. Same structure as `field`, and shape `(dim, field.shape)`, in the order of `get_first_der` (θ, ϕ).
+        If given, they are used instead of computing them from the map. They must be given together with `second_der`, and they are normalised together with the field if `normalise=True`.
+        Default: computed when needed.
+
+    second_der : np.array or None, optional
+        Second **covariant** derivatives of the field in an orthonormal basis of the space. Same structure as `field`, and shape `(dim*(dim+1)/2, field.shape)`, in the order of `get_second_der` (θθ, ϕϕ, θϕ).
+        They must be given together with `first_der`.
+        Default: computed when needed.
+
+    pixel_weights : np.array or None, optional
+        Relative weight of each pixel in the averages over the mask. HEALPix pixels have equal areas, so this is only needed to weight the pixels differently.
+        It is an array of finite and non-negative values of the same shape that `field`. It is used by the Minkowski Functionals and by the normalisation of the field (weighted variance).
+        Default: all pixels have the same weight.
+
     Attributes
     ----------
     field : np.array
@@ -68,20 +83,25 @@ class Healpix(DataField):
     mask : np.array
         Mask where the field is considered. It is a bool array of the same shape that `field`.
         
+    pixel_weights : np.array or None
+        Relative weight of each pixel in the averages over the mask, or `None` if all pixels have the same weight.
+
     """   
-    def __init__(self, field, normalise=True, mask=None):
-        super().__init__(field, 2, name="HEALPix map", mask=mask)
+    def __init__(self, field, normalise=True, mask=None, first_der=None, second_der=None, pixel_weights=None):
+        super().__init__(field, 2, name="HEALPix map", mask=mask, pixel_weights=pixel_weights)
         self.nside = hp.get_nside(self.field)
         if hp.get_nside(self.mask) != self.nside:
             raise ValueError('The map and the mask have different nside')
-        
+        self._check_finite()
+        sigma = 1.
         if normalise:
             # self.field -= self.field.mean()
-            σ2 = self.get_variance()
-            self.field /= np.sqrt(σ2)
+            sigma = np.sqrt(self.get_variance())
+            self.field /= sigma
+        self._set_derivatives(first_der, second_der, scale=sigma)
             
     def get_variance(self):
-        """Compute the variance of the Healpix scalar map within the mask. 
+        """Compute the variance of the Healpix scalar map within the mask, weighted by `pixel_weights` if given.
 
         Returns
         -------
@@ -89,7 +109,7 @@ class Healpix(DataField):
             The variance of the Healpix map within the mask.
 
         """    
-        return (np.var(self.field[self.mask]))
+        return _masked_variance(self.field, self.mask, self.pixel_weights)
     
     def get_first_der(self, lmax=None):
         """Compute the covariant first derivatives of the input Healpix scalar map. 
@@ -156,7 +176,7 @@ class Healpix(DataField):
 
 
 class HealpixP2(Healpix):
-    """Class for spherical scalar fields in HEALPix format.
+    """Class for spherical $P^2 = Q^2 + U^2$ fields in HEALPix format, from the $Q$ and $U$ maps.
 
     Parameters
     ----------
@@ -173,6 +193,21 @@ class HealpixP2(Healpix):
         Mask where the field if considered. It is a bool array of the same shape that `field`.
         Default: all data is included.
         
+    first_der : np.array or None, optional
+        First **covariant** derivatives of $P^2$, computed from the input `Q` and `U` (before the normalisation). Same structure as `field`, and shape `(dim, field.shape)`, in the order of `get_first_der` (θ, ϕ).
+        They must be given together with `second_der`. If `normalise=True`, they are normalised together with $P^2$, i.e., divided by the average of the variances of `Q` and `U`.
+        Default: computed when needed.
+
+    second_der : np.array or None, optional
+        Second **covariant** derivatives of $P^2$, computed from the input `Q` and `U` (before the normalisation). Same structure as `field`, and shape `(dim*(dim+1)/2, field.shape)`, in the order of `get_second_der` (θθ, ϕϕ, θϕ).
+        They must be given together with `first_der`.
+        Default: computed when needed.
+
+    pixel_weights : np.array or None, optional
+        Relative weight of each pixel in the averages over the mask. HEALPix pixels have equal areas, so this is only needed to weight the pixels differently.
+        It is an array of finite and non-negative values of the same shape that `field`. It is used by the Minkowski Functionals and by the normalisation of the field (weighted variance).
+        Default: all pixels have the same weight.
+
     Attributes
     ----------
     Q : np.array
@@ -203,30 +238,40 @@ class HealpixP2(Healpix):
     mask : np.array
         Mask where the field if considered. It is a bool array of the same shape that `field`.
         
+    pixel_weights : np.array or None
+        Relative weight of each pixel in the averages over the mask, or `None` if all pixels have the same weight.
+
     """   
-    def __init__(self, Q, U, normalise=True, mask=None):
+    def __init__(self, Q, U, normalise=True, mask=None, first_der=None, second_der=None, pixel_weights=None):
         self.Q = Q
         self.U = U
         self.mask = mask
+        self.pixel_weights = _prepare_pixel_weights(pixel_weights, np.shape(Q))
+        σ2 = 1.
         if normalise:
             # self.Q -= self.Q.mean()
             # self.U -= self.U.mean()
             σ2 = self.get_variance()
-            self.Q /= np.sqrt(σ2)
-            self.U /= np.sqrt(σ2)
+            self.Q = self.Q / np.sqrt(σ2)   # Not in place, so that the input maps are not modified
+            self.U = self.U / np.sqrt(σ2)
+        # P² scales as σ² (not σ), so the given derivatives are normalised here instead of in `Healpix`
+        if first_der is not None:
+            first_der = np.asarray(first_der) / σ2
+        if second_der is not None:
+            second_der = np.asarray(second_der) / σ2
         
-        super().__init__(self.Q**2. + self.U**2., normalise=False, mask=mask)
+        super().__init__(self.Q**2. + self.U**2., normalise=False, mask=mask, first_der=first_der, second_der=second_der, pixel_weights=pixel_weights)
             
     def get_variance(self):
-        """Compute the variance of the input Healpix scalar map within the input mask. 
+        """Compute the variance of the input $Q$ and $U$ maps within the input mask (as the average of both), weighted by `pixel_weights` if given.
 
         Returns
         -------
         var : float
-            The variance of the input Healpix map within the input mask.
+            The variance of the input $Q$ and $U$ maps within the input mask.
 
         """    
-        return (np.var(self.Q[self.mask]) + np.var(self.U[self.mask]))/2.
+        return (_masked_variance(self.Q, self.mask, self.pixel_weights) + _masked_variance(self.U, self.mask, self.pixel_weights))/2.
     
 
 __all__ = ["Healpix", "HealpixP2"]

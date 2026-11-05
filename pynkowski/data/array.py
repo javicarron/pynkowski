@@ -1,5 +1,5 @@
 import numpy as np
-from .base_da import DataField
+from .base_da import DataField, _masked_variance
 
 
 
@@ -48,7 +48,7 @@ class DataArray(DataField):
     ----------
     field : np.array
         Pixelized field as an array of arbitrary dimension. All pixels (or voxels) are expected to be the same size. The pixel shape is not necessarily a cube (see `spacing`).
-        The field can have different sizes in each dimension.
+        The field can have different sizes in each dimension. The field must be finite: the pixels outside of the region of interest can be set to any finite value and excluded with `mask`.
         
     normalise : bool, optional
         If `True`, the map is normalised to have unit variance. Note: the mean of the map is not forced to be 0.
@@ -61,6 +61,22 @@ class DataArray(DataField):
     spacing : float or np.array, optional
         Spacing between pixels (centres) in each dimension. If a float, the spacing is the same in all dimensions. 
         If an array, it must have the same length as the number of dimensions of the field.
+        It is only used to compute the derivatives with finite differences, i.e., if `first_der` and `second_der` are not given.
+
+    first_der : np.array or None, optional
+        First **covariant** derivatives of the field in an orthonormal basis of the space. Same structure as `field`, and shape `(dim, field.shape)`.
+        If given, they are used instead of finite differences (e.g., Fourier-space derivatives of a periodic box). They must be given together with `second_der`, and they are normalised together with the field if `normalise=True`.
+        Default: computed with finite differences when needed.
+
+    second_der : np.array or None, optional
+        Second **covariant** derivatives of the field in an orthonormal basis of the space. Same structure as `field`, and shape `(dim*(dim+1)/2, field.shape)`.
+        The order of the derivatives is the same as in `get_second_der`. They must be given together with `first_der`.
+        Default: computed with finite differences when needed.
+
+    pixel_weights : np.array or None, optional
+        Relative weight of each pixel in the averages over the mask (e.g., the volume of the pixels for a grid with non-uniform spacing).
+        It is an array of finite and non-negative values of the same shape that `field`. It is used by the Minkowski Functionals and by the normalisation of the field (weighted variance).
+        Default: all pixels have the same weight.
         
     Attributes
     ----------
@@ -83,20 +99,25 @@ class DataArray(DataField):
         Spacing between pixels (centres) in each dimension. If a float, the spacing is the same in all dimensions.
         If an array, it must have the same length as the number of dimensions of the field.
         
+    pixel_weights : np.array or None
+        Relative weight of each pixel in the averages over the mask, or `None` if all pixels have the same weight.
+
     """
-    def __init__(self, field, normalise=True, mask=None, spacing=1.):
+    def __init__(self, field, normalise=True, mask=None, spacing=1., first_der=None, second_der=None, pixel_weights=None):
         dim = len(field.shape)
-        super().__init__(field, dim=dim, name='DataArray', mask=mask)
+        super().__init__(field, dim=dim, name='DataArray', mask=mask, pixel_weights=pixel_weights)
         if self.mask.shape != self.field.shape:
             raise ValueError('The map and the mask have different shapes')
+        self._check_finite()
+        sigma = 1.
         if normalise:
-            self.field /= np.sqrt(self.get_variance())
-        self.first_der = None
-        self.second_der = None
+            sigma = np.sqrt(self.get_variance())
+            self.field /= sigma
+        self._set_derivatives(first_der, second_der, scale=sigma)
         self.spacing = spacing
             
     def get_variance(self):
-        """Compute the variance of the field within the mask. 
+        """Compute the variance of the field within the mask, weighted by `pixel_weights` if given.
 
         Returns
         -------
@@ -104,7 +125,7 @@ class DataArray(DataField):
             The variance of the input field within the mask.
 
         """    
-        return (np.var(self.field[self.mask]))
+        return _masked_variance(self.field, self.mask, self.pixel_weights)
 
     def get_first_der(self):
         """Compute the covariant first derivatives of the field. 
